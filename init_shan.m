@@ -1,5 +1,5 @@
 function [Params, Links] = init_shan()
-%import necessary libarary
+%import necessary libarary and test git
 import com.comsol.model.*
 import com.comsol.model.util.*
 
