@@ -28,7 +28,7 @@ for i = 1:NumofUC.value
     Positions(i) = (i-0.5-NumofUC.value)*BaseParams{1}.value-0.5*DL.value;
     Positions(NumofUC.value+i) = (i-0.5)*BaseParams{1}.value+0.5*DL.value;
 end
-AllUCnames = UCarrayfromsingle(wp1, Basenames, BaseParams, Positions);
+[AllUCParams, AllUCnames, coords] = UCarrayfromsingle(wp1, Basenames, BaseParams, Positions, Links);
 for i = 1:size(Basenames,2)
     wp1.geom.feature(Basenames(i)).active(false);
 end
@@ -40,6 +40,7 @@ for i = 1:size(AllUCnames,2)
 end
 temp{size(AllUCnames,2)+1} = 'defect';
 Uni.selection('input').set(temp);
+Uni.set('intbnd', false);
 
 %extrude
 ext1.set('workplane', 'wp1');
@@ -47,8 +48,13 @@ ext1.selection('input').set({'wp1.Uni'});
 ext1.set('distance', {'DH'});
 geom1.run;
 
+%get indicies
+idx_bnd1 = mphselectbox(model,'geom1', coords{1}, 'boundary');
+idx_bnd2 = mphselectbox(model,'geom1', coords{2}, 'boundary');
+idx_ftri = mphselectbox(model,'geom1', coords{3}, 'boundary');
+idx_sweldestiface = mphselectbox(model,'geom1', coords{3}, 'boundary');
 %physics interface
-fix1.selection.set([1 72]);
+fix1.selection.set([idx_bnd1 idx_bnd2]);
 
 %fetching the entities
 
@@ -56,9 +62,9 @@ fix1.selection.set([1 72]);
 Msize.set('hmax', 'MS');
 Msize.set('hmin', 'MS/4');
 Msize.set('hcurve', '0.2');
-ftri.selection.set([4 10 17 24 31 37 42 47 54 61 68]);
-swel.selection('sourceface').set([4 10 17 24 31 37 42 47 54 61 68]);
-swel.selection('targetface').set([3 9 16 23 30 36 41 46 53 60 67]);
+ftri.selection.set(idx_ftri);
+swel.selection('sourceface').set(idx_ftri);
+swel.selection('targetface').set(idx_sweldestiface);
 mesh.run;
 
 %prestress condiciton
@@ -71,7 +77,7 @@ std.run;
 
 %export data
 Eigenfreq = mphglobal(model, 'solid.freq');
-
+plot(Eigenfreq,'*')
 %in Eigenfreq find the local mode
 SingleRunResult = Localmode(Eigenfreq);
 

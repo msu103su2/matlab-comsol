@@ -2,7 +2,7 @@ function out = model
 %
 % Untitled.m
 %
-% Model exported on Jul 26 2019, 15:54 by COMSOL 5.4.0.346.
+% Model exported on Jul 26 2019, 18:02 by COMSOL 5.4.0.346.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -181,11 +181,34 @@ model.component('mod1').geom('geom1').feature('wp1').geom.feature('UCCharm1').ac
 model.component('mod1').geom('geom1').feature('wp1').geom.feature('UCFillet1').active(false);
 model.component('mod1').geom('geom1').feature('wp1').geom.feature.create('Uni', 'Union');
 model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni').selection('input').set({'UCFillet1_1' 'UCFillet1_2' 'UCFillet1_3' 'UCFillet1_4' 'defect'});
-model.component('mod1').geom('geom1').feature('wp1').geom.run('Uni');
-model.component('mod1').geom('geom1').run('wp1');
 model.component('mod1').geom('geom1').feature('ext1').set('workplane', 'wp1');
-model.component('mod1').geom('geom1').feature('ext1').selection('input').set({'wp1'});
-model.component('mod1').geom('geom1').feature('ext1').setIndex('distance', '10e-6', 0);
-model.component('mod1').geom('geom1').run('ext1');
+model.component('mod1').geom('geom1').feature('ext1').selection('input').set({'wp1.Uni'});
+model.component('mod1').geom('geom1').feature('ext1').set('distance', 'DH');
+model.component('mod1').geom('geom1').run;
+model.component('mod1').geom('geom1').run;
+model.component('mod1').geom('geom1').run;
+model.component('mod1').geom('geom1').run;
+model.component('mod1').geom('geom1').run;
+
+model.component('mod1').physics('solid').feature('fix1').selection.set([1 90]);
+
+model.component('mod1').mesh('mesh').feature('size').set('hmax', 'MS');
+model.component('mod1').mesh('mesh').feature('size').set('hmin', 'MS/4');
+model.component('mod1').mesh('mesh').feature('size').set('hcurve', '0.2');
+model.component('mod1').mesh('mesh').feature('ftri').selection.set([4 25 46 51 72]);
+model.component('mod1').mesh('mesh').feature('swel').selection('sourceface').set([4 25 46 51 72]);
+model.component('mod1').mesh('mesh').feature('swel').selection('targetface').set([4 25 46 51 72]);
+model.component('mod1').mesh('mesh').run;
+
+model.component('mod1').physics('solid').feature('lemm1').feature('iss1').set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
+
+model.study('std').feature('eig').set('neigs', 50);
+
+model.component('mod1').mesh('mesh').run;
+
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni').set('intbnd', false);
+model.component('mod1').geom('geom1').run('fin');
+
+model.component('mod1').mesh('mesh').run;
 
 out = model;
