@@ -31,12 +31,16 @@ geom1 = model.geom.create('geom1', 3);
 
 %----geom.wp1---------
 wp1 = geom1.feature.create('wp1', 'WorkPlane');
+wp1.set('quickplane', 'xy');
+defect = wp1.geom.feature.create('defect', 'Rectangle');
+defect.set('size', [DL.value DW.value]);
+defect.set('base', 'center');
+defect.set('pos', [Dx.value Dy.value]);
 
-%Just reserve space for Params
+%ectract
 [BaseParams, Basenames] = unitcellgeom(wp1);
 
 ext1 = geom1.feature.create('ext1','Extrude');
-ext1.selection('input').set('wp1');
 
 Si3N4 = model.material.create('Si3N4');
 Si3N4.selection.all;
@@ -68,7 +72,7 @@ eig.set('neigsactive', true);
 eig.set('geometricNonlinearity', true);
 eig.set('useadvanceddisable', true);
 
-Links = {model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
-    fix1, std, eig};
+Links = {model, geom1, wp1, Uni, ext1, mesh, Msize, ftri, swel, iss1, ...
+    fix1, std, eig, defect};
 Params = {Params, BaseParams};
 end

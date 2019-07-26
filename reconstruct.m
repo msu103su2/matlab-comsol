@@ -1,44 +1,49 @@
 function SingleRunResult = reconstruct(Params, Links)
 import com.comsol.model.*
 import com.comsol.model.util.*
-[model, geom1, wp1, Uni, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, defect, LeftUCs, RightUCs] = Links{1:end};
-[DL, DW, DH, Dx, Dy, Dz, UL, UW, UH, Ux, Uy, Uz, kx, MS, NumofUC, ucindex] = Params{1:end};
-Params = [DL, DW, DH, Dx, Dy, Dz, UL, UW, UH, Ux, Uy, Uz, kx, MS, NumofUC, ucindex];
-BaseParams = [ucindex UL, UW, UH, Ux, Uy, Uz];
-RightArrayParams = repmat(BaseParams, NumofUC.value, 1);
-LeftArrayParams = repmat(BaseParams, NumofUC.value, 1);
+[model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
+    eig] = Links{1:end};
+BaseParams = Params{2};
+Params = Params{1};
+[DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = Params{1:end};
 
 for i = 1:size(Params,2)
-    model.param.set(Params(i).name,[num2str(Params(i).value) Params(i).unit], ...
-        Params(i).comment);
+    model.param.set(Params{i}.name,[num2str(Params{i}.value) Params{i}.unit], ...
+        Params{i}.comment);
 end
 
-defect.set('size', [DL.value DW.value]);%defect.set('size', {Params(1).name Params(2).name});
-defect.set('pos', [Dx.value Dy.value]);%defect.set('pos', {Params(4).name Params(5).name});
+geom1.feature.remove('wp1');
+wp1 = geom1.feature.create('wp1', 'WorkPlane');
+geom1.feature.move('wp1',0);
+wp1.set('quickplane', 'xy');
+defect = wp1.geom.feature.create('defect', 'Rectangle');
+defect.set('size', [DL.value DW.value]);
+defect.set('base', 'center');
+defect.set('pos', [Dx.value Dy.value]);
 
-LeftArrayParams(1,5).value = -LeftArrayParams(1,5).value;
-for i = 1 : NumofUC.value
-    if i>1
-    RightArrayParams(i,:) = UCP_byIndex(i, RightArrayParams, 1);
-    LeftArrayParams(i,:) = UCP_byIndex(i, LeftArrayParams, -1);
-    end
+%deal with the geomtry array
+[BaseParams, Basenames] = unitcellgeom(wp1);
+Positions = zeros(1, NumofUC.value*2);
+for i = 1:NumofUC.value
+    Positions(i) = (i-0.5-NumofUC.value)*BaseParams{1}.value-0.5*DL.value;
+    Positions(NumofUC.value+i) = (i-0.5)*BaseParams{1}.value+0.5*DL.value;
 end
-
-for i = 1 : NumofUC.value
-    SetElement(i, RightArrayParams, RightUCs);
-    SetElement(i, LeftArrayParams, LeftUCs);
+AllUCnames = UCarrayfromsingle(wp1, Basenames, BaseParams, Positions);
+for i = 1:size(Basenames,2)
+    wp1.geom.feature(Basenames(i)).active(false);
 end
 
 %create union
-strofobj{NumofUC.value*2+1} = 'defect';
-for i = 1 : NumofUC.value
-    strofobj{2*i-1} = ['RightUC_' num2str(i)];
-    strofobj{2*i} = ['LeftUC_' num2str(i)];
+Uni = wp1.geom.feature.create('Uni', 'Union');
+for i = 1:size(AllUCnames,2)
+    temp{i} = AllUCnames{i}{end};
 end
-Uni.selection('input').set(strofobj);
+temp{size(AllUCnames,2)+1} = 'defect';
+Uni.selection('input').set(temp);
 
 %extrude
+ext1.set('workplane', 'wp1');
+ext1.selection('input').set({'wp1.Uni'});
 ext1.set('distance', {'DH'});
 geom1.run;
 
