@@ -73,7 +73,9 @@ iss1.set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
 %study node
 eig.set('neigs', 50);
 
+tic;
 std.run;
+toc;
 
 %export data
 Eigenfreq = mphglobal(model, 'solid.freq');
