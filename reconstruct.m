@@ -71,7 +71,7 @@ mesh.run;
 iss1.set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
 
 %study node
-eig.set('neigs', 50);
+eig.set('neigs', 100);
 
 tic;
 std.run;
@@ -79,7 +79,12 @@ toc;
 
 %export data
 Eigenfreq = mphglobal(model, 'solid.freq');
-plot(Eigenfreq,'*')
+Eigenfreq = Eigenfreq(Eigenfreq == real(Eigenfreq));
+plotgraph = figure;
+plot(Eigenfreq,'*');
+c=clock;
+saveas(plotgraph,['snapshot\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
+close(plotgraph);
 %in Eigenfreq find the local mode
 SingleRunResult = Localmode(Eigenfreq);
 
