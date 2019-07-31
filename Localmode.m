@@ -2,6 +2,7 @@ function result = Localmode(Eigenfreq)
 % function need to figure out which is the local model and how good it is,
 % need to return a number to indicate how good the result is. the number
 % shall be smaller the better.
+
 products = zeros(1,size(Eigenfreq',2));
 gapsize = zeros(1,size(Eigenfreq',2));
 for i = 2 : (size(Eigenfreq',2)-1)

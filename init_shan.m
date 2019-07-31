@@ -19,7 +19,7 @@ Params = {DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC};
 
 %----Model node creation and modification
 model = ModelUtil.create('Model');
-model.hist.disable;
+%model.hist.disable;
 %----Model params defination
 for i = 1 : size(Params,2)
     model.param.set(Params{i}.name,[num2str(Params{i}.value) Params{i}.unit], ...

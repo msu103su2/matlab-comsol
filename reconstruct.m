@@ -33,15 +33,23 @@ for i = 1:size(Basenames,2)
     wp1.geom.feature(Basenames(i)).active(false);
 end
 
+ls1 = wp1.geom.create('ls1','LineSegment');
+ls1.set('specify1', 'coord');
+ls1.set('specify2', 'coord');
+ls1.set('coord1', coords{5});
+ls1.set('coord2', coords{6});
+
 %create union
-Uni = wp1.geom.feature.create('Uni', 'Union');
+Uni_small = wp1.geom.feature.create('Uni_small', 'Union');
 for i = 1:size(AllUCnames,2)
     temp{i} = AllUCnames{i}{end};
 end
 temp{size(AllUCnames,2)+1} = 'defect';
-Uni.selection('input').set(temp);
-Uni.set('intbnd', false);
-
+Uni_small.selection('input').set(temp);
+Uni_small.set('intbnd', false);
+Uni = wp1.geom.feature.create('Uni', 'Union');
+Uni.set('intbnd', true);
+Uni.selection('input').set({'Uni_small', 'ls1'});
 %extrude
 ext1.set('workplane', 'wp1');
 ext1.selection('input').set({'wp1.Uni'});
@@ -52,7 +60,7 @@ geom1.run;
 idx_bnd1 = mphselectbox(model,'geom1', coords{1}, 'boundary');
 idx_bnd2 = mphselectbox(model,'geom1', coords{2}, 'boundary');
 idx_ftri = mphselectbox(model,'geom1', coords{3}, 'boundary');
-idx_sweldestiface = mphselectbox(model,'geom1', coords{3}, 'boundary');
+idx_sweldestiface = mphselectbox(model,'geom1', coords{4}, 'boundary');
 %physics interface
 fix1.selection.set([idx_bnd1 idx_bnd2]);
 

@@ -33,6 +33,8 @@ for i = 1:size(Basenames,2)
     wp1.geom.feature(Basenames(i)).active(false);
 end
 
+wp1.geom.crea
+
 %create union
 Uni = wp1.geom.feature.create('Uni', 'Union');
 for i = 1:size(AllUCnames,2)
@@ -79,7 +81,7 @@ toc;
 
 %export data
 Eigenfreq = mphglobal(model, 'solid.freq');
-Eigenfreq = 
+Eigenfreq = Eigenfreq(Eigenfreq == real(Eigenfreq));
 plotgraph = figure;
 plot(Eigenfreq,'*');
 c=clock;

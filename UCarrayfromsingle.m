@@ -24,5 +24,8 @@ coords_ftriface = [Positions(1)-AllUCParams{1}{1}.value/2-tolerance, Positions(e
 coords_sweldestiface = [Positions(1)-AllUCParams{1}{1}.value/2-tolerance, Positions(end)+AllUCParams{end}{1}.value/2+tolerance;...
     -AllUCParams{1}{8}.value/2-tolerance, AllUCParams{end}{8}.value/2+tolerance;...
     -tolerance, +tolerance];
-coords = {coords_bnd1, coords_bnd2, coords_ftriface, coords_sweldestiface};
+ls1coords1 =[Positions(1)-AllUCParams{1}{1}.value/2,0];
+ls1coords2 =[Positions(end)+AllUCParams{end}{1}.value/2,0];
+coords = {coords_bnd1, coords_bnd2, coords_ftriface, coords_sweldestiface,...
+    ls1coords1, ls1coords2};
 end
