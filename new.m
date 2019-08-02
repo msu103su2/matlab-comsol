@@ -2,7 +2,7 @@ function out = model
 %
 % new.m
 %
-% Model exported on Jul 31 2019, 18:02 by COMSOL 5.4.0.346.
+% Model exported on Aug 2 2019, 13:07 by COMSOL 5.4.0.346.
 
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -383,34 +383,182 @@ model.component('mod1').geom('geom1').feature('wp1').geom.feature('UCR2').active
 model.component('mod1').geom('geom1').feature('wp1').geom.feature('UCUnion1').active(false);
 model.component('mod1').geom('geom1').feature('wp1').geom.feature('UCCharm1').active(false);
 model.component('mod1').geom('geom1').feature('wp1').geom.feature('UCFillet1').active(false);
-model.component('mod1').geom('geom1').feature('wp1').geom.feature.create('Uni', 'Union');
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni').selection('input').set({'UCFillet1_1' 'UCFillet1_2' 'UCFillet1_3' 'UCFillet1_4' 'UCFillet1_5' 'UCFillet1_6' 'UCFillet1_7' 'UCFillet1_8' 'UCFillet1_9' 'UCFillet1_10'  ...
+model.component('mod1').geom('geom1').feature('wp1').geom.create('ls1', 'LineSegment');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('specify1', 'coord');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('specify2', 'coord');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('coord1', [-0.0017000000000000001 0]);
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('coord2', [0 0]);
+model.component('mod1').geom('geom1').feature('wp1').geom.create('ls2', 'LineSegment');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls2').set('specify1', 'coord');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls2').set('specify2', 'coord');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls2').set('coord1', [0 0]);
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls2').set('coord2', [0.0017000000000000001 0]);
+model.component('mod1').geom('geom1').feature('wp1').geom.feature.create('Uni_small', 'Union');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni_small').selection('input').set({'UCFillet1_1' 'UCFillet1_2' 'UCFillet1_3' 'UCFillet1_4' 'UCFillet1_5' 'UCFillet1_6' 'UCFillet1_7' 'UCFillet1_8' 'UCFillet1_9' 'UCFillet1_10'  ...
 'UCFillet1_11' 'UCFillet1_12' 'UCFillet1_13' 'UCFillet1_14' 'UCFillet1_15' 'UCFillet1_16' 'defect'});
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni').set('intbnd', false);
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni_small').set('intbnd', false);
+model.component('mod1').geom('geom1').feature('wp1').geom.feature.create('Uni', 'Union');
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni').set('intbnd', true);
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('Uni').selection('input').set({'Uni_small' 'ls1' 'ls2'});
 model.component('mod1').geom('geom1').feature('ext1').set('workplane', 'wp1');
 model.component('mod1').geom('geom1').feature('ext1').selection('input').set({'wp1.Uni'});
 model.component('mod1').geom('geom1').feature('ext1').set('distance', 'DH');
 model.component('mod1').geom('geom1').run;
+
+model.component('mod1').physics('solid').feature('lemm1').feature('iss1').set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
+
+model.study('std').feature('eig').set('neigs', 100);
+
+model.component('mod1').geom('geom1').create('difblock', 'Block');
+model.component('mod1').geom('geom1').feature('difblock').set('size', [0.0034000000000000002 1.0E-4 2.0E-8]);
+model.component('mod1').geom('geom1').feature('difblock').set('pos', [0 5.0E-5 1.0E-8]);
+model.component('mod1').geom('geom1').feature('difblock').set('base', 'center');
+model.component('mod1').geom('geom1').create('dif1', 'Difference');
+model.component('mod1').geom('geom1').feature('dif1').selection('input').set({'ext1'});
+model.component('mod1').geom('geom1').feature('dif1').selection('input2').set({'difblock'});
+model.component('mod1').geom('geom1').run;
+
+model.component('mod1').physics('solid').create('sym1', 'SymmetrySolid', 2);
+
+model.component('mod1').geom('geom1').run;
+
+model.component('mod1').physics('solid').feature('sym1').selection.set([5 78]);
+
 model.component('mod1').geom('geom1').run;
 model.component('mod1').geom('geom1').run;
 model.component('mod1').geom('geom1').run;
 model.component('mod1').geom('geom1').run;
 
-model.component('mod1').physics('solid').feature('fix1').selection.set([1 294]);
+model.component('mod1').physics('solid').feature('fix1').selection.set([1 151]);
 
 model.component('mod1').mesh('mesh').feature('size').set('hmax', 'MS');
 model.component('mod1').mesh('mesh').feature('size').set('hmin', 'MS/4');
 model.component('mod1').mesh('mesh').feature('size').set('hcurve', '0.2');
 model.component('mod1').mesh('mesh').feature('ftri').selection.set([4]);
 model.component('mod1').mesh('mesh').feature('swel').selection('sourceface').set([4]);
-model.component('mod1').mesh('mesh').feature('swel').selection('targetface').set([4]);
+model.component('mod1').mesh('mesh').feature('swel').selection('targetface').set([3]);
 model.component('mod1').mesh('mesh').run;
 
-model.component('mod1').physics('solid').feature('lemm1').feature('iss1').set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
-
-model.study('std').feature('eig').set('neigs', 100);
 model.study('std').run;
 
+model.component('mod1').geom('geom1').run;
+
+model.result.numerical.remove('eval_internal');
+model.result.numerical.create('eval_internal', 'Eval');
+model.result.numerical('eval_internal').set('expr', 'u*u+v*v+w*w');
+model.result.numerical('eval_internal').set('complexfun', 'on');
+model.result.numerical('eval_internal').set('matherr', 'off');
+model.result.numerical('eval_internal').set('phase', 0);
+model.result.numerical('eval_internal').set('recover', 'off');
+model.result.numerical('eval_internal').set('refine', 1);
+model.result.numerical('eval_internal').set('solnum', {'1' '2' '3' '4' '5' '6' '7' '8' '9' '10'  ...
+'11' '12' '13' '14' '15' '16' '17' '18' '19' '20'  ...
+'21' '22' '23' '24' '25' '26' '27' '28' '29' '30'  ...
+'31' '32' '33' '34' '35' '36' '37' '38' '39' '40'  ...
+'41' '42' '43' '44' '45' '46' '47' '48' '49' '50'  ...
+'51' '52' '53' '54' '55' '56' '57' '58' '59' '60'  ...
+'61' '62' '63' '64' '65' '66' '67' '68' '69' '70'  ...
+'71' '72' '73' '74' '75' '76' '77' '78' '79' '80'  ...
+'81' '82' '83' '84' '85' '86' '87' '88' '89' '90'  ...
+'91' '92' '93' '94' '95' '96' '97' '98' '99' '100'});
+model.result.numerical('eval_internal').set('smooth', 'internal');
+model.result.numerical('eval_internal').set('smoothexpr', []);
+model.result.numerical('eval_internal').set('pattern', 'lagrange');
+model.result.numerical('eval_internal').selection.geom(0);
+model.result.numerical('eval_internal').selection.set([149]);
+model.result.numerical('eval_internal').set('outersolnum', 1);
+model.result.numerical('eval_internal').set('allowmaterialsmoothing', true);
+model.result.numerical('eval_internal').set('expr', {'u*u+v*v+w*w'});
+model.result.numerical('eval_internal').set('evalmethodactive', 'on');
+model.result.numerical('eval_internal').set('outertype', 'none');
+model.result.numerical('eval_internal').set('solvertype', 'solnum');
+model.result.numerical('eval_internal').set('outersolnum', '1');
+model.result.numerical('eval_internal').set('solnum', '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100');
+model.result.numerical('eval_internal').set('timeinterp', 'off');
+model.result.numerical('eval_internal').set('outersolnum', 1);
+model.result.numerical('eval_internal').set('allowmaterialsmoothing', true);
+model.result.numerical('eval_internal').set('expr', {'u*u+v*v+w*w'});
+model.result.numerical('eval_internal').set('evalmethodactive', 'on');
+model.result.numerical('eval_internal').set('outertype', 'none');
+model.result.numerical('eval_internal').set('solvertype', 'solnum');
+model.result.numerical('eval_internal').set('outersolnum', '1');
+model.result.numerical('eval_internal').set('solnum', '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100');
+model.result.numerical('eval_internal').set('timeinterp', 'off');
+model.result.numerical('eval_internal').getData(0);
+model.result.numerical('eval_internal').getCoordinates;
+model.result.numerical('eval_internal').getElements;
+model.result.numerical('eval_internal').getVertexElements;
+model.result.numerical.remove('eval_internal');
+model.result.numerical.create('num1', 'IntVolume');
+model.result.numerical('num1').set('intorder', 4);
+model.result.numerical('num1').set('method', 'auto');
+model.result.numerical('num1').selection.all;
+
+model.sol('sol1').getSizeMulti;
+model.sol('sol1').getSize;
+model.sol('sol1').getPVals;
+model.sol('sol1').getPValsImag;
+
+model.result.numerical('num1').set('expr', 'solid.rho*(u*u+v*v+w*w)');
+model.result.numerical('num1').run;
+model.result.numerical('num1').set('solnumindices', 1);
+model.result.numerical('num1').set('outersolnum', 1);
+model.result.numerical('num1').set('dataisaxisym', false);
+model.result.numerical('num1').set('expr', {'solid.rho*(u*u+v*v+w*w)'});
+model.result.numerical('num1').set('evalmethodactive', 'on');
+model.result.numerical('num1').set('hasouter', false);
+model.result.numerical('num1').set('outerinput', 'all');
+model.result.numerical('num1').set('outersolnum', '1');
+model.result.numerical('num1').set('solnum', '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100');
+model.result.numerical('num1').set('outersolnumindices', '');
+model.result.numerical('num1').set('solnumindices', '1');
+model.result.numerical('num1').set('outerinput', 'all');
+model.result.numerical('num1').set('innerinput', 'manualindices');
+model.result.numerical('num1').set('looplevelinput', {'manualindices'});
+model.result.numerical('num1').set('looplevel', {'1' '2' '3' '4' '5' '6' '7' '8' '9' '10'  ...
+'11' '12' '13' '14' '15' '16' '17' '18' '19' '20'  ...
+'21' '22' '23' '24' '25' '26' '27' '28' '29' '30'  ...
+'31' '32' '33' '34' '35' '36' '37' '38' '39' '40'  ...
+'41' '42' '43' '44' '45' '46' '47' '48' '49' '50'  ...
+'51' '52' '53' '54' '55' '56' '57' '58' '59' '60'  ...
+'61' '62' '63' '64' '65' '66' '67' '68' '69' '70'  ...
+'71' '72' '73' '74' '75' '76' '77' '78' '79' '80'  ...
+'81' '82' '83' '84' '85' '86' '87' '88' '89' '90'  ...
+'91' '92' '93' '94' '95' '96' '97' '98' '99' '100'});
+model.result.numerical('num1').set('looplevelindices', {'1'});
+model.result.numerical('num1').set('interp', {''});
+model.result.numerical('num1').set('solrepresentation', 'solutioninfo');
+
+model.sol('sol1').getSizeMulti;
+
+model.result.numerical('num1').set('solnumindices', [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100]);
+model.result.numerical('num1').set('outersolnum', 1);
+model.result.numerical('num1').set('dataisaxisym', false);
+model.result.numerical('num1').set('expr', {'solid.rho*(u*u+v*v+w*w)'});
+model.result.numerical('num1').set('evalmethodactive', 'on');
+model.result.numerical('num1').set('hasouter', false);
+model.result.numerical('num1').set('outerinput', 'all');
+model.result.numerical('num1').set('outersolnum', '1');
+model.result.numerical('num1').set('solnum', '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100');
+model.result.numerical('num1').set('outersolnumindices', '');
+model.result.numerical('num1').set('solnumindices', '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100');
+model.result.numerical('num1').set('outerinput', 'all');
+model.result.numerical('num1').set('innerinput', 'manualindices');
+model.result.numerical('num1').set('looplevelinput', {'manualindices'});
+model.result.numerical('num1').set('looplevel', {'1' '2' '3' '4' '5' '6' '7' '8' '9' '10'  ...
+'11' '12' '13' '14' '15' '16' '17' '18' '19' '20'  ...
+'21' '22' '23' '24' '25' '26' '27' '28' '29' '30'  ...
+'31' '32' '33' '34' '35' '36' '37' '38' '39' '40'  ...
+'41' '42' '43' '44' '45' '46' '47' '48' '49' '50'  ...
+'51' '52' '53' '54' '55' '56' '57' '58' '59' '60'  ...
+'61' '62' '63' '64' '65' '66' '67' '68' '69' '70'  ...
+'71' '72' '73' '74' '75' '76' '77' '78' '79' '80'  ...
+'81' '82' '83' '84' '85' '86' '87' '88' '89' '90'  ...
+'91' '92' '93' '94' '95' '96' '97' '98' '99' '100'});
+model.result.numerical('num1').set('looplevelindices', {'1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100'});
+model.result.numerical('num1').set('interp', {''});
+model.result.numerical('num1').set('solrepresentation', 'solutioninfo');
+model.result.numerical.remove('num1');
 model.result.numerical.remove('global_internal');
 model.result.numerical.create('global_internal', 'Global');
 model.result.numerical('global_internal').set('expr', 'solid.freq');
@@ -438,15 +586,83 @@ model.result.numerical('global_internal').set('timeinterp', 'off');
 model.result.numerical('global_internal').getData;
 model.result.numerical('global_internal').getImagData;
 model.result.numerical.remove('global_internal');
+model.result.create('pg1', 'PlotGroup3D');
+model.result('pg1').run;
+model.result('pg1').create('vol1', 'Volume');
+model.result('pg1').feature('vol1').create('def1', 'Deform');
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').set('looplevel', [68]);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 69, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 70, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 71, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 72, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 73, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 74, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 75, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 76, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 77, 0);
+model.result('pg1').run;
+model.result('pg1').run;
+model.result('pg1').set('looplevel', [33]);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 34, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 35, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 36, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 37, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 38, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 39, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 40, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 41, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 42, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 43, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 44, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 45, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 46, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 47, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 48, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 49, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 50, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 51, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 52, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 53, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 54, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 55, 0);
+model.result('pg1').run;
+model.result('pg1').setIndex('looplevel', 56, 0);
+model.result('pg1').run;
 
-model.component('mod1').geom('geom1').feature('wp1').geom.run('Uni');
-model.component('mod1').geom('geom1').feature('wp1').geom.create('ls1', 'LineSegment');
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('specify1', 'coord');
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('specify2', 'coord');
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('coord1', {'-1e-3' '0'});
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('coord2', {'01e3' '0'});
-model.component('mod1').geom('geom1').feature('wp1').geom.run('ls1');
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('ls1').set('coord2', {'01e-3' '0'});
-model.component('mod1').geom('geom1').feature('wp1').geom.run('ls1');
+model.study('std').feature('eig').set('shift', '5[Hz]');
 
 out = model;

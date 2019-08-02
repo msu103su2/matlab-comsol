@@ -8,7 +8,7 @@ import com.comsol.model.util.*
 f1 = 'name';   f2 = 'value';    f3 = 'unit';    f4 = 'comment';
 DL = struct(f1, 'DL', f2, 200e-6, f3, '[m]', f4, 'Defect length');
 DW = struct(f1, 'DW', f2, 10e-6, f3, '[m]', f4, 'Defect width');
-DH = struct(f1, 'DH', f2, 20e-9, f3, '[m]', f4, 'Defect height');
+DH = struct(f1, 'DH', f2, 100e-9, f3, '[m]', f4, 'Defect height');
 Dx = struct(f1, 'Dx', f2, 0, f3, '[m]', f4, 'Defect x position');
 Dy = struct(f1, 'Dy', f2, 0, f3, '[m]', f4, 'Defect y position');
 Dz = struct(f1, 'Dz', f2, 0, f3, '[m]', f4, 'Defect z position');
@@ -33,7 +33,7 @@ geom1 = model.geom.create('geom1', 3);
 wp1 = geom1.feature.create('wp1', 'WorkPlane');
 
 %Just reserve space for Params
-[BaseParams, Basenames] = unitcellgeom(wp1);
+[BaseParams, Basenames] = unitcellgeom(wp1, Params);
 
 ext1 = geom1.feature.create('ext1','Extrude');
 ext1.selection('input').set('wp1');
@@ -69,6 +69,6 @@ eig.set('geometricNonlinearity', true);
 eig.set('useadvanceddisable', true);
 
 Links = {model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
-    fix1, std, eig};
+    fix1, std, eig, solid};
 Params = {Params, BaseParams};
 end

@@ -1,16 +1,14 @@
-function result = Localmode(Eigenfreq)
-% function need to figure out which is the local model and how good it is,
-% need to return a number to indicate how good the result is. the number
-% shall be smaller the better.
-
-products = zeros(1,size(Eigenfreq',2));
-gapsize = zeros(1,size(Eigenfreq',2));
-for i = 2 : (size(Eigenfreq',2)-1)
-    products(i) = (Eigenfreq(i+1)-Eigenfreq(i))*(Eigenfreq(i)-Eigenfreq(i-1));
-end
-for i = 2 : (size(Eigenfreq',2)-1)
-    gapsize(i) = (Eigenfreq(i+1)-Eigenfreq(i-1));
-end
-result = 1/max(products);
-max(gapsize)
+function result = Localmode(Links,coords)
+[model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
+    eig, solid] = Links{1:end};
+eps = 1e-10;
+import com.comsol.model.*
+import com.comsol.model.util.*
+centerpoint = mphselectbox(model,'geom1', [-eps,eps;-eps,eps;-eps,eps;], 'point');
+centerpointdata_disp = mpheval(model,'u*u+v*v+w*w','edim',0,'selection',centerpoint);
+temp = mphint2(model,'solid.rho*(u*u+v*v+w*w)',3);
+effectivemass = temp./(centerpointdata_disp.d1)';
+[minEffMass, index] = min(effectivemass);
+allfreq = mphglobal(model, 'solid.freq');
+result = allfreq(index);
 end
