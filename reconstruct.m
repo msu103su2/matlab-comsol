@@ -92,14 +92,25 @@ Msize.set('hmax', 'MS');
 Msize.set('hmin', 'MS/4');
 Msize.set('hcurve', '0.2');
 ftri.selection.set(idx_ftri);
+ref1 = mesh.create('ref1','Refine');
+ref1.set('rmethod', 'regular');
+ref1.set('numrefine', 5);
+ref1.selection.geom('geom1', 2);
+ref1.selection.set([idx_bnd1 idx_bnd2]);
 swel.selection('sourceface').set(idx_ftri);
 swel.selection('targetface').set(idx_sweldestiface);
 mesh.run;
 std.run;
-localmodefreq = Localmode(Links,coords);
-difblock.active(false);
-dif1.active(false);
-sym1.active(false);
+[localmodefreq, localmodeEffMass] = Localmode(Links,coords);
+
+%{
+...
+
+The following code do the calculation without symmetrizing the geom
+
+geom1.feature.remove('difblock');
+geom1.feature.remove('dif1');
+solid.feature.remove('sym1');
 geom1.run;
 
 %get indicies
@@ -123,16 +134,17 @@ eig.set('shift',[num2str(localmodefreq) '[Hz]']);
 tic;
 std.run;
 toc;
+...
+...
+%}
 
 %export data
 Eigenfreq = mphglobal(model,'solid.freq');
-Eigenfreq = Eigenfreq(Eigenfreq==real(Eigenfreq));
 plotgraph = figure;
-plot(Eigenfreq,'*');
+plot(real(Eigenfreq),'*');
 c=clock;
 saveas(plotgraph,['snapshot\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
 close(plotgraph);
-%in Eigenfreq find the local mode
-SingleRunResult = evaluategeom(Links,localmodefreq);
+SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
 
 end

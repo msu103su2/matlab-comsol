@@ -47,7 +47,7 @@ Si3N4.materialModel('def').set('heatcapacity', '700[J/(kg*K)]');
 Si3N4.materialModel('def').set('relpermittivity', {'9.7' '0' '0' '0' '9.7' '0' '0' '0' '9.7'});
 Si3N4.materialModel('def').set('density', '3100[kg/m^3]');
 Si3N4.materialModel('def').set('thermalconductivity', {'20[W/(m*K)]' '0' '0' '0' '20[W/(m*K)]' '0' '0' '0' '20[W/(m*K)]'});
-Si3N4.materialModel('def').set('youngsmodulus', '250e9[Pa]');
+Si3N4.materialModel('def').set('youngsmodulus', '250e9+1e8i[Pa]');
 Si3N4.materialModel('def').set('poissonsratio', '0.23');
 
 mesh = model.mesh.create('mesh', 'geom1');
