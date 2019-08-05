@@ -54,6 +54,7 @@ mesh = model.mesh.create('mesh', 'geom1');
 Msize = mesh.feature('size');
 ftri = mesh.feature.create('ftri', 'FreeTri');
 swel = mesh.create('swel', 'Sweep');
+ref1 = mesh.create('ref1','Refine');
 
 solid = model.physics.create('solid', 'SolidMechanics', 'geom1');
 fix1 = solid.create('fix1', 'Fixed', 2);
@@ -69,6 +70,6 @@ eig.set('geometricNonlinearity', true);
 eig.set('useadvanceddisable', true);
 
 Links = {model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
-    fix1, std, eig, solid};
+    fix1, std, eig, solid, ref1};
 Params = {Params, BaseParams};
 end

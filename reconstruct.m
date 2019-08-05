@@ -3,7 +3,7 @@ import com.comsol.model.*
 import com.comsol.model.util.*
 eps = 1e-10;
 [model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, solid] = Links{1:end};
+    eig, solid, ref1] = Links{1:end};
 BaseParams = Params{2};
 DefectParams = Params{1};
 [DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
@@ -92,9 +92,8 @@ Msize.set('hmax', 'MS');
 Msize.set('hmin', 'MS/4');
 Msize.set('hcurve', '0.2');
 ftri.selection.set(idx_ftri);
-ref1 = mesh.create('ref1','Refine');
 ref1.set('rmethod', 'regular');
-ref1.set('numrefine', 5);
+ref1.set('numrefine', 3);
 ref1.selection.geom('geom1', 2);
 ref1.selection.set([idx_bnd1 idx_bnd2]);
 swel.selection('sourceface').set(idx_ftri);
@@ -102,15 +101,13 @@ swel.selection('targetface').set(idx_sweldestiface);
 mesh.run;
 std.run;
 [localmodefreq, localmodeEffMass] = Localmode(Links,coords);
-
+geom1.feature.remove('difblock');
+geom1.feature.remove('dif1');
+solid.feature.remove('sym1');
 %{
 ...
 
 The following code do the calculation without symmetrizing the geom
-
-geom1.feature.remove('difblock');
-geom1.feature.remove('dif1');
-solid.feature.remove('sym1');
 geom1.run;
 
 %get indicies
