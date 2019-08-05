@@ -6,7 +6,7 @@ import com.comsol.model.util.*
 %----params defined section-----
 % paramname = {value, 'unit', 'comments'}
 f1 = 'name';   f2 = 'value';    f3 = 'unit';    f4 = 'comment';
-DL = struct(f1, 'DL', f2, 200e-6, f3, '[m]', f4, 'Defect length');
+DL = struct(f1, 'DL', f2, 140e-6, f3, '[m]', f4, 'Defect length');
 DW = struct(f1, 'DW', f2, 10e-6, f3, '[m]', f4, 'Defect width');
 DH = struct(f1, 'DH', f2, 100e-9, f3, '[m]', f4, 'Defect height');
 Dx = struct(f1, 'Dx', f2, 0, f3, '[m]', f4, 'Defect x position');
@@ -19,7 +19,7 @@ Params = {DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC};
 
 %----Model node creation and modification
 model = ModelUtil.create('Model');
-%model.hist.disable;
+model.hist.disable;
 %----Model params defination
 for i = 1 : size(Params,2)
     model.param.set(Params{i}.name,[num2str(Params{i}.value) Params{i}.unit], ...

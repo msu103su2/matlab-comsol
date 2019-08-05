@@ -3,7 +3,7 @@ import com.comsol.model.*
 import com.comsol.model.util.*
 eps = 1e-10;
 [model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, solid] = Links{1:end};
+    eig, solid, ref1] = Links{1:end};
 BaseParams = Params{2};
 DefectParams = Params{1};
 [DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
@@ -23,7 +23,7 @@ defect.set('base', 'center');
 defect.set('pos', [Dx.value Dy.value]);
 
 %deal with the geomtry array
-[BaseParams, Basenames] = unitcellgeom(wp1, DefectParams);
+[BaseParams, Basenames] = unitcellgeom(wp1, DefectParams, Bas);
 Positions = zeros(1, NumofUC.value*2);
 for i = 1:NumofUC.value
     Positions(i) = (i-0.5-NumofUC.value)*BaseParams{1}.value-0.5*DL.value;
@@ -92,7 +92,6 @@ Msize.set('hmax', 'MS');
 Msize.set('hmin', 'MS/4');
 Msize.set('hcurve', '0.2');
 ftri.selection.set(idx_ftri);
-ref1 = mesh.create('ref1','Refine');
 ref1.set('rmethod', 'regular');
 ref1.set('numrefine', 3);
 ref1.selection.geom('geom1', 2);
@@ -101,12 +100,10 @@ swel.selection('sourceface').set(idx_ftri);
 swel.selection('targetface').set(idx_sweldestiface);
 mesh.run;
 std.run;
+[localmodefreq, localmodeEffMass] = Localmode(Links,coords);
 geom1.feature.remove('difblock');
 geom1.feature.remove('dif1');
 solid.feature.remove('sym1');
-mesh.feature.remove('ref1');
-[localmodefreq, localmodeEffMass] = Localmode(Links,coords);
-
 %{
 ...
 
@@ -143,8 +140,8 @@ Eigenfreq = mphglobal(model,'solid.freq');
 plotgraph = figure;
 plot(real(Eigenfreq),'*');
 c=clock;
-saveas(plotgraph,['snapshot\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
+saveas(plotgraph,['snapshot3\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
 close(plotgraph);
 SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
-
+SingleRunResult.EffMass = localmodeEffMass;
 end

@@ -8,7 +8,7 @@ for i = 1:size(Positions,2)
         strcat(Basenames{3}, '_', num2str(i)) strcat(Basenames{4}, '_', num2str(i))...
         strcat(Basenames{5}, '_', num2str(i))};
     UCParams{4}.value = Positions(i);
-    [AllUCParams{i}, AllUCnames{i}] = unitcellgeom(workplane, DefectParams, names, UCParams);
+    [AllUCParams{i}, AllUCnames{i}] = unitcellgeom(workplane, DefectParams, UCParams, names);
 end
 %return the entity indices for boundary fixed boundary and mesh
 tolerance = BaseParams{3}.value/10;

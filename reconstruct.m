@@ -23,7 +23,7 @@ defect.set('base', 'center');
 defect.set('pos', [Dx.value Dy.value]);
 
 %deal with the geomtry array
-[BaseParams, Basenames] = unitcellgeom(wp1, DefectParams);
+[BaseParams, Basenames] = unitcellgeom(wp1, DefectParams, BaseParams);
 Positions = zeros(1, NumofUC.value*2);
 for i = 1:NumofUC.value
     Positions(i) = (i-0.5-NumofUC.value)*BaseParams{1}.value-0.5*DL.value;
@@ -140,8 +140,8 @@ Eigenfreq = mphglobal(model,'solid.freq');
 plotgraph = figure;
 plot(real(Eigenfreq),'*');
 c=clock;
-saveas(plotgraph,['snapshot\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
+saveas(plotgraph,['snapshot4\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
 close(plotgraph);
 SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
-
+SingleRunResult.EffMass = localmodeEffMass;
 end

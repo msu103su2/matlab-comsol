@@ -1,4 +1,4 @@
-function [rUCParams, rnames] = unitcellgeom(workplane, DefectParams, names, UCParams)
+function [rUCParams, rnames] = unitcellgeom(workplane, DefectParams, UCParams, names)
 %construct the unit cell geom
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -16,6 +16,10 @@ if nargin < 3
     ChamferR = struct(f1, 'ChamferR', f2, 5e-6, f3, '[m]', f4, 'Chamfer radius');
     FilletR = struct(f1, 'FilletR', f2, 5e-6, f3, '[m]', f4, 'fillet radius');
     names = {'UCR1' 'UCR2' 'UCUnion1' 'UCCharm1' 'UCFillet1'};
+elseif nargin < 4
+    [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
+    names = {'UCR1' 'UCR2' 'UCUnion1' 'UCCharm1' 'UCFillet1'};
+    UH.value = DefectParams{3}.value;
 else
     [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
     UH.value = DefectParams{3}.value;
