@@ -23,7 +23,7 @@ flags(size(ParamstoSweep,1)) = int64(1);
 while counter < division(end)
     temp = counter;
     for i = 0:size(ParamstoSweep,1)-2
-        flags(end-i) = fix(temp/division(end-i-1));
+        flags(end-i) = fix(double(temp)/double(division(end-i-1)));
         temp = rem(temp, division(end-i-1));
         flags(end-i) = flags(end-i)+1;
     end
@@ -33,12 +33,12 @@ while counter < division(end)
         Params{ParamstoSweep{i}(1)}{ParamstoSweep{i}(2)}.value = dim{i}(flags(i));
         Alldata.point(counter) = dim{i}(flags(i));
     end
-    Alldata.SingleResults(counter) = reconstruct(Params, Links);
+    %Alldata.SingleResults(counter) = reconstruct(Params, Links);
     if counter == 1
-        a = mphglobal(model,'solid.freq');
+        %a = mphglobal(model,'solid.freq');
     else
-        a = [a, mphglobal(model,'solid.freq')];
+        %a = [a, mphglobal(model,'solid.freq')];
     end
 end
-Alldata.Allfreq = a;
+%Alldata.Allfreq = a;
 end
