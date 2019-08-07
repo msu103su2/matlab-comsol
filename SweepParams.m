@@ -33,12 +33,12 @@ while counter < division(end)
         Params{ParamstoSweep{i}(1)}{ParamstoSweep{i}(2)}.value = dim{i}(flags(i));
         Alldata.point(counter) = dim{i}(flags(i));
     end
-    %Alldata.SingleResults(counter) = reconstruct(Params, Links);
+    Alldata.SingleResults(counter) = reconstruct(Params, Links);
     if counter == 1
-        %a = mphglobal(model,'solid.freq');
+        a = mphglobal(model,'solid.freq');
     else
-        %a = [a, mphglobal(model,'solid.freq')];
+        a = [a, mphglobal(model,'solid.freq')];
     end
 end
-%Alldata.Allfreq = a;
+Alldata.Allfreq = a;
 end
