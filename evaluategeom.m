@@ -9,5 +9,9 @@ allfreq = mphglobal(model,'solid.freq');
 SingleResult.localmodefreq = allfreq(localmodeindex);
 SingleResult.QualityFactor = real(localmodefreq)./imag(localmodefreq);
 SingleResult.cooperation = 1*SingleResult.QualityFactor/(localmodeEffMass*localmodefreq);
-SingleResult.gapsize = allfreq(localmodeindex+1) - allfreq(localmodeindex-1);
+if localmodeindex == 1 || localmodeindex == size(allfreq,1)
+    SingleResult.gapsize = 0;
+else
+    SingleResult.gapsize = allfreq(localmodeindex+1) - allfreq(localmodeindex-1);
+end
 end

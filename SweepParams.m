@@ -31,7 +31,11 @@ while counter < division(end)
     counter = counter+1;
     for i = 1:size(ParamstoSweep,1)
         Params{ParamstoSweep{i}(1)}{ParamstoSweep{i}(2)}.value = dim{i}(flags(i));
-        Alldata.point(counter) = dim{i}(flags(i));
+        if i == 1
+            Alldata.point(counter) = dim{i}(flags(i));
+        else
+            Alldata.point(counter) = [Alldata.point(counter);dim{i}(flags(i))];
+        end
     end
     Alldata.SingleResults(counter) = reconstruct(Params, Links);
     if counter == 1

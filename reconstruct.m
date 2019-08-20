@@ -93,7 +93,7 @@ Msize.set('hmin', 'MS/4');
 Msize.set('hcurve', '0.2');
 ftri.selection.set(idx_ftri);
 ref1.set('rmethod', 'regular');
-ref1.set('numrefine', 3);
+ref1.set('numrefine', 2);
 ref1.selection.geom('geom1', 2);
 ref1.selection.set([idx_bnd1 idx_bnd2]);
 swel.selection('sourceface').set(idx_ftri);
