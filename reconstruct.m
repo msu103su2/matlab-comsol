@@ -140,7 +140,7 @@ Eigenfreq = mphglobal(model,'solid.freq');
 plotgraph = figure;
 plot(real(Eigenfreq),'*');
 c=clock;
-saveas(plotgraph,['snapshot4\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
+saveas(plotgraph,['snapshot5\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
 close(plotgraph);
 SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
 SingleRunResult.EffMass = localmodeEffMass;
