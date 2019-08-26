@@ -2,7 +2,7 @@ function Alldata = SweepParams(ParamstoSweep, SweepRanges, stepsizes, Params, Li
 import com.comsol.model.*
 import com.comsol.model.util.*
 [model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, solid, ref1] = Links{1:end};
+    eig, solid, ref] = Links{1:end};
 for i = 1:size(ParamstoSweep,1)
     dim{i} = SweepRanges{i}.min : stepsizes(i) : SweepRanges{i}.max;
 end

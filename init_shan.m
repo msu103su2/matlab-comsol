@@ -13,7 +13,7 @@ Dx = struct(f1, 'Dx', f2, 0, f3, '[m]', f4, 'Defect x position');
 Dy = struct(f1, 'Dy', f2, 0, f3, '[m]', f4, 'Defect y position');
 Dz = struct(f1, 'Dz', f2, 0, f3, '[m]', f4, 'Defect z position');
 kx = struct(f1, 'kx', f2, 2*pi/DL.value, f3, '[1/m]', f4, 'Defect length');
-MS = struct(f1, 'MS', f2, DL.value/20, f3, '[m]', f4, 'Mesh typical size');
+MS = struct(f1, 'MS', f2, 7e-6, f3, '[m]', f4, 'Mesh typical size');
 NumofUC = struct(f1, 'NumofUC', f2, 5, f3, '[1]', f4, 'Unitcell number on one side');
 Params = {DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC};
 
@@ -53,8 +53,12 @@ Si3N4.materialModel('def').set('poissonsratio', '0.23');
 mesh = model.mesh.create('mesh', 'geom1');
 Msize = mesh.feature('size');
 ftri = mesh.feature.create('ftri', 'FreeTri');
-swel = mesh.create('swel', 'Sweep');
 ref1 = mesh.create('ref1','Refine');
+ref2 = mesh.create('ref2','Refine');
+ref3 = mesh.create('ref3','Refine');
+ref4 = mesh.create('ref4','Refine');
+swel = mesh.create('swel', 'Sweep');
+ref = {ref1,ref2,ref3,ref4};
 
 solid = model.physics.create('solid', 'SolidMechanics', 'geom1');
 fix1 = solid.create('fix1', 'Fixed', 2);
@@ -70,6 +74,6 @@ eig.set('geometricNonlinearity', true);
 eig.set('useadvanceddisable', true);
 
 Links = {model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
-    fix1, std, eig, solid, ref1};
+    fix1, std, eig, solid, ref};
 Params = {Params, BaseParams};
 end

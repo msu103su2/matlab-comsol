@@ -3,7 +3,7 @@ import com.comsol.model.*
 import com.comsol.model.util.*
 eps = 1e-10;
 [model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, solid, ref1] = Links{1:end};
+    eig, solid, ref] = Links{1:end};
 BaseParams = Params{2};
 DefectParams = Params{1};
 [DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
@@ -92,10 +92,55 @@ Msize.set('hmax', 'MS');
 Msize.set('hmin', 'MS/4');
 Msize.set('hcurve', '0.2');
 ftri.selection.set(idx_ftri);
-ref1.set('rmethod', 'regular');
-ref1.set('numrefine', 2);
-ref1.selection.geom('geom1', 2);
-ref1.selection.set([idx_bnd1 idx_bnd2]);
+
+ref{1}.set('rmethod', 'regular');
+ref{1}.set('numrefine', 5);
+ref{1}.set('boxcoord', true);
+ref{1}.set('xmax', coords{1}(1,1)+MS.value);
+ref{1}.set('xmin', coords{1}(1,1));
+ref{1}.set('ymax', coords{1}(2,2));
+ref{1}.set('ymin', coords{1}(2,1));
+ref{1}.set('zmax', coords{1}(3,2));
+ref{1}.set('zmin', coords{1}(3,1));
+ref{1}.selection.geom('geom1', 2);
+ref{1}.selection.set(idx_ftri);
+
+ref{2}.set('rmethod', 'regular');
+ref{2}.set('numrefine', 1);
+ref{2}.set('boxcoord', true);
+ref{2}.set('xmax', coords{1}(1,1)+MS.value/3);
+ref{2}.set('xmin', coords{1}(1,1));
+ref{2}.set('ymax', coords{1}(2,2));
+ref{2}.set('ymin', coords{1}(2,1));
+ref{2}.set('zmax', coords{1}(3,2));
+ref{2}.set('zmin', coords{1}(3,1));
+ref{2}.selection.geom('geom1', 2);
+ref{2}.selection.set(idx_ftri);
+
+ref{3}.set('rmethod', 'regular');
+ref{3}.set('numrefine', 5);
+ref{3}.set('boxcoord', true);
+ref{3}.set('xmax', coords{2}(1,2));
+ref{3}.set('xmin', coords{2}(1,2)-MS.value);
+ref{3}.set('ymax', coords{2}(2,2));
+ref{3}.set('ymin', coords{2}(2,1));
+ref{3}.set('zmax', coords{2}(3,2));
+ref{3}.set('zmin', coords{2}(3,1));
+ref{3}.selection.geom('geom1', 2);
+ref{3}.selection.set(idx_ftri);
+
+ref{4}.set('rmethod', 'regular');
+ref{4}.set('numrefine', 1);
+ref{4}.set('boxcoord', true);
+ref{4}.set('xmax', coords{2}(1,2));
+ref{4}.set('xmin', coords{2}(1,2)-MS.value/3);
+ref{4}.set('ymax', coords{2}(2,2));
+ref{4}.set('ymin', coords{2}(2,1));
+ref{4}.set('zmax', coords{2}(3,2));
+ref{4}.set('zmin', coords{2}(3,1));
+ref{4}.selection.geom('geom1', 2);
+ref{4}.selection.set(idx_ftri);
+
 swel.selection('sourceface').set(idx_ftri);
 swel.selection('targetface').set(idx_sweldestiface);
 mesh.run;
@@ -137,11 +182,6 @@ toc;
 
 %export data
 Eigenfreq = mphglobal(model,'solid.freq');
-plotgraph = figure;
-plot(real(Eigenfreq),'*');
-c=clock;
-saveas(plotgraph,['snapshot5\test', num2str(c(4)), num2str(c(5)), num2str(round(c(6))), '.png']);
-close(plotgraph);
 SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
 SingleRunResult.EffMass = localmodeEffMass;
 end
