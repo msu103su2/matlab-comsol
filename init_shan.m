@@ -13,7 +13,7 @@ Dx = struct(f1, 'Dx', f2, 0, f3, '[m]', f4, 'Defect x position');
 Dy = struct(f1, 'Dy', f2, 0, f3, '[m]', f4, 'Defect y position');
 Dz = struct(f1, 'Dz', f2, 0, f3, '[m]', f4, 'Defect z position');
 kx = struct(f1, 'kx', f2, 2*pi/DL.value, f3, '[1/m]', f4, 'Defect length');
-MS = struct(f1, 'MS', f2, 7e-6, f3, '[m]', f4, 'Mesh typical size');
+MS = struct(f1, 'MS', f2, 3e-6, f3, '[m]', f4, 'Mesh typical size');
 NumofUC = struct(f1, 'NumofUC', f2, 5, f3, '[1]', f4, 'Unitcell number on one side');
 Params = {DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC};
 
