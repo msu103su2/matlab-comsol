@@ -1,7 +1,6 @@
 0.001 gdsReso
 0.001 shapeReso
-# testDie<testDie struct>
-<UC struct>
+<UC_testDie_DL001 struct>
 128 layer
 0.000 0.000 140.000 10.000 0 rectangleC
 129 layer
@@ -14,30 +13,30 @@
 50.000 -7.500 3.536 3.536 45 rectangleC
 133 layer
 -50.000 -7.500 3.536 3.536 45 rectangleC
-<UCpart001 UC 128 genArea>
-<UCpart002 UC 129 genArea>
-<UCpart003 UC 130 genArea>
-<UCpart004 UC 131 genArea>
-<UCpart005 UC 132 genArea>
-<UCpart006 UC 133 genArea>
+<UCpart001 UC_testDie_DL001 128 genArea>
+<UCpart002 UC_testDie_DL001 129 genArea>
+<UCpart003 UC_testDie_DL001 130 genArea>
+<UCpart004 UC_testDie_DL001 131 genArea>
+<UCpart005 UC_testDie_DL001 132 genArea>
+<UCpart006 UC_testDie_DL001 133 genArea>
 <UCpart001 UCpart002 134 or>
-<Union UC 134 genArea>
+<Union UC_testDie_DL001 134 genArea>
 <Union UCpart003 135 subtract>
-<Union UC 135 genArea>
+<Union UC_testDie_DL001 135 genArea>
 <Union UCpart004 136 subtract>
-<Union UC 136 genArea>
+<Union UC_testDie_DL001 136 genArea>
 <Union UCpart005 137 subtract>
-<Union UC 137 genArea>
+<Union UC_testDie_DL001 137 genArea>
 <Union UCpart006 138 subtract>
-<Union UC 138 genArea>
+<Union UC_testDie_DL001 138 genArea>
 139 layer
 -50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
 140 layer
 -51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
-<Tri UC 139 genArea>
-<Arc UC 140 genArea>
+<Tri UC_testDie_DL001 139 genArea>
+<Arc UC_testDie_DL001 140 genArea>
 <Tri Arc 160 subtract>
-<CurveOr UC 160 genArea>
+<CurveOr UC_testDie_DL001 160 genArea>
 <CurveOr 0 0 X 1 0 0 162 genAreaCopy>
 <CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
 <CurveOr 0 0 0 1 180 0 166 genAreaCopy>
@@ -45,42 +44,42 @@
 -47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
 142 layer
 -45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
-<Tri UC 141 genArea>
-<Arc UC 142 genArea>
+<Tri UC_testDie_DL001 141 genArea>
+<Arc UC_testDie_DL001 142 genArea>
 <Tri Arc 161 subtract>
-<CurveSub UC 161 genArea>
+<CurveSub UC_testDie_DL001 161 genArea>
 <CurveSub 0 0 X 1 0 0 163 genAreaCopy>
 <CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
 <CurveSub 0 0 0 1 180 0 167 genAreaCopy>
 <Union CurveOr 168 or>
-<Union UC 168 genArea>
-<CurveOr UC 162 genArea>
+<Union UC_testDie_DL001 168 genArea>
+<CurveOr UC_testDie_DL001 162 genArea>
 <Union CurveOr 169 or>
-<Union UC 169 genArea>
-<CurveOr UC 164 genArea>
+<Union UC_testDie_DL001 169 genArea>
+<CurveOr UC_testDie_DL001 164 genArea>
 <Union CurveOr 170 or>
-<Union UC 170 genArea>
-<CurveOr UC 166 genArea>
+<Union UC_testDie_DL001 170 genArea>
+<CurveOr UC_testDie_DL001 166 genArea>
 <Union CurveOr 171 or>
-<Union UC 171 genArea>
-<CurveSub UC 161 genArea>
+<Union UC_testDie_DL001 171 genArea>
+<CurveSub UC_testDie_DL001 161 genArea>
 <Union CurveSub 172 subtract>
-<Union UC 172 genArea>
-<CurveSub UC 163 genArea>
+<Union UC_testDie_DL001 172 genArea>
+<CurveSub UC_testDie_DL001 163 genArea>
 <Union CurveSub 173 subtract>
-<Union UC 173 genArea>
-<CurveSub UC 165 genArea>
+<Union UC_testDie_DL001 173 genArea>
+<CurveSub UC_testDie_DL001 165 genArea>
 <Union CurveSub 174 subtract>
-<Union UC 174 genArea>
-<CurveSub UC 167 genArea>
-<Union CurveSub 6 subtract>
+<Union UC_testDie_DL001 174 genArea>
+<CurveSub UC_testDie_DL001 167 genArea>
+<Union CurveSub 175 subtract>
 # define device(beam)
-<testDie_DL=0.000 struct>
-6 layer
+<testDie_DL001 struct>
+175 layer
 0 0 70 10 0 rectangleC
-<UC 105.000 0.000 5 1 140.000 0.000 1 arrayRect>
-<UC -105.000 0.000 5 1 -140.000 0.000 1 arrayRect>
-<testDie_DL=0.000 -200.000 <UC struct>
+<UC_testDie_DL001 105.000 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL001 -105.000 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL002 struct>
 128 layer
 0.000 0.000 140.000 10.000 0 rectangleC
 129 layer
@@ -93,30 +92,30 @@
 50.000 -7.500 3.536 3.536 45 rectangleC
 133 layer
 -50.000 -7.500 3.536 3.536 45 rectangleC
-<UCpart001 UC 128 genArea>
-<UCpart002 UC 129 genArea>
-<UCpart003 UC 130 genArea>
-<UCpart004 UC 131 genArea>
-<UCpart005 UC 132 genArea>
-<UCpart006 UC 133 genArea>
+<UCpart001 UC_testDie_DL002 128 genArea>
+<UCpart002 UC_testDie_DL002 129 genArea>
+<UCpart003 UC_testDie_DL002 130 genArea>
+<UCpart004 UC_testDie_DL002 131 genArea>
+<UCpart005 UC_testDie_DL002 132 genArea>
+<UCpart006 UC_testDie_DL002 133 genArea>
 <UCpart001 UCpart002 134 or>
-<Union UC 134 genArea>
+<Union UC_testDie_DL002 134 genArea>
 <Union UCpart003 135 subtract>
-<Union UC 135 genArea>
+<Union UC_testDie_DL002 135 genArea>
 <Union UCpart004 136 subtract>
-<Union UC 136 genArea>
+<Union UC_testDie_DL002 136 genArea>
 <Union UCpart005 137 subtract>
-<Union UC 137 genArea>
+<Union UC_testDie_DL002 137 genArea>
 <Union UCpart006 138 subtract>
-<Union UC 138 genArea>
+<Union UC_testDie_DL002 138 genArea>
 139 layer
 -50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
 140 layer
 -51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
-<Tri UC 139 genArea>
-<Arc UC 140 genArea>
+<Tri UC_testDie_DL002 139 genArea>
+<Arc UC_testDie_DL002 140 genArea>
 <Tri Arc 160 subtract>
-<CurveOr UC 160 genArea>
+<CurveOr UC_testDie_DL002 160 genArea>
 <CurveOr 0 0 X 1 0 0 162 genAreaCopy>
 <CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
 <CurveOr 0 0 0 1 180 0 166 genAreaCopy>
@@ -124,42 +123,1385 @@
 -47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
 142 layer
 -45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
-<Tri UC 141 genArea>
-<Arc UC 142 genArea>
+<Tri UC_testDie_DL002 141 genArea>
+<Arc UC_testDie_DL002 142 genArea>
 <Tri Arc 161 subtract>
-<CurveSub UC 161 genArea>
+<CurveSub UC_testDie_DL002 161 genArea>
 <CurveSub 0 0 X 1 0 0 163 genAreaCopy>
 <CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
 <CurveSub 0 0 0 1 180 0 167 genAreaCopy>
 <Union CurveOr 168 or>
-<Union UC 168 genArea>
-<CurveOr UC 162 genArea>
+<Union UC_testDie_DL002 168 genArea>
+<CurveOr UC_testDie_DL002 162 genArea>
 <Union CurveOr 169 or>
-<Union UC 169 genArea>
-<CurveOr UC 164 genArea>
+<Union UC_testDie_DL002 169 genArea>
+<CurveOr UC_testDie_DL002 164 genArea>
 <Union CurveOr 170 or>
-<Union UC 170 genArea>
-<CurveOr UC 166 genArea>
+<Union UC_testDie_DL002 170 genArea>
+<CurveOr UC_testDie_DL002 166 genArea>
 <Union CurveOr 171 or>
-<Union UC 171 genArea>
-<CurveSub UC 161 genArea>
+<Union UC_testDie_DL002 171 genArea>
+<CurveSub UC_testDie_DL002 161 genArea>
 <Union CurveSub 172 subtract>
-<Union UC 172 genArea>
-<CurveSub UC 163 genArea>
+<Union UC_testDie_DL002 172 genArea>
+<CurveSub UC_testDie_DL002 163 genArea>
 <Union CurveSub 173 subtract>
-<Union UC 173 genArea>
-<CurveSub UC 165 genArea>
+<Union UC_testDie_DL002 173 genArea>
+<CurveSub UC_testDie_DL002 165 genArea>
 <Union CurveSub 174 subtract>
-<Union UC 174 genArea>
-<CurveSub UC 167 genArea>
-<Union CurveSub 6 subtract>
+<Union UC_testDie_DL002 174 genArea>
+<CurveSub UC_testDie_DL002 167 genArea>
+<Union CurveSub 175 subtract>
 # define device(beam)
-<testDie_DL=0.000 struct>
-6 layer
+<testDie_DL002 struct>
+175 layer
+0 0 73.8889 10 0 rectangleC
+<UC_testDie_DL002 106.944 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL002 -106.944 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL003 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL003 128 genArea>
+<UCpart002 UC_testDie_DL003 129 genArea>
+<UCpart003 UC_testDie_DL003 130 genArea>
+<UCpart004 UC_testDie_DL003 131 genArea>
+<UCpart005 UC_testDie_DL003 132 genArea>
+<UCpart006 UC_testDie_DL003 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL003 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL003 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL003 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL003 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL003 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL003 139 genArea>
+<Arc UC_testDie_DL003 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL003 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL003 141 genArea>
+<Arc UC_testDie_DL003 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL003 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL003 168 genArea>
+<CurveOr UC_testDie_DL003 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL003 169 genArea>
+<CurveOr UC_testDie_DL003 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL003 170 genArea>
+<CurveOr UC_testDie_DL003 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL003 171 genArea>
+<CurveSub UC_testDie_DL003 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL003 172 genArea>
+<CurveSub UC_testDie_DL003 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL003 173 genArea>
+<CurveSub UC_testDie_DL003 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL003 174 genArea>
+<CurveSub UC_testDie_DL003 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL003 struct>
+175 layer
+0 0 77.7778 10 0 rectangleC
+<UC_testDie_DL003 108.889 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL003 -108.889 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL004 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL004 128 genArea>
+<UCpart002 UC_testDie_DL004 129 genArea>
+<UCpart003 UC_testDie_DL004 130 genArea>
+<UCpart004 UC_testDie_DL004 131 genArea>
+<UCpart005 UC_testDie_DL004 132 genArea>
+<UCpart006 UC_testDie_DL004 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL004 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL004 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL004 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL004 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL004 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL004 139 genArea>
+<Arc UC_testDie_DL004 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL004 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL004 141 genArea>
+<Arc UC_testDie_DL004 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL004 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL004 168 genArea>
+<CurveOr UC_testDie_DL004 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL004 169 genArea>
+<CurveOr UC_testDie_DL004 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL004 170 genArea>
+<CurveOr UC_testDie_DL004 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL004 171 genArea>
+<CurveSub UC_testDie_DL004 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL004 172 genArea>
+<CurveSub UC_testDie_DL004 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL004 173 genArea>
+<CurveSub UC_testDie_DL004 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL004 174 genArea>
+<CurveSub UC_testDie_DL004 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL004 struct>
+175 layer
+0 0 81.6667 10 0 rectangleC
+<UC_testDie_DL004 110.833 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL004 -110.833 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL005 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL005 128 genArea>
+<UCpart002 UC_testDie_DL005 129 genArea>
+<UCpart003 UC_testDie_DL005 130 genArea>
+<UCpart004 UC_testDie_DL005 131 genArea>
+<UCpart005 UC_testDie_DL005 132 genArea>
+<UCpart006 UC_testDie_DL005 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL005 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL005 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL005 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL005 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL005 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL005 139 genArea>
+<Arc UC_testDie_DL005 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL005 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL005 141 genArea>
+<Arc UC_testDie_DL005 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL005 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL005 168 genArea>
+<CurveOr UC_testDie_DL005 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL005 169 genArea>
+<CurveOr UC_testDie_DL005 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL005 170 genArea>
+<CurveOr UC_testDie_DL005 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL005 171 genArea>
+<CurveSub UC_testDie_DL005 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL005 172 genArea>
+<CurveSub UC_testDie_DL005 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL005 173 genArea>
+<CurveSub UC_testDie_DL005 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL005 174 genArea>
+<CurveSub UC_testDie_DL005 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL005 struct>
+175 layer
+0 0 85.5556 10 0 rectangleC
+<UC_testDie_DL005 112.778 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL005 -112.778 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL006 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL006 128 genArea>
+<UCpart002 UC_testDie_DL006 129 genArea>
+<UCpart003 UC_testDie_DL006 130 genArea>
+<UCpart004 UC_testDie_DL006 131 genArea>
+<UCpart005 UC_testDie_DL006 132 genArea>
+<UCpart006 UC_testDie_DL006 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL006 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL006 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL006 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL006 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL006 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL006 139 genArea>
+<Arc UC_testDie_DL006 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL006 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL006 141 genArea>
+<Arc UC_testDie_DL006 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL006 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL006 168 genArea>
+<CurveOr UC_testDie_DL006 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL006 169 genArea>
+<CurveOr UC_testDie_DL006 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL006 170 genArea>
+<CurveOr UC_testDie_DL006 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL006 171 genArea>
+<CurveSub UC_testDie_DL006 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL006 172 genArea>
+<CurveSub UC_testDie_DL006 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL006 173 genArea>
+<CurveSub UC_testDie_DL006 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL006 174 genArea>
+<CurveSub UC_testDie_DL006 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL006 struct>
+175 layer
+0 0 89.4444 10 0 rectangleC
+<UC_testDie_DL006 114.722 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL006 -114.722 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL007 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL007 128 genArea>
+<UCpart002 UC_testDie_DL007 129 genArea>
+<UCpart003 UC_testDie_DL007 130 genArea>
+<UCpart004 UC_testDie_DL007 131 genArea>
+<UCpart005 UC_testDie_DL007 132 genArea>
+<UCpart006 UC_testDie_DL007 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL007 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL007 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL007 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL007 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL007 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL007 139 genArea>
+<Arc UC_testDie_DL007 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL007 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL007 141 genArea>
+<Arc UC_testDie_DL007 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL007 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL007 168 genArea>
+<CurveOr UC_testDie_DL007 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL007 169 genArea>
+<CurveOr UC_testDie_DL007 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL007 170 genArea>
+<CurveOr UC_testDie_DL007 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL007 171 genArea>
+<CurveSub UC_testDie_DL007 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL007 172 genArea>
+<CurveSub UC_testDie_DL007 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL007 173 genArea>
+<CurveSub UC_testDie_DL007 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL007 174 genArea>
+<CurveSub UC_testDie_DL007 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL007 struct>
+175 layer
+0 0 93.3333 10 0 rectangleC
+<UC_testDie_DL007 116.667 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL007 -116.667 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL008 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL008 128 genArea>
+<UCpart002 UC_testDie_DL008 129 genArea>
+<UCpart003 UC_testDie_DL008 130 genArea>
+<UCpart004 UC_testDie_DL008 131 genArea>
+<UCpart005 UC_testDie_DL008 132 genArea>
+<UCpart006 UC_testDie_DL008 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL008 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL008 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL008 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL008 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL008 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL008 139 genArea>
+<Arc UC_testDie_DL008 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL008 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL008 141 genArea>
+<Arc UC_testDie_DL008 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL008 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL008 168 genArea>
+<CurveOr UC_testDie_DL008 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL008 169 genArea>
+<CurveOr UC_testDie_DL008 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL008 170 genArea>
+<CurveOr UC_testDie_DL008 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL008 171 genArea>
+<CurveSub UC_testDie_DL008 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL008 172 genArea>
+<CurveSub UC_testDie_DL008 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL008 173 genArea>
+<CurveSub UC_testDie_DL008 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL008 174 genArea>
+<CurveSub UC_testDie_DL008 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL008 struct>
+175 layer
+0 0 97.2222 10 0 rectangleC
+<UC_testDie_DL008 118.611 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL008 -118.611 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL009 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL009 128 genArea>
+<UCpart002 UC_testDie_DL009 129 genArea>
+<UCpart003 UC_testDie_DL009 130 genArea>
+<UCpart004 UC_testDie_DL009 131 genArea>
+<UCpart005 UC_testDie_DL009 132 genArea>
+<UCpart006 UC_testDie_DL009 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL009 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL009 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL009 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL009 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL009 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL009 139 genArea>
+<Arc UC_testDie_DL009 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL009 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL009 141 genArea>
+<Arc UC_testDie_DL009 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL009 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL009 168 genArea>
+<CurveOr UC_testDie_DL009 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL009 169 genArea>
+<CurveOr UC_testDie_DL009 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL009 170 genArea>
+<CurveOr UC_testDie_DL009 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL009 171 genArea>
+<CurveSub UC_testDie_DL009 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL009 172 genArea>
+<CurveSub UC_testDie_DL009 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL009 173 genArea>
+<CurveSub UC_testDie_DL009 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL009 174 genArea>
+<CurveSub UC_testDie_DL009 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL009 struct>
+175 layer
+0 0 101.1111 10 0 rectangleC
+<UC_testDie_DL009 120.556 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL009 -120.556 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0010 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0010 128 genArea>
+<UCpart002 UC_testDie_DL0010 129 genArea>
+<UCpart003 UC_testDie_DL0010 130 genArea>
+<UCpart004 UC_testDie_DL0010 131 genArea>
+<UCpart005 UC_testDie_DL0010 132 genArea>
+<UCpart006 UC_testDie_DL0010 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0010 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0010 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0010 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0010 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0010 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0010 139 genArea>
+<Arc UC_testDie_DL0010 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0010 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0010 141 genArea>
+<Arc UC_testDie_DL0010 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0010 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0010 168 genArea>
+<CurveOr UC_testDie_DL0010 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0010 169 genArea>
+<CurveOr UC_testDie_DL0010 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0010 170 genArea>
+<CurveOr UC_testDie_DL0010 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0010 171 genArea>
+<CurveSub UC_testDie_DL0010 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0010 172 genArea>
+<CurveSub UC_testDie_DL0010 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0010 173 genArea>
+<CurveSub UC_testDie_DL0010 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0010 174 genArea>
+<CurveSub UC_testDie_DL0010 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0010 struct>
+175 layer
+0 0 105 10 0 rectangleC
+<UC_testDie_DL0010 122.500 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0010 -122.500 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0011 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0011 128 genArea>
+<UCpart002 UC_testDie_DL0011 129 genArea>
+<UCpart003 UC_testDie_DL0011 130 genArea>
+<UCpart004 UC_testDie_DL0011 131 genArea>
+<UCpart005 UC_testDie_DL0011 132 genArea>
+<UCpart006 UC_testDie_DL0011 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0011 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0011 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0011 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0011 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0011 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0011 139 genArea>
+<Arc UC_testDie_DL0011 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0011 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0011 141 genArea>
+<Arc UC_testDie_DL0011 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0011 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0011 168 genArea>
+<CurveOr UC_testDie_DL0011 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0011 169 genArea>
+<CurveOr UC_testDie_DL0011 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0011 170 genArea>
+<CurveOr UC_testDie_DL0011 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0011 171 genArea>
+<CurveSub UC_testDie_DL0011 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0011 172 genArea>
+<CurveSub UC_testDie_DL0011 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0011 173 genArea>
+<CurveSub UC_testDie_DL0011 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0011 174 genArea>
+<CurveSub UC_testDie_DL0011 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0011 struct>
+175 layer
+0 0 108.8889 10 0 rectangleC
+<UC_testDie_DL0011 124.444 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0011 -124.444 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0012 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0012 128 genArea>
+<UCpart002 UC_testDie_DL0012 129 genArea>
+<UCpart003 UC_testDie_DL0012 130 genArea>
+<UCpart004 UC_testDie_DL0012 131 genArea>
+<UCpart005 UC_testDie_DL0012 132 genArea>
+<UCpart006 UC_testDie_DL0012 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0012 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0012 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0012 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0012 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0012 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0012 139 genArea>
+<Arc UC_testDie_DL0012 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0012 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0012 141 genArea>
+<Arc UC_testDie_DL0012 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0012 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0012 168 genArea>
+<CurveOr UC_testDie_DL0012 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0012 169 genArea>
+<CurveOr UC_testDie_DL0012 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0012 170 genArea>
+<CurveOr UC_testDie_DL0012 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0012 171 genArea>
+<CurveSub UC_testDie_DL0012 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0012 172 genArea>
+<CurveSub UC_testDie_DL0012 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0012 173 genArea>
+<CurveSub UC_testDie_DL0012 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0012 174 genArea>
+<CurveSub UC_testDie_DL0012 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0012 struct>
+175 layer
+0 0 112.7778 10 0 rectangleC
+<UC_testDie_DL0012 126.389 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0012 -126.389 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0013 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0013 128 genArea>
+<UCpart002 UC_testDie_DL0013 129 genArea>
+<UCpart003 UC_testDie_DL0013 130 genArea>
+<UCpart004 UC_testDie_DL0013 131 genArea>
+<UCpart005 UC_testDie_DL0013 132 genArea>
+<UCpart006 UC_testDie_DL0013 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0013 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0013 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0013 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0013 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0013 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0013 139 genArea>
+<Arc UC_testDie_DL0013 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0013 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0013 141 genArea>
+<Arc UC_testDie_DL0013 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0013 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0013 168 genArea>
+<CurveOr UC_testDie_DL0013 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0013 169 genArea>
+<CurveOr UC_testDie_DL0013 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0013 170 genArea>
+<CurveOr UC_testDie_DL0013 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0013 171 genArea>
+<CurveSub UC_testDie_DL0013 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0013 172 genArea>
+<CurveSub UC_testDie_DL0013 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0013 173 genArea>
+<CurveSub UC_testDie_DL0013 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0013 174 genArea>
+<CurveSub UC_testDie_DL0013 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0013 struct>
+175 layer
+0 0 116.6667 10 0 rectangleC
+<UC_testDie_DL0013 128.333 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0013 -128.333 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0014 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0014 128 genArea>
+<UCpart002 UC_testDie_DL0014 129 genArea>
+<UCpart003 UC_testDie_DL0014 130 genArea>
+<UCpart004 UC_testDie_DL0014 131 genArea>
+<UCpart005 UC_testDie_DL0014 132 genArea>
+<UCpart006 UC_testDie_DL0014 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0014 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0014 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0014 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0014 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0014 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0014 139 genArea>
+<Arc UC_testDie_DL0014 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0014 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0014 141 genArea>
+<Arc UC_testDie_DL0014 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0014 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0014 168 genArea>
+<CurveOr UC_testDie_DL0014 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0014 169 genArea>
+<CurveOr UC_testDie_DL0014 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0014 170 genArea>
+<CurveOr UC_testDie_DL0014 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0014 171 genArea>
+<CurveSub UC_testDie_DL0014 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0014 172 genArea>
+<CurveSub UC_testDie_DL0014 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0014 173 genArea>
+<CurveSub UC_testDie_DL0014 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0014 174 genArea>
+<CurveSub UC_testDie_DL0014 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0014 struct>
+175 layer
+0 0 120.5556 10 0 rectangleC
+<UC_testDie_DL0014 130.278 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0014 -130.278 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0015 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0015 128 genArea>
+<UCpart002 UC_testDie_DL0015 129 genArea>
+<UCpart003 UC_testDie_DL0015 130 genArea>
+<UCpart004 UC_testDie_DL0015 131 genArea>
+<UCpart005 UC_testDie_DL0015 132 genArea>
+<UCpart006 UC_testDie_DL0015 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0015 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0015 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0015 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0015 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0015 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0015 139 genArea>
+<Arc UC_testDie_DL0015 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0015 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0015 141 genArea>
+<Arc UC_testDie_DL0015 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0015 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0015 168 genArea>
+<CurveOr UC_testDie_DL0015 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0015 169 genArea>
+<CurveOr UC_testDie_DL0015 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0015 170 genArea>
+<CurveOr UC_testDie_DL0015 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0015 171 genArea>
+<CurveSub UC_testDie_DL0015 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0015 172 genArea>
+<CurveSub UC_testDie_DL0015 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0015 173 genArea>
+<CurveSub UC_testDie_DL0015 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0015 174 genArea>
+<CurveSub UC_testDie_DL0015 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0015 struct>
+175 layer
+0 0 124.4444 10 0 rectangleC
+<UC_testDie_DL0015 132.222 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0015 -132.222 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0016 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0016 128 genArea>
+<UCpart002 UC_testDie_DL0016 129 genArea>
+<UCpart003 UC_testDie_DL0016 130 genArea>
+<UCpart004 UC_testDie_DL0016 131 genArea>
+<UCpart005 UC_testDie_DL0016 132 genArea>
+<UCpart006 UC_testDie_DL0016 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0016 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0016 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0016 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0016 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0016 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0016 139 genArea>
+<Arc UC_testDie_DL0016 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0016 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0016 141 genArea>
+<Arc UC_testDie_DL0016 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0016 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0016 168 genArea>
+<CurveOr UC_testDie_DL0016 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0016 169 genArea>
+<CurveOr UC_testDie_DL0016 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0016 170 genArea>
+<CurveOr UC_testDie_DL0016 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0016 171 genArea>
+<CurveSub UC_testDie_DL0016 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0016 172 genArea>
+<CurveSub UC_testDie_DL0016 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0016 173 genArea>
+<CurveSub UC_testDie_DL0016 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0016 174 genArea>
+<CurveSub UC_testDie_DL0016 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0016 struct>
+175 layer
+0 0 128.3333 10 0 rectangleC
+<UC_testDie_DL0016 134.167 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0016 -134.167 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0017 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0017 128 genArea>
+<UCpart002 UC_testDie_DL0017 129 genArea>
+<UCpart003 UC_testDie_DL0017 130 genArea>
+<UCpart004 UC_testDie_DL0017 131 genArea>
+<UCpart005 UC_testDie_DL0017 132 genArea>
+<UCpart006 UC_testDie_DL0017 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0017 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0017 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0017 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0017 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0017 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0017 139 genArea>
+<Arc UC_testDie_DL0017 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0017 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0017 141 genArea>
+<Arc UC_testDie_DL0017 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0017 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0017 168 genArea>
+<CurveOr UC_testDie_DL0017 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0017 169 genArea>
+<CurveOr UC_testDie_DL0017 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0017 170 genArea>
+<CurveOr UC_testDie_DL0017 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0017 171 genArea>
+<CurveSub UC_testDie_DL0017 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0017 172 genArea>
+<CurveSub UC_testDie_DL0017 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0017 173 genArea>
+<CurveSub UC_testDie_DL0017 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0017 174 genArea>
+<CurveSub UC_testDie_DL0017 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0017 struct>
+175 layer
+0 0 132.2222 10 0 rectangleC
+<UC_testDie_DL0017 136.111 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0017 -136.111 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0018 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0018 128 genArea>
+<UCpart002 UC_testDie_DL0018 129 genArea>
+<UCpart003 UC_testDie_DL0018 130 genArea>
+<UCpart004 UC_testDie_DL0018 131 genArea>
+<UCpart005 UC_testDie_DL0018 132 genArea>
+<UCpart006 UC_testDie_DL0018 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0018 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0018 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0018 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0018 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0018 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0018 139 genArea>
+<Arc UC_testDie_DL0018 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0018 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0018 141 genArea>
+<Arc UC_testDie_DL0018 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0018 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0018 168 genArea>
+<CurveOr UC_testDie_DL0018 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0018 169 genArea>
+<CurveOr UC_testDie_DL0018 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0018 170 genArea>
+<CurveOr UC_testDie_DL0018 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0018 171 genArea>
+<CurveSub UC_testDie_DL0018 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0018 172 genArea>
+<CurveSub UC_testDie_DL0018 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0018 173 genArea>
+<CurveSub UC_testDie_DL0018 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0018 174 genArea>
+<CurveSub UC_testDie_DL0018 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0018 struct>
+175 layer
+0 0 136.1111 10 0 rectangleC
+<UC_testDie_DL0018 138.056 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0018 -138.056 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0019 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0019 128 genArea>
+<UCpart002 UC_testDie_DL0019 129 genArea>
+<UCpart003 UC_testDie_DL0019 130 genArea>
+<UCpart004 UC_testDie_DL0019 131 genArea>
+<UCpart005 UC_testDie_DL0019 132 genArea>
+<UCpart006 UC_testDie_DL0019 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0019 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0019 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0019 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0019 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0019 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0019 139 genArea>
+<Arc UC_testDie_DL0019 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0019 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0019 141 genArea>
+<Arc UC_testDie_DL0019 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0019 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0019 168 genArea>
+<CurveOr UC_testDie_DL0019 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0019 169 genArea>
+<CurveOr UC_testDie_DL0019 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0019 170 genArea>
+<CurveOr UC_testDie_DL0019 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0019 171 genArea>
+<CurveSub UC_testDie_DL0019 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0019 172 genArea>
+<CurveSub UC_testDie_DL0019 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0019 173 genArea>
+<CurveSub UC_testDie_DL0019 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0019 174 genArea>
+<CurveSub UC_testDie_DL0019 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0019 struct>
+175 layer
 0 0 140 10 0 rectangleC
-<UC 140.000 0.000 5 1 140.000 0.000 1 arrayRect>
-<UC -140.000 0.000 5 1 -140.000 0.000 1 arrayRect>
-<testDie_DL=0.000 0.000 <UC struct>
+<UC_testDie_DL0019 140.000 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0019 -140.000 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0020 struct>
 128 layer
 0.000 0.000 140.000 10.000 0 rectangleC
 129 layer
@@ -172,30 +1514,30 @@
 50.000 -7.500 3.536 3.536 45 rectangleC
 133 layer
 -50.000 -7.500 3.536 3.536 45 rectangleC
-<UCpart001 UC 128 genArea>
-<UCpart002 UC 129 genArea>
-<UCpart003 UC 130 genArea>
-<UCpart004 UC 131 genArea>
-<UCpart005 UC 132 genArea>
-<UCpart006 UC 133 genArea>
+<UCpart001 UC_testDie_DL0020 128 genArea>
+<UCpart002 UC_testDie_DL0020 129 genArea>
+<UCpart003 UC_testDie_DL0020 130 genArea>
+<UCpart004 UC_testDie_DL0020 131 genArea>
+<UCpart005 UC_testDie_DL0020 132 genArea>
+<UCpart006 UC_testDie_DL0020 133 genArea>
 <UCpart001 UCpart002 134 or>
-<Union UC 134 genArea>
+<Union UC_testDie_DL0020 134 genArea>
 <Union UCpart003 135 subtract>
-<Union UC 135 genArea>
+<Union UC_testDie_DL0020 135 genArea>
 <Union UCpart004 136 subtract>
-<Union UC 136 genArea>
+<Union UC_testDie_DL0020 136 genArea>
 <Union UCpart005 137 subtract>
-<Union UC 137 genArea>
+<Union UC_testDie_DL0020 137 genArea>
 <Union UCpart006 138 subtract>
-<Union UC 138 genArea>
+<Union UC_testDie_DL0020 138 genArea>
 139 layer
 -50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
 140 layer
 -51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
-<Tri UC 139 genArea>
-<Arc UC 140 genArea>
+<Tri UC_testDie_DL0020 139 genArea>
+<Arc UC_testDie_DL0020 140 genArea>
 <Tri Arc 160 subtract>
-<CurveOr UC 160 genArea>
+<CurveOr UC_testDie_DL0020 160 genArea>
 <CurveOr 0 0 X 1 0 0 162 genAreaCopy>
 <CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
 <CurveOr 0 0 0 1 180 0 166 genAreaCopy>
@@ -203,42 +1545,1434 @@
 -47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
 142 layer
 -45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
-<Tri UC 141 genArea>
-<Arc UC 142 genArea>
+<Tri UC_testDie_DL0020 141 genArea>
+<Arc UC_testDie_DL0020 142 genArea>
 <Tri Arc 161 subtract>
-<CurveSub UC 161 genArea>
+<CurveSub UC_testDie_DL0020 161 genArea>
 <CurveSub 0 0 X 1 0 0 163 genAreaCopy>
 <CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
 <CurveSub 0 0 0 1 180 0 167 genAreaCopy>
 <Union CurveOr 168 or>
-<Union UC 168 genArea>
-<CurveOr UC 162 genArea>
+<Union UC_testDie_DL0020 168 genArea>
+<CurveOr UC_testDie_DL0020 162 genArea>
 <Union CurveOr 169 or>
-<Union UC 169 genArea>
-<CurveOr UC 164 genArea>
+<Union UC_testDie_DL0020 169 genArea>
+<CurveOr UC_testDie_DL0020 164 genArea>
 <Union CurveOr 170 or>
-<Union UC 170 genArea>
-<CurveOr UC 166 genArea>
+<Union UC_testDie_DL0020 170 genArea>
+<CurveOr UC_testDie_DL0020 166 genArea>
 <Union CurveOr 171 or>
-<Union UC 171 genArea>
-<CurveSub UC 161 genArea>
+<Union UC_testDie_DL0020 171 genArea>
+<CurveSub UC_testDie_DL0020 161 genArea>
 <Union CurveSub 172 subtract>
-<Union UC 172 genArea>
-<CurveSub UC 163 genArea>
+<Union UC_testDie_DL0020 172 genArea>
+<CurveSub UC_testDie_DL0020 163 genArea>
 <Union CurveSub 173 subtract>
-<Union UC 173 genArea>
-<CurveSub UC 165 genArea>
+<Union UC_testDie_DL0020 173 genArea>
+<CurveSub UC_testDie_DL0020 165 genArea>
 <Union CurveSub 174 subtract>
-<Union UC 174 genArea>
-<CurveSub UC 167 genArea>
-<Union CurveSub 6 subtract>
+<Union UC_testDie_DL0020 174 genArea>
+<CurveSub UC_testDie_DL0020 167 genArea>
+<Union CurveSub 175 subtract>
 # define device(beam)
-<testDie_DL=0.000 struct>
-6 layer
+<testDie_DL0020 struct>
+175 layer
+0 0 143.8889 10 0 rectangleC
+<UC_testDie_DL0020 141.944 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0020 -141.944 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0021 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0021 128 genArea>
+<UCpart002 UC_testDie_DL0021 129 genArea>
+<UCpart003 UC_testDie_DL0021 130 genArea>
+<UCpart004 UC_testDie_DL0021 131 genArea>
+<UCpart005 UC_testDie_DL0021 132 genArea>
+<UCpart006 UC_testDie_DL0021 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0021 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0021 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0021 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0021 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0021 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0021 139 genArea>
+<Arc UC_testDie_DL0021 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0021 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0021 141 genArea>
+<Arc UC_testDie_DL0021 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0021 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0021 168 genArea>
+<CurveOr UC_testDie_DL0021 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0021 169 genArea>
+<CurveOr UC_testDie_DL0021 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0021 170 genArea>
+<CurveOr UC_testDie_DL0021 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0021 171 genArea>
+<CurveSub UC_testDie_DL0021 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0021 172 genArea>
+<CurveSub UC_testDie_DL0021 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0021 173 genArea>
+<CurveSub UC_testDie_DL0021 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0021 174 genArea>
+<CurveSub UC_testDie_DL0021 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0021 struct>
+175 layer
+0 0 147.7778 10 0 rectangleC
+<UC_testDie_DL0021 143.889 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0021 -143.889 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0022 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0022 128 genArea>
+<UCpart002 UC_testDie_DL0022 129 genArea>
+<UCpart003 UC_testDie_DL0022 130 genArea>
+<UCpart004 UC_testDie_DL0022 131 genArea>
+<UCpart005 UC_testDie_DL0022 132 genArea>
+<UCpart006 UC_testDie_DL0022 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0022 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0022 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0022 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0022 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0022 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0022 139 genArea>
+<Arc UC_testDie_DL0022 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0022 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0022 141 genArea>
+<Arc UC_testDie_DL0022 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0022 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0022 168 genArea>
+<CurveOr UC_testDie_DL0022 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0022 169 genArea>
+<CurveOr UC_testDie_DL0022 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0022 170 genArea>
+<CurveOr UC_testDie_DL0022 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0022 171 genArea>
+<CurveSub UC_testDie_DL0022 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0022 172 genArea>
+<CurveSub UC_testDie_DL0022 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0022 173 genArea>
+<CurveSub UC_testDie_DL0022 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0022 174 genArea>
+<CurveSub UC_testDie_DL0022 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0022 struct>
+175 layer
+0 0 151.6667 10 0 rectangleC
+<UC_testDie_DL0022 145.833 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0022 -145.833 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0023 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0023 128 genArea>
+<UCpart002 UC_testDie_DL0023 129 genArea>
+<UCpart003 UC_testDie_DL0023 130 genArea>
+<UCpart004 UC_testDie_DL0023 131 genArea>
+<UCpart005 UC_testDie_DL0023 132 genArea>
+<UCpart006 UC_testDie_DL0023 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0023 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0023 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0023 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0023 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0023 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0023 139 genArea>
+<Arc UC_testDie_DL0023 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0023 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0023 141 genArea>
+<Arc UC_testDie_DL0023 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0023 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0023 168 genArea>
+<CurveOr UC_testDie_DL0023 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0023 169 genArea>
+<CurveOr UC_testDie_DL0023 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0023 170 genArea>
+<CurveOr UC_testDie_DL0023 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0023 171 genArea>
+<CurveSub UC_testDie_DL0023 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0023 172 genArea>
+<CurveSub UC_testDie_DL0023 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0023 173 genArea>
+<CurveSub UC_testDie_DL0023 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0023 174 genArea>
+<CurveSub UC_testDie_DL0023 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0023 struct>
+175 layer
+0 0 155.5556 10 0 rectangleC
+<UC_testDie_DL0023 147.778 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0023 -147.778 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0024 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0024 128 genArea>
+<UCpart002 UC_testDie_DL0024 129 genArea>
+<UCpart003 UC_testDie_DL0024 130 genArea>
+<UCpart004 UC_testDie_DL0024 131 genArea>
+<UCpart005 UC_testDie_DL0024 132 genArea>
+<UCpart006 UC_testDie_DL0024 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0024 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0024 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0024 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0024 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0024 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0024 139 genArea>
+<Arc UC_testDie_DL0024 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0024 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0024 141 genArea>
+<Arc UC_testDie_DL0024 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0024 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0024 168 genArea>
+<CurveOr UC_testDie_DL0024 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0024 169 genArea>
+<CurveOr UC_testDie_DL0024 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0024 170 genArea>
+<CurveOr UC_testDie_DL0024 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0024 171 genArea>
+<CurveSub UC_testDie_DL0024 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0024 172 genArea>
+<CurveSub UC_testDie_DL0024 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0024 173 genArea>
+<CurveSub UC_testDie_DL0024 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0024 174 genArea>
+<CurveSub UC_testDie_DL0024 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0024 struct>
+175 layer
+0 0 159.4444 10 0 rectangleC
+<UC_testDie_DL0024 149.722 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0024 -149.722 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0025 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0025 128 genArea>
+<UCpart002 UC_testDie_DL0025 129 genArea>
+<UCpart003 UC_testDie_DL0025 130 genArea>
+<UCpart004 UC_testDie_DL0025 131 genArea>
+<UCpart005 UC_testDie_DL0025 132 genArea>
+<UCpart006 UC_testDie_DL0025 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0025 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0025 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0025 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0025 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0025 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0025 139 genArea>
+<Arc UC_testDie_DL0025 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0025 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0025 141 genArea>
+<Arc UC_testDie_DL0025 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0025 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0025 168 genArea>
+<CurveOr UC_testDie_DL0025 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0025 169 genArea>
+<CurveOr UC_testDie_DL0025 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0025 170 genArea>
+<CurveOr UC_testDie_DL0025 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0025 171 genArea>
+<CurveSub UC_testDie_DL0025 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0025 172 genArea>
+<CurveSub UC_testDie_DL0025 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0025 173 genArea>
+<CurveSub UC_testDie_DL0025 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0025 174 genArea>
+<CurveSub UC_testDie_DL0025 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0025 struct>
+175 layer
+0 0 163.3333 10 0 rectangleC
+<UC_testDie_DL0025 151.667 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0025 -151.667 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0026 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0026 128 genArea>
+<UCpart002 UC_testDie_DL0026 129 genArea>
+<UCpart003 UC_testDie_DL0026 130 genArea>
+<UCpart004 UC_testDie_DL0026 131 genArea>
+<UCpart005 UC_testDie_DL0026 132 genArea>
+<UCpart006 UC_testDie_DL0026 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0026 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0026 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0026 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0026 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0026 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0026 139 genArea>
+<Arc UC_testDie_DL0026 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0026 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0026 141 genArea>
+<Arc UC_testDie_DL0026 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0026 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0026 168 genArea>
+<CurveOr UC_testDie_DL0026 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0026 169 genArea>
+<CurveOr UC_testDie_DL0026 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0026 170 genArea>
+<CurveOr UC_testDie_DL0026 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0026 171 genArea>
+<CurveSub UC_testDie_DL0026 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0026 172 genArea>
+<CurveSub UC_testDie_DL0026 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0026 173 genArea>
+<CurveSub UC_testDie_DL0026 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0026 174 genArea>
+<CurveSub UC_testDie_DL0026 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0026 struct>
+175 layer
+0 0 167.2222 10 0 rectangleC
+<UC_testDie_DL0026 153.611 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0026 -153.611 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0027 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0027 128 genArea>
+<UCpart002 UC_testDie_DL0027 129 genArea>
+<UCpart003 UC_testDie_DL0027 130 genArea>
+<UCpart004 UC_testDie_DL0027 131 genArea>
+<UCpart005 UC_testDie_DL0027 132 genArea>
+<UCpart006 UC_testDie_DL0027 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0027 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0027 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0027 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0027 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0027 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0027 139 genArea>
+<Arc UC_testDie_DL0027 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0027 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0027 141 genArea>
+<Arc UC_testDie_DL0027 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0027 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0027 168 genArea>
+<CurveOr UC_testDie_DL0027 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0027 169 genArea>
+<CurveOr UC_testDie_DL0027 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0027 170 genArea>
+<CurveOr UC_testDie_DL0027 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0027 171 genArea>
+<CurveSub UC_testDie_DL0027 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0027 172 genArea>
+<CurveSub UC_testDie_DL0027 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0027 173 genArea>
+<CurveSub UC_testDie_DL0027 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0027 174 genArea>
+<CurveSub UC_testDie_DL0027 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0027 struct>
+175 layer
+0 0 171.1111 10 0 rectangleC
+<UC_testDie_DL0027 155.556 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0027 -155.556 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0028 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0028 128 genArea>
+<UCpart002 UC_testDie_DL0028 129 genArea>
+<UCpart003 UC_testDie_DL0028 130 genArea>
+<UCpart004 UC_testDie_DL0028 131 genArea>
+<UCpart005 UC_testDie_DL0028 132 genArea>
+<UCpart006 UC_testDie_DL0028 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0028 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0028 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0028 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0028 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0028 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0028 139 genArea>
+<Arc UC_testDie_DL0028 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0028 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0028 141 genArea>
+<Arc UC_testDie_DL0028 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0028 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0028 168 genArea>
+<CurveOr UC_testDie_DL0028 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0028 169 genArea>
+<CurveOr UC_testDie_DL0028 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0028 170 genArea>
+<CurveOr UC_testDie_DL0028 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0028 171 genArea>
+<CurveSub UC_testDie_DL0028 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0028 172 genArea>
+<CurveSub UC_testDie_DL0028 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0028 173 genArea>
+<CurveSub UC_testDie_DL0028 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0028 174 genArea>
+<CurveSub UC_testDie_DL0028 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0028 struct>
+175 layer
+0 0 175 10 0 rectangleC
+<UC_testDie_DL0028 157.500 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0028 -157.500 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0029 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0029 128 genArea>
+<UCpart002 UC_testDie_DL0029 129 genArea>
+<UCpart003 UC_testDie_DL0029 130 genArea>
+<UCpart004 UC_testDie_DL0029 131 genArea>
+<UCpart005 UC_testDie_DL0029 132 genArea>
+<UCpart006 UC_testDie_DL0029 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0029 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0029 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0029 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0029 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0029 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0029 139 genArea>
+<Arc UC_testDie_DL0029 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0029 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0029 141 genArea>
+<Arc UC_testDie_DL0029 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0029 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0029 168 genArea>
+<CurveOr UC_testDie_DL0029 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0029 169 genArea>
+<CurveOr UC_testDie_DL0029 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0029 170 genArea>
+<CurveOr UC_testDie_DL0029 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0029 171 genArea>
+<CurveSub UC_testDie_DL0029 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0029 172 genArea>
+<CurveSub UC_testDie_DL0029 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0029 173 genArea>
+<CurveSub UC_testDie_DL0029 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0029 174 genArea>
+<CurveSub UC_testDie_DL0029 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0029 struct>
+175 layer
+0 0 178.8889 10 0 rectangleC
+<UC_testDie_DL0029 159.444 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0029 -159.444 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0030 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0030 128 genArea>
+<UCpart002 UC_testDie_DL0030 129 genArea>
+<UCpart003 UC_testDie_DL0030 130 genArea>
+<UCpart004 UC_testDie_DL0030 131 genArea>
+<UCpart005 UC_testDie_DL0030 132 genArea>
+<UCpart006 UC_testDie_DL0030 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0030 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0030 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0030 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0030 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0030 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0030 139 genArea>
+<Arc UC_testDie_DL0030 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0030 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0030 141 genArea>
+<Arc UC_testDie_DL0030 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0030 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0030 168 genArea>
+<CurveOr UC_testDie_DL0030 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0030 169 genArea>
+<CurveOr UC_testDie_DL0030 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0030 170 genArea>
+<CurveOr UC_testDie_DL0030 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0030 171 genArea>
+<CurveSub UC_testDie_DL0030 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0030 172 genArea>
+<CurveSub UC_testDie_DL0030 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0030 173 genArea>
+<CurveSub UC_testDie_DL0030 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0030 174 genArea>
+<CurveSub UC_testDie_DL0030 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0030 struct>
+175 layer
+0 0 182.7778 10 0 rectangleC
+<UC_testDie_DL0030 161.389 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0030 -161.389 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0031 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0031 128 genArea>
+<UCpart002 UC_testDie_DL0031 129 genArea>
+<UCpart003 UC_testDie_DL0031 130 genArea>
+<UCpart004 UC_testDie_DL0031 131 genArea>
+<UCpart005 UC_testDie_DL0031 132 genArea>
+<UCpart006 UC_testDie_DL0031 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0031 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0031 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0031 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0031 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0031 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0031 139 genArea>
+<Arc UC_testDie_DL0031 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0031 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0031 141 genArea>
+<Arc UC_testDie_DL0031 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0031 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0031 168 genArea>
+<CurveOr UC_testDie_DL0031 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0031 169 genArea>
+<CurveOr UC_testDie_DL0031 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0031 170 genArea>
+<CurveOr UC_testDie_DL0031 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0031 171 genArea>
+<CurveSub UC_testDie_DL0031 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0031 172 genArea>
+<CurveSub UC_testDie_DL0031 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0031 173 genArea>
+<CurveSub UC_testDie_DL0031 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0031 174 genArea>
+<CurveSub UC_testDie_DL0031 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0031 struct>
+175 layer
+0 0 186.6667 10 0 rectangleC
+<UC_testDie_DL0031 163.333 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0031 -163.333 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0032 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0032 128 genArea>
+<UCpart002 UC_testDie_DL0032 129 genArea>
+<UCpart003 UC_testDie_DL0032 130 genArea>
+<UCpart004 UC_testDie_DL0032 131 genArea>
+<UCpart005 UC_testDie_DL0032 132 genArea>
+<UCpart006 UC_testDie_DL0032 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0032 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0032 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0032 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0032 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0032 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0032 139 genArea>
+<Arc UC_testDie_DL0032 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0032 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0032 141 genArea>
+<Arc UC_testDie_DL0032 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0032 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0032 168 genArea>
+<CurveOr UC_testDie_DL0032 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0032 169 genArea>
+<CurveOr UC_testDie_DL0032 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0032 170 genArea>
+<CurveOr UC_testDie_DL0032 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0032 171 genArea>
+<CurveSub UC_testDie_DL0032 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0032 172 genArea>
+<CurveSub UC_testDie_DL0032 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0032 173 genArea>
+<CurveSub UC_testDie_DL0032 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0032 174 genArea>
+<CurveSub UC_testDie_DL0032 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0032 struct>
+175 layer
+0 0 190.5556 10 0 rectangleC
+<UC_testDie_DL0032 165.278 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0032 -165.278 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0033 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0033 128 genArea>
+<UCpart002 UC_testDie_DL0033 129 genArea>
+<UCpart003 UC_testDie_DL0033 130 genArea>
+<UCpart004 UC_testDie_DL0033 131 genArea>
+<UCpart005 UC_testDie_DL0033 132 genArea>
+<UCpart006 UC_testDie_DL0033 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0033 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0033 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0033 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0033 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0033 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0033 139 genArea>
+<Arc UC_testDie_DL0033 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0033 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0033 141 genArea>
+<Arc UC_testDie_DL0033 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0033 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0033 168 genArea>
+<CurveOr UC_testDie_DL0033 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0033 169 genArea>
+<CurveOr UC_testDie_DL0033 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0033 170 genArea>
+<CurveOr UC_testDie_DL0033 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0033 171 genArea>
+<CurveSub UC_testDie_DL0033 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0033 172 genArea>
+<CurveSub UC_testDie_DL0033 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0033 173 genArea>
+<CurveSub UC_testDie_DL0033 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0033 174 genArea>
+<CurveSub UC_testDie_DL0033 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0033 struct>
+175 layer
+0 0 194.4444 10 0 rectangleC
+<UC_testDie_DL0033 167.222 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0033 -167.222 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0034 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0034 128 genArea>
+<UCpart002 UC_testDie_DL0034 129 genArea>
+<UCpart003 UC_testDie_DL0034 130 genArea>
+<UCpart004 UC_testDie_DL0034 131 genArea>
+<UCpart005 UC_testDie_DL0034 132 genArea>
+<UCpart006 UC_testDie_DL0034 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0034 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0034 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0034 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0034 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0034 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0034 139 genArea>
+<Arc UC_testDie_DL0034 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0034 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0034 141 genArea>
+<Arc UC_testDie_DL0034 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0034 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0034 168 genArea>
+<CurveOr UC_testDie_DL0034 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0034 169 genArea>
+<CurveOr UC_testDie_DL0034 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0034 170 genArea>
+<CurveOr UC_testDie_DL0034 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0034 171 genArea>
+<CurveSub UC_testDie_DL0034 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0034 172 genArea>
+<CurveSub UC_testDie_DL0034 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0034 173 genArea>
+<CurveSub UC_testDie_DL0034 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0034 174 genArea>
+<CurveSub UC_testDie_DL0034 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0034 struct>
+175 layer
+0 0 198.3333 10 0 rectangleC
+<UC_testDie_DL0034 169.167 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0034 -169.167 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0035 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0035 128 genArea>
+<UCpart002 UC_testDie_DL0035 129 genArea>
+<UCpart003 UC_testDie_DL0035 130 genArea>
+<UCpart004 UC_testDie_DL0035 131 genArea>
+<UCpart005 UC_testDie_DL0035 132 genArea>
+<UCpart006 UC_testDie_DL0035 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0035 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0035 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0035 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0035 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0035 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0035 139 genArea>
+<Arc UC_testDie_DL0035 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0035 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0035 141 genArea>
+<Arc UC_testDie_DL0035 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0035 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0035 168 genArea>
+<CurveOr UC_testDie_DL0035 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0035 169 genArea>
+<CurveOr UC_testDie_DL0035 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0035 170 genArea>
+<CurveOr UC_testDie_DL0035 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0035 171 genArea>
+<CurveSub UC_testDie_DL0035 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0035 172 genArea>
+<CurveSub UC_testDie_DL0035 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0035 173 genArea>
+<CurveSub UC_testDie_DL0035 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0035 174 genArea>
+<CurveSub UC_testDie_DL0035 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0035 struct>
+175 layer
+0 0 202.2222 10 0 rectangleC
+<UC_testDie_DL0035 171.111 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0035 -171.111 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0036 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0036 128 genArea>
+<UCpart002 UC_testDie_DL0036 129 genArea>
+<UCpart003 UC_testDie_DL0036 130 genArea>
+<UCpart004 UC_testDie_DL0036 131 genArea>
+<UCpart005 UC_testDie_DL0036 132 genArea>
+<UCpart006 UC_testDie_DL0036 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0036 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0036 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0036 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0036 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0036 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0036 139 genArea>
+<Arc UC_testDie_DL0036 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0036 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0036 141 genArea>
+<Arc UC_testDie_DL0036 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0036 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0036 168 genArea>
+<CurveOr UC_testDie_DL0036 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0036 169 genArea>
+<CurveOr UC_testDie_DL0036 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0036 170 genArea>
+<CurveOr UC_testDie_DL0036 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0036 171 genArea>
+<CurveSub UC_testDie_DL0036 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0036 172 genArea>
+<CurveSub UC_testDie_DL0036 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0036 173 genArea>
+<CurveSub UC_testDie_DL0036 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0036 174 genArea>
+<CurveSub UC_testDie_DL0036 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0036 struct>
+175 layer
+0 0 206.1111 10 0 rectangleC
+<UC_testDie_DL0036 173.056 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0036 -173.056 0.000 5 1 -140.000 0.000 1 arrayRect>
+<UC_testDie_DL0037 struct>
+128 layer
+0.000 0.000 140.000 10.000 0 rectangleC
+129 layer
+0.000 0.000 100.000 15.000 0 rectangleC
+130 layer
+50.000 7.500 3.536 3.536 45 rectangleC
+131 layer
+-50.000 7.500 3.536 3.536 45 rectangleC
+132 layer
+50.000 -7.500 3.536 3.536 45 rectangleC
+133 layer
+-50.000 -7.500 3.536 3.536 45 rectangleC
+<UCpart001 UC_testDie_DL0037 128 genArea>
+<UCpart002 UC_testDie_DL0037 129 genArea>
+<UCpart003 UC_testDie_DL0037 130 genArea>
+<UCpart004 UC_testDie_DL0037 131 genArea>
+<UCpart005 UC_testDie_DL0037 132 genArea>
+<UCpart006 UC_testDie_DL0037 133 genArea>
+<UCpart001 UCpart002 134 or>
+<Union UC_testDie_DL0037 134 genArea>
+<Union UCpart003 135 subtract>
+<Union UC_testDie_DL0037 135 genArea>
+<Union UCpart004 136 subtract>
+<Union UC_testDie_DL0037 136 genArea>
+<Union UCpart005 137 subtract>
+<Union UC_testDie_DL0037 137 genArea>
+<Union UCpart006 138 subtract>
+<Union UC_testDie_DL0037 138 genArea>
+139 layer
+-50.000 5.000 -51.768 5.000 -48.750 6.250 points2shape
+140 layer
+-51.768 9.268 4.268 4.268 -90.000 -45.000 0.000 arcVector
+<Tri UC_testDie_DL0037 139 genArea>
+<Arc UC_testDie_DL0037 140 genArea>
+<Tri Arc 160 subtract>
+<CurveOr UC_testDie_DL0037 160 genArea>
+<CurveOr 0 0 X 1 0 0 162 genAreaCopy>
+<CurveOr 0 0 Y 1 0 0 164 genAreaCopy>
+<CurveOr 0 0 0 1 180 0 166 genAreaCopy>
+141 layer
+-47.500 7.500 -45.732 7.500 -48.750 6.250 points2shape
+142 layer
+-45.732 3.232 4.268 4.268 -90.000 -45.000 180.000 arcVector
+<Tri UC_testDie_DL0037 141 genArea>
+<Arc UC_testDie_DL0037 142 genArea>
+<Tri Arc 161 subtract>
+<CurveSub UC_testDie_DL0037 161 genArea>
+<CurveSub 0 0 X 1 0 0 163 genAreaCopy>
+<CurveSub 0 0 Y 1 0 0 165 genAreaCopy>
+<CurveSub 0 0 0 1 180 0 167 genAreaCopy>
+<Union CurveOr 168 or>
+<Union UC_testDie_DL0037 168 genArea>
+<CurveOr UC_testDie_DL0037 162 genArea>
+<Union CurveOr 169 or>
+<Union UC_testDie_DL0037 169 genArea>
+<CurveOr UC_testDie_DL0037 164 genArea>
+<Union CurveOr 170 or>
+<Union UC_testDie_DL0037 170 genArea>
+<CurveOr UC_testDie_DL0037 166 genArea>
+<Union CurveOr 171 or>
+<Union UC_testDie_DL0037 171 genArea>
+<CurveSub UC_testDie_DL0037 161 genArea>
+<Union CurveSub 172 subtract>
+<Union UC_testDie_DL0037 172 genArea>
+<CurveSub UC_testDie_DL0037 163 genArea>
+<Union CurveSub 173 subtract>
+<Union UC_testDie_DL0037 173 genArea>
+<CurveSub UC_testDie_DL0037 165 genArea>
+<Union CurveSub 174 subtract>
+<Union UC_testDie_DL0037 174 genArea>
+<CurveSub UC_testDie_DL0037 167 genArea>
+<Union CurveSub 175 subtract>
+# define device(beam)
+<testDie_DL0037 struct>
+175 layer
 0 0 210 10 0 rectangleC
-<UC 175.000 0.000 5 1 140.000 0.000 1 arrayRect>
-<UC -175.000 0.000 5 1 -140.000 0.000 1 arrayRect>
-<testDie_DL=0.000 200.000 # define the overall wafer structure
+<UC_testDie_DL0037 175.000 0.000 5 1 140.000 0.000 1 arrayRect>
+<UC_testDie_DL0037 -175.000 0.000 5 1 -140.000 0.000 1 arrayRect>
+# testDie
+<testDie struct>
+<testDie_DL001 -1000.000 -3600.000 0 1 0 instance>
+<testDie_DL002 -1000.000 -3400.000 0 1 0 instance>
+<testDie_DL003 -1000.000 -3200.000 0 1 0 instance>
+<testDie_DL004 -1000.000 -3000.000 0 1 0 instance>
+<testDie_DL005 -1000.000 -2800.000 0 1 0 instance>
+<testDie_DL006 -1000.000 -2600.000 0 1 0 instance>
+<testDie_DL007 -1000.000 -2400.000 0 1 0 instance>
+<testDie_DL008 -1000.000 -2200.000 0 1 0 instance>
+<testDie_DL009 -1000.000 -2000.000 0 1 0 instance>
+<testDie_DL0010 -1000.000 -1800.000 0 1 0 instance>
+<testDie_DL0011 -1000.000 -1600.000 0 1 0 instance>
+<testDie_DL0012 -1000.000 -1400.000 0 1 0 instance>
+<testDie_DL0013 -1000.000 -1200.000 0 1 0 instance>
+<testDie_DL0014 -1000.000 -1000.000 0 1 0 instance>
+<testDie_DL0015 -1000.000 -800.000 0 1 0 instance>
+<testDie_DL0016 -1000.000 -600.000 0 1 0 instance>
+<testDie_DL0017 -1000.000 -400.000 0 1 0 instance>
+<testDie_DL0018 -1000.000 -200.000 0 1 0 instance>
+<testDie_DL0019 -1000.000 0.000 0 1 0 instance>
+<testDie_DL0020 -1000.000 200.000 0 1 0 instance>
+<testDie_DL0021 -1000.000 400.000 0 1 0 instance>
+<testDie_DL0022 -1000.000 600.000 0 1 0 instance>
+<testDie_DL0023 -1000.000 800.000 0 1 0 instance>
+<testDie_DL0024 -1000.000 1000.000 0 1 0 instance>
+<testDie_DL0025 -1000.000 1200.000 0 1 0 instance>
+<testDie_DL0026 -1000.000 1400.000 0 1 0 instance>
+<testDie_DL0027 -1000.000 1600.000 0 1 0 instance>
+<testDie_DL0028 -1000.000 1800.000 0 1 0 instance>
+<testDie_DL0029 -1000.000 2000.000 0 1 0 instance>
+<testDie_DL0030 -1000.000 2200.000 0 1 0 instance>
+<testDie_DL0031 -1000.000 2400.000 0 1 0 instance>
+<testDie_DL0032 -1000.000 2600.000 0 1 0 instance>
+<testDie_DL0033 -1000.000 2800.000 0 1 0 instance>
+<testDie_DL0034 -1000.000 3000.000 0 1 0 instance>
+<testDie_DL0035 -1000.000 3200.000 0 1 0 instance>
+<testDie_DL0036 -1000.000 3400.000 0 1 0 instance>
+<testDie_DL0037 -1000.000 3600.000 0 1 0 instance>
+175 layer
+2750.000 1000.000 3750.000 -7500.000 -4750.000 1500.000 0.000 rectSUshape
+2750.000 -1000.000 -3750.000 -7500.000 4750.000 1500.000 0.000 rectSUshape
+-2235.000 0.000 1000.000 7215.000 0 rectangleC
+235.000 0.000 1000.000 7215.000 0 rectangleC
+<beams testDie 175 genArea>
+176 layer
+0 0 11000.000 11000.000 0 rectangleC
+<base testDie 176 genArea>
+<base beams 6 subtract>
+# define the overall wafer structure
 <wafer struct>
 1 layer
 100 layer
