@@ -1,25 +1,35 @@
-function ToCNST(Params, filename)
-DefectParams = Params{1};
-UCParams = Params{2};
-[DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
-[UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
-
+function ToCNST(DiesParams, filename, Dielayer, Backlayer)%DiesParams(i).Params,DiesParams(i).ParamIndex,DiesParams(i).YStep, DiesParams(i).Yrange, DiesParams(i).Dienumber,DiesParams(i).Diename
 fileID = fopen([filename,'.cnst'], 'w');
 fprintf(fileID, '0.001 gdsReso\n');
 fprintf(fileID, '0.001 shapeReso\n');
-name = singleDie(Params, [1,1],[70e-6, 210e-6], 200, [-3.6e3,3.6e3],'testDie',6,fileID);
+
+for i = 1:size(DiesParams, 2)
+    temp = singleDie(DiesParams(i).Params,DiesParams(i).ParamsIndex,DiesParams(i).ParamsRange, DiesParams(i).Ystep, DiesParams(i).Yrange,DiesParams(i).Diename,Dielayer,fileID,Backlayer);
+end
+
+%[DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
+%[UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
+%name = singleDie(Params,[1,1],[70e-6, 210e-6], 200, [-400,400],'testDie',Dielayer,fileID,Backlayer);
 
 fprintf(fileID, '# define the overall wafer structure\n');
+WaferR = 50e3;
+NumofDiesPerSide = WaferR / 1.1e4;
+[DieCenters,Mirrors] = FitDieInWafer (WaferR, 1.1e4, 1.1e4);
+
 fprintf(fileID, '<wafer struct>\n');%define the overall wafer layout, how dies are organized, the size of dies
 fprintf(fileID, '1 layer\n');%marker layer, define the boundary
 fprintf(fileID, '100 layer\n');
-fprintf(fileID, '0 0 1e5 1e5 -71.3 251.3 0 arcVector\n');
+fprintf(fileID, sprintf('0 0 %.3f %.3f -71.3 251.3 0 arcVector\n',WaferR, WaferR));
 fprintf(fileID, '<partA wafer 100 genArea>\n');
 fprintf(fileID, '101 layer\n');
-fprintf(fileID, '0 0 1e5 1e5 -108.7 -71.3 1 0 arc\n');
+fprintf(fileID, sprintf('0 0 %.3f %.3f -108.7 -71.3 1 0 arc\n',WaferR, WaferR));
 fprintf(fileID, '<partB wafer 101 genArea>\n');
 fprintf(fileID, '<partA partB 0 or>\n');
-
+fprintf(fileID, '2 layer\n');
+for i = 1:size(DiesParams,2)
+fprintf(fileID,sprintf('<%s %.3f %.3f %s 1 0 instance>\n',DiesParams(i).Diename,DieCenters{DiesParams(i).Dienumber}(1),DieCenters{DiesParams(i).Dienumber}(2), Mirrors(i)));
+fprintf(fileID,sprintf('<{{%1.f}} {{Arial}} 4000 %.3f %.3f textgdsC>\n',DiesParams(i).Dienumber,DieCenters{DiesParams(i).Dienumber}(1),DieCenters{DiesParams(i).Dienumber}(2)));
+end
 
 fclose(fileID);
 
@@ -143,14 +153,20 @@ dx = -UL.value;
 fprintf(fileID, sprintf('<UC_%s %.3f %.3f %1.f %1.f %.3f %.3f 1 arrayRect>\n',SBname,x*1e6,y*1e6,NumofUC.value,1,dx*1e6,dy*1e6));
 end
 
-function name = singleDie(Params, IndexofParamToBeVaried, VaryRange, BeamArrayYstep, BeamArrayYrange, Diename, Dielayer, fileID)
+function name = singleDie(Params, IndexofParamToBeVaried, VaryRange, BeamArrayYstep, BeamArrayYrange, Diename, Dielayer, fileID, Backlayer)
 name = Diename;
 SingleDieLength = 11e3;
 SingleDieWidth = 11e3;
-DiceWidth = 1.5e3;
+WaferHeight = 400;%um
+EtchAngle = 54.7;%degree
+EtchWidth = WaferHeight/tan(EtchAngle/180*pi);
+DiceWidth = WaferHeight/tan(EtchAngle/180*pi);
 IntervalWidth = 4e3;
 HoldGapWidth = 2e3;
 BeamHolderWidth = 1e3;
+BeamEndsReserveWidth = 10;
+
+
 Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(1)}.value = VaryRange(1);
 ParamStep = (VaryRange(2)-VaryRange(1))/((BeamArrayYrange(2)-BeamArrayYrange(1))/BeamArrayYstep);
 counter = 1;
@@ -169,7 +185,7 @@ for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
     fprintf(fileID,sprintf('<%s %.3f %.3f 0 1 0 instance>\n',SBname{counter},-IntervalWidth/4,y));
     counter = counter + 1;
 end
-fprintf(fileID, '175 layer\n');
+fprintf(fileID, sprintf('%1.f layer\n',Dielayer));
 fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f %.3f rectSUshape\n',...
     (SingleDieLength-IntervalWidth-DiceWidth)/2, HoldGapWidth/2,...
     (SingleDieWidth-DiceWidth-HoldGapWidth)/2,...
@@ -182,19 +198,71 @@ fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f %.3f rectSUshape\n',...
     -(SingleDieLength-IntervalWidth/2-DiceWidth),...
     (SingleDieLength-DiceWidth)/2,...
     DiceWidth,0));
-fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-    -IntervalWidth/4-min(Lengths)/2-BeamHolderWidth/2,...
-    (BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
-    BeamHolderWidth,BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6));
-fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-    -IntervalWidth/4+min(Lengths)/2+BeamHolderWidth/2,...
-    (BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
-    BeamHolderWidth,BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6));
+fprintf(fileID, sprintf('<Dices %s %1.f genArea>\n',Diename, Dielayer));
+fprintf(fileID, sprintf('<Dices 0 0 0 1 0 0 %1.f genAreaCopy>\n',Backlayer));
 
-fprintf(fileID, sprintf('<beams %s 175 genArea>\n',Diename));
 fprintf(fileID, '176 layer\n');
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
+    -IntervalWidth/4,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
+    min(Lengths),BeamArrayYrange(2)-BeamArrayYrange(1)+BeamArrayYstep*2));
+
+
+fprintf(fileID, '0 layer\n');
 fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',SingleDieLength, SingleDieWidth));
+
 fprintf(fileID, sprintf('<base %s 176 genArea>\n',Diename));
+fprintf(fileID, sprintf('<beams %s 175 genArea>\n',Diename));
 fprintf(fileID, sprintf('<base beams %1.f subtract>\n',Dielayer));
 
+fprintf(fileID, sprintf('%1.f layer\n',Backlayer));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
+    -IntervalWidth/4,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
+    min(Lengths)-2*BeamEndsReserveWidth+2*EtchWidth,...
+    BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6+2*EtchWidth));
+end
+
+function [ListofDies,Mirrors] = FitDieInWafer (WaferR, DieLength, DieWidth)
+n = 2*ceil(WaferR/DieWidth);
+m = 2*ceil(WaferR/DieLength);
+counter = 1;
+for i = 1:n
+    for j = 1:m
+        f = 1;
+        [theta,rho] = cart2pol((j-m/2-0.5)*DieLength + DieLength/2,(-i+n/2+0.5)*DieWidth + DieWidth/2);
+        if rho>WaferEdge(theta,WaferR)
+            f = 0;
+        end
+        [theta,rho] = cart2pol((j-m/2-0.5)*DieLength - DieLength/2,(-i+n/2+0.5)*DieWidth + DieWidth/2);
+        if rho>WaferEdge(theta,WaferR)
+            f = 0;
+        end
+        [theta,rho] = cart2pol((j-m/2-0.5)*DieLength + DieLength/2,(-i+n/2+0.5)*DieWidth - DieWidth/2);
+        if rho>WaferEdge(theta,WaferR)
+            f = 0;
+        end
+        [theta,rho] = cart2pol((j-m/2-0.5)*DieLength - DieLength/2,(-i+n/2+0.5)*DieWidth - DieWidth/2);
+        if rho>WaferEdge(theta,WaferR)
+            f = 0;
+        end
+        if f==1
+            ListofDies(counter) = {[(j-m/2-0.5)*DieLength,(-i+n/2+0.5)*DieWidth]};
+            if mod(j,2)==0
+                Mirrors(counter) = 'Y';
+            else
+                Mirrors(counter) = 'N';
+            end
+            counter = counter + 1;
+        end
+    end
+end
+end
+
+function R = WaferEdge(theta, WaferR)
+if 251.3/180*pi<=mod(theta,2*pi) && mod(theta,2*pi)<=288.7/180*pi
+    L = WaferR * cos(18.7/180*pi);
+    x = L * tan(abs(mod(theta,2*pi)-1.5*pi));
+    R = sqrt(L*L+x*x);
+else
+    R = WaferR;
+end
 end
