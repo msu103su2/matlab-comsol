@@ -94,7 +94,7 @@ Msize.set('hcurve', '0.2');
 ftri.selection.set(idx_ftri);
 
 ref{1}.set('rmethod', 'regular');
-ref{1}.set('numrefine', 5);
+ref{1}.set('numrefine', 3);
 ref{1}.set('boxcoord', true);
 ref{1}.set('xmax', coords{1}(1,1)+MS.value);
 ref{1}.set('xmin', coords{1}(1,1));
@@ -118,7 +118,7 @@ ref{2}.selection.geom('geom1', 2);
 ref{2}.selection.set(idx_ftri);
 
 ref{3}.set('rmethod', 'regular');
-ref{3}.set('numrefine', 5);
+ref{3}.set('numrefine', 3);
 ref{3}.set('boxcoord', true);
 ref{3}.set('xmax', coords{2}(1,2));
 ref{3}.set('xmin', coords{2}(1,2)-MS.value);
