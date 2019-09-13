@@ -159,10 +159,10 @@ SingleDieLength = 11e3;
 SingleDieWidth = 11e3;
 WaferHeight = 400;%um
 EtchAngle = 54.7;%degree
-EtchWidth = WaferHeight/tan(EtchAngle/180*pi);
+EtchWidth = 2*WaferHeight/tan(EtchAngle/180*pi);
 DiceWidth = WaferHeight/tan(EtchAngle/180*pi);
 IntervalWidth = 4e3;
-HoldGapWidth = 2e3;
+HoldGapWidth = 2e2;
 BeamHolderWidth = 1e3;
 BeamEndsReserveWidth = 10;
 
