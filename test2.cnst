@@ -1,5 +1,86 @@
 0.001 gdsReso
 0.001 shapeReso
+<square struct>
+100 layer
+0 0 10.000 10.000 0 rectangleC
+<stick struct>
+<square -96.000 -270.000 17 46 12.000 12.000 1 arrayRect>
+<square -84.000 -282.000 15 1 12.000 12.000 1 arrayRect>
+<square -72.000 -294.000 13 1 12.000 12.000 1 arrayRect>
+<square -60.000 -306.000 11 1 12.000 12.000 1 arrayRect>
+<square -48.000 -318.000 9 1 12.000 12.000 1 arrayRect>
+<square -36.000 -330.000 7 1 12.000 12.000 1 arrayRect>
+<square -24.000 -342.000 5 1 12.000 12.000 1 arrayRect>
+<square -12.000 -354.000 3 1 12.000 12.000 1 arrayRect>
+<square 0.000 -366.000 1 1 12.000 12.000 1 arrayRect>
+<square -84.000 282.000 15 1 12.000 12.000 1 arrayRect>
+<square -72.000 294.000 13 1 12.000 12.000 1 arrayRect>
+<square -60.000 306.000 11 1 12.000 12.000 1 arrayRect>
+<square -48.000 318.000 9 1 12.000 12.000 1 arrayRect>
+<square -36.000 330.000 7 1 12.000 12.000 1 arrayRect>
+<square -24.000 342.000 5 1 12.000 12.000 1 arrayRect>
+<square -12.000 354.000 3 1 12.000 12.000 1 arrayRect>
+<square 0.000 366.000 1 1 12.000 12.000 1 arrayRect>
+<1 struct>
+<stick 400.000 400.000 N 1 0 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<2 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick 400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick -400.000 -400.000 N 1 0 instance>
+<stick 0.000 -800.000 N 1 90 instance>
+<3 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick 400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 0.000 -800.000 N 1 90 instance>
+<4 struct>
+<stick -400.000 400.000 N 1 0 instance>
+<stick 400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<5 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick -400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 0.000 -800.000 N 1 90 instance>
+<6 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick -400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 0.000 -800.000 N 1 90 instance>
+<stick -400.000 -400.000 N 1 0 instance>
+<7 struct>
+<stick 400.000 400.000 N 1 0 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 0.000 800.000 N 1 90 instance>
+<8 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick -400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 0.000 -800.000 N 1 90 instance>
+<stick -400.000 -400.000 N 1 0 instance>
+<stick 400.000 400.000 N 1 0 instance>
+<9 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick -400.000 400.000 N 1 0 instance>
+<stick 0.000 0.000 N 1 90 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 400.000 400.000 N 1 0 instance>
+<0 struct>
+<stick 0.000 800.000 N 1 90 instance>
+<stick -400.000 400.000 N 1 0 instance>
+<stick 400.000 -400.000 N 1 0 instance>
+<stick 0.000 -800.000 N 1 90 instance>
+<stick -400.000 -400.000 N 1 0 instance>
+<stick 400.000 400.000 N 1 0 instance>
+<_ struct>
+<stick 0.000 -800.000 N 1 90 instance>
 <UC_testDie_DL001 struct>
 128 layer
 0.000 0.000 140.000 10.000 0 rectangleC
@@ -844,6 +925,18 @@
 <partA partB 0 or>
 2 layer
 <testDie 27500.000 5500.000 Y 1 0 instance>
+<8 31433.568 1166.432 N 1 90 instance>
+<9 31433.568 2266.432 N 1 90 instance>
+<0 31433.568 3366.432 N 1 90 instance>
+<_ 31433.568 4466.432 N 1 90 instance>
+<2 31433.568 5566.432 N 1 90 instance>
+<5 31433.568 6666.432 N 1 90 instance>
 <{{25}} {{Arial}} 4000 27500.000 5500.000 textgdsC>
 <testDie -27500.000 -16500.000 N 1 0 instance>
+<8 -31433.568 -20833.568 N 1 90 instance>
+<9 -31433.568 -19733.568 N 1 90 instance>
+<0 -31433.568 -18633.568 N 1 90 instance>
+<_ -31433.568 -17533.568 N 1 90 instance>
+<3 -31433.568 -16433.568 N 1 90 instance>
+<6 -31433.568 -15333.568 N 1 90 instance>
 <{{36}} {{Arial}} 4000 -27500.000 -16500.000 textgdsC>
