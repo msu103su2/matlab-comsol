@@ -1,60 +1,69 @@
 function SingleRunResult = reconstruct(Params, Links)
 import com.comsol.model.*
 import com.comsol.model.util.*
-[model, geom1, wp1, Uni, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, defect, LeftUCs, RightUCs] = Links{1:end};
-[DL, DW, DH, Dx, Dy, Dz, UL, UW, UH, Ux, Uy, Uz, kx, MS, NumofUC, ucindex] = Params{1:end};
-Params = [DL, DW, DH, Dx, Dy, Dz, UL, UW, UH, Ux, Uy, Uz, kx, MS, NumofUC, ucindex];
-BaseParams = [ucindex UL, UW, UH, Ux, Uy, Uz];
-RightArrayParams = repmat(BaseParams, NumofUC.value, 1);
-LeftArrayParams = repmat(BaseParams, NumofUC.value, 1);
+eps = 1e-10;
+[model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
+    eig, solid, ref] = Links{1:end};
+BaseParams = Params{2};
+DefectParams = Params{1};
+[DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
 
-for i = 1:size(Params,2)
-    model.param.set(Params(i).name,[num2str(Params(i).value) Params(i).unit], ...
-        Params(i).comment);
+for i = 1:size(DefectParams,2)
+    model.param.set(DefectParams{i}.name,[num2str(DefectParams{i}.value) DefectParams{i}.unit], ...
+        DefectParams{i}.comment);
 end
 
-defect.set('size', [DL.value DW.value]);%defect.set('size', {Params(1).name Params(2).name});
-defect.set('pos', [Dx.value Dy.value]);%defect.set('pos', {Params(4).name Params(5).name});
+geom1.feature.remove('wp1');
+wp1 = geom1.feature.create('wp1', 'WorkPlane');
+geom1.feature.move('wp1',0);
+wp1.set('quickplane', 'xy');
+defect = wp1.geom.feature.create('defect', 'Rectangle');
+defect.set('size', [DL.value DW.value]);
+defect.set('base', 'center');
+defect.set('pos', [Dx.value Dy.value]);
 
-LeftArrayParams(1,5).value = -LeftArrayParams(1,5).value;
-for i = 1 : NumofUC.value
-    if i>1
-    RightArrayParams(i,:) = UCP_byIndex(i, RightArrayParams, 1);
-    LeftArrayParams(i,:) = UCP_byIndex(i, LeftArrayParams, -1);
-    end
+%deal with the geomtry array
+[BaseParams, Basenames] = unitcellgeom(wp1, DefectParams, BaseParams);
+Positions = zeros(1, NumofUC.value*2);
+for i = 1:NumofUC.value
+    Positions(i) = (i-0.5-NumofUC.value)*BaseParams{1}.value-0.5*DL.value;
+    Positions(NumofUC.value+i) = (i-0.5)*BaseParams{1}.value+0.5*DL.value;
+end
+[AllUCParams, AllUCnames, coords] = UCarrayfromsingle(wp1, Basenames, BaseParams, Positions, Links, DefectParams);
+for i = 1:size(Basenames,2)
+    wp1.geom.feature(Basenames(i)).active(false);
 end
 
-for i = 1 : NumofUC.value
-    SetElement(i, RightArrayParams, RightUCs);
-    SetElement(i, LeftArrayParams, LeftUCs);
-end
+ls1 = wp1.geom.create('ls1','LineSegment');
+ls1.set('specify1', 'coord');
+ls1.set('specify2', 'coord');
+ls1.set('coord1', coords{5});
+ls1.set('coord2', [0,0]);
+
+ls2 = wp1.geom.create('ls2','LineSegment');
+ls2.set('specify1', 'coord');
+ls2.set('specify2', 'coord');
+ls2.set('coord1', [0,0]);
+ls2.set('coord2', coords{6});
+
 
 %create union
-strofobj{NumofUC.value*2+1} = 'defect';
-for i = 1 : NumofUC.value
-    strofobj{2*i-1} = ['RightUC_' num2str(i)];
-    strofobj{2*i} = ['LeftUC_' num2str(i)];
+Uni_small = wp1.geom.feature.create('Uni_small', 'Union');
+for i = 1:size(AllUCnames,2)
+    temp{i} = AllUCnames{i}{end};
 end
-Uni.selection('input').set(strofobj);
+temp{size(AllUCnames,2)+1} = 'defect';
+Uni_small.selection('input').set(temp);
+Uni_small.set('intbnd', false);
+Uni = wp1.geom.feature.create('Uni', 'Union');
+Uni.set('intbnd', true);
+Uni.selection('input').set({'Uni_small', 'ls1', 'ls2'});
 
 %extrude
+ext1.set('workplane', 'wp1');
+ext1.selection('input').set({'wp1.Uni'});
 ext1.set('distance', {'DH'});
 geom1.run;
-
-%physics interface
-fix1.selection.set([1 72]);
-
-%fetching the entities
-
-%meshing
-Msize.set('hmax', 'MS');
-Msize.set('hmin', 'MS/4');
-Msize.set('hcurve', '0.2');
-ftri.selection.set([4 10 17 24 31 37 42 47 54 61 68]);
-swel.selection('sourceface').set([4 10 17 24 31 37 42 47 54 61 68]);
-swel.selection('targetface').set([3 9 16 23 30 36 41 46 53 60 67]);
-mesh.run;
 
 %prestress condiciton
 iss1.set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
@@ -62,12 +71,117 @@ iss1.set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
 %study node
 eig.set('neigs', 50);
 
+%extra control for obtaining localmode through symmetry
+difblock = geom1.create('difblock','Block');
+difblock.set('size',[coords{6}(1)-coords{5}(1) DW.value*10 DH.value]);
+difblock.set('pos',[0 DW.value*5 DH.value/2]);
+difblock.set('base','center');
+dif1 = geom1.create('dif1', 'Difference');
+dif1.selection('input').set({'ext1'});
+dif1.selection('input2').set({'difblock'});
+geom1.run;
+sym1 = solid.create('sym1','SymmetrySolid',2);
+symmetryface = mphselectbox(model,'geom1',[coords{5}(1)-eps,coords{6}(1)+eps;-eps,eps;-eps,DH.value+eps],'boundary');
+sym1.selection.set(symmetryface);
+idx_bnd1 = mphselectbox(model,'geom1', coords{1}, 'boundary');
+idx_bnd2 = mphselectbox(model,'geom1', coords{2}, 'boundary');
+idx_ftri = mphselectbox(model,'geom1', coords{3}, 'boundary');
+idx_sweldestiface = mphselectbox(model,'geom1', coords{4}, 'boundary');
+fix1.selection.set([idx_bnd1 idx_bnd2]);
+Msize.set('hmax', 'MS');
+Msize.set('hmin', 'MS/4');
+Msize.set('hcurve', '0.2');
+ftri.selection.set(idx_ftri);
+
+ref{1}.set('rmethod', 'regular');
+ref{1}.set('numrefine', 3);
+ref{1}.set('boxcoord', true);
+ref{1}.set('xmax', coords{1}(1,1)+MS.value);
+ref{1}.set('xmin', coords{1}(1,1));
+ref{1}.set('ymax', coords{1}(2,2));
+ref{1}.set('ymin', coords{1}(2,1));
+ref{1}.set('zmax', coords{1}(3,2));
+ref{1}.set('zmin', coords{1}(3,1));
+ref{1}.selection.geom('geom1', 2);
+ref{1}.selection.set(idx_ftri);
+
+ref{2}.set('rmethod', 'regular');
+ref{2}.set('numrefine', 1);
+ref{2}.set('boxcoord', true);
+ref{2}.set('xmax', coords{1}(1,1)+MS.value/3);
+ref{2}.set('xmin', coords{1}(1,1));
+ref{2}.set('ymax', coords{1}(2,2));
+ref{2}.set('ymin', coords{1}(2,1));
+ref{2}.set('zmax', coords{1}(3,2));
+ref{2}.set('zmin', coords{1}(3,1));
+ref{2}.selection.geom('geom1', 2);
+ref{2}.selection.set(idx_ftri);
+
+ref{3}.set('rmethod', 'regular');
+ref{3}.set('numrefine', 3);
+ref{3}.set('boxcoord', true);
+ref{3}.set('xmax', coords{2}(1,2));
+ref{3}.set('xmin', coords{2}(1,2)-MS.value);
+ref{3}.set('ymax', coords{2}(2,2));
+ref{3}.set('ymin', coords{2}(2,1));
+ref{3}.set('zmax', coords{2}(3,2));
+ref{3}.set('zmin', coords{2}(3,1));
+ref{3}.selection.geom('geom1', 2);
+ref{3}.selection.set(idx_ftri);
+
+ref{4}.set('rmethod', 'regular');
+ref{4}.set('numrefine', 1);
+ref{4}.set('boxcoord', true);
+ref{4}.set('xmax', coords{2}(1,2));
+ref{4}.set('xmin', coords{2}(1,2)-MS.value/3);
+ref{4}.set('ymax', coords{2}(2,2));
+ref{4}.set('ymin', coords{2}(2,1));
+ref{4}.set('zmax', coords{2}(3,2));
+ref{4}.set('zmin', coords{2}(3,1));
+ref{4}.selection.geom('geom1', 2);
+ref{4}.selection.set(idx_ftri);
+
+swel.selection('sourceface').set(idx_ftri);
+swel.selection('targetface').set(idx_sweldestiface);
+mesh.run;
 std.run;
+[localmodefreq, localmodeEffMass] = Localmode(Links,coords);
+geom1.feature.remove('difblock');
+geom1.feature.remove('dif1');
+solid.feature.remove('sym1');
+%{
+...
+
+The following code do the calculation without symmetrizing the geom
+geom1.run;
+
+%get indicies
+idx_bnd1 = mphselectbox(model,'geom1', coords{1}, 'boundary');
+idx_bnd2 = mphselectbox(model,'geom1', coords{2}, 'boundary');
+idx_ftri = mphselectbox(model,'geom1', coords{3}, 'boundary');
+idx_sweldestiface = mphselectbox(model,'geom1', coords{4}, 'boundary');
+%physics interface
+fix1.selection.set([idx_bnd1 idx_bnd2]);
+
+%meshing
+Msize.set('hmax', 'MS');
+Msize.set('hmin', 'MS/4');
+Msize.set('hcurve', '0.2');
+ftri.selection.set(idx_ftri);
+swel.selection('sourceface').set(idx_ftri);
+swel.selection('targetface').set(idx_sweldestiface);
+mesh.run;
+eig.set('neigs', 100);
+eig.set('shift',[num2str(localmodefreq) '[Hz]']);
+tic;
+std.run;
+toc;
+...
+...
+%}
 
 %export data
-Eigenfreq = mphglobal(model, 'solid.freq');
-
-%in Eigenfreq find the local mode
-SingleRunResult = Localmode(Eigenfreq);
-
+Eigenfreq = mphglobal(model,'solid.freq');
+SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
+SingleRunResult.EffMass = localmodeEffMass;
 end
