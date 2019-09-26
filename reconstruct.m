@@ -143,12 +143,11 @@ ref{4}.selection.set(idx_ftri);
 
 swel.selection('sourceface').set(idx_ftri);
 swel.selection('targetface').set(idx_sweldestiface);
+swel.create('dis1', 'Distribution');
+swel.feature('dis1').set('numelem', 4);
 mesh.run;
 std.run;
 [localmodefreq, localmodeEffMass] = Localmode(Links,coords);
-geom1.feature.remove('difblock');
-geom1.feature.remove('dif1');
-solid.feature.remove('sym1');
 %{
 ...
 
@@ -182,6 +181,9 @@ toc;
 
 %export data
 Eigenfreq = mphglobal(model,'solid.freq');
-SingleRunResult = evaluategeom(Links,localmodefreq, localmodeEffMass);
+SingleRunResult = evaluategeom(Links,Params,localmodefreq, localmodeEffMass);
 SingleRunResult.EffMass = localmodeEffMass;
+geom1.feature.remove('difblock');
+geom1.feature.remove('dif1');
+solid.feature.remove('sym1');
 end

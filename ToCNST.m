@@ -179,12 +179,12 @@ SingleDieWidth = 11e3;
 WaferHeight = 400;%um
 EtchAngle = 54.7;%degree
 EtchWidth = 2*WaferHeight/tan(EtchAngle/180*pi);
-DiceWidth = WaferHeight/tan(EtchAngle/180*pi);
+EtchWidth = EtchWidth*1.5;
+DiceWidth = EtchWidth;
 IntervalWidth = 4e3;
 HoldGapWidth = 2e2;
 BeamHolderWidth = 1e3;
 BeamEndsReserveWidth = 10;
-
 
 Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(1)}.value = VaryRange(1);
 ParamStep = (VaryRange(2)-VaryRange(1))/((BeamArrayYrange(2)-BeamArrayYrange(1))/BeamArrayYstep);

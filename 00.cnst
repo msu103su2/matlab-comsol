@@ -378,16 +378,16 @@
 <partB wafer 101 genArea>
 <partA partB 0 or>
 2 layer
-<DL20<1 31433.568 1166.432 N 1 90 instance>
-<2 31433.568 2266.432 N 1 90 instance>
-<3 31433.568 3366.432 N 1 90 instance>
+<DL20<0 31433.568 1166.432 N 1 90 instance>
+<0 31433.568 2266.432 N 1 90 instance>
+<0 31433.568 3366.432 N 1 90 instance>
 <_ 31433.568 4466.432 N 1 90 instance>
 <2 31433.568 5566.432 N 1 90 instance>
 <5 31433.568 6666.432 N 1 90 instance>
 <{{25}} {{Arial}} 4000 27500.000 5500.000 textgdsC>
-<DL20<1 12566.432 1166.432 N 1 90 instance>
-<2 12566.432 2266.432 N 1 90 instance>
-<3 12566.432 3366.432 N 1 90 instance>
+<DL20<0 12566.432 1166.432 N 1 90 instance>
+<0 12566.432 2266.432 N 1 90 instance>
+<0 12566.432 3366.432 N 1 90 instance>
 <_ 12566.432 4466.432 N 1 90 instance>
 <2 12566.432 5566.432 N 1 90 instance>
 <4 12566.432 6666.432 N 1 90 instance>
