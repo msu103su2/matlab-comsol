@@ -564,16 +564,9 @@ end
 
 function newParams = UpdateDependencies(Params, IndexofParamToBeVaried)
 newParams = Params;
-key = [num2str(IndexofParamToBeVaried(1)),num2str(IndexofParamToBeVaried(2))]
-switch key
-    case ['2','8']%UrecW, update charmfR and filletR, to filletR's maxminum
+switch IndexofParamToBeVaried
+    case [2,8]%UrecW
         newParams{2}{9}.value = (newParams{2}{8}.value-newParams{2}{2}.value)/2;
-        candi = newParams{2}{9}.value*cos(pi/4)/tan(22.5*pi/180);
-        temp = min([(newParams{2}{1}.value-newParams{2}{7}.value)/2,(newParams{2}{7}.value-newParams{2}{9}.value)/2])
-        if temp > newParams{2}{9}.value*cos(pi/4)
-            newParams{2}{10}.value = candi;
-        else
-            newParams{2}{10}.value = temp/tan(22.5*pi/180);
-        end
+        newParams{2}{10}.value = newParams{2}{9}.value*cos(pi/4)/tan(22.5*pi/180);
 end
 end

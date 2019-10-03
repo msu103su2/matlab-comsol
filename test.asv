@@ -1,0 +1,9 @@
+function R = test(theta)
+if (161.3/180*pi<=mod(theta,2*pi)) & (mod(theta,2*pi)<=198.7/180*pi)
+    L = cos(18.7/180*pi);
+    x = L * tan(abs(mod(theta,2*pi)-pi));
+    R = sqrt(L*L+x*x);
+else
+    R = 1;
+end
+end
