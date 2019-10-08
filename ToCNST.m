@@ -13,8 +13,9 @@ GDSpath = [GDSdir,'\',filename,'.gds'];
 TempCNSTpath = [workingdir,'\\',filename,'.cnst'];
 fileID = fopen(TempCNSTpath, 'w');
 fprintf(fileID, '0.001 gdsReso\n');
-fprintf(fileID, '0.001 shapeReso\n');
+fprintf(fileID, '0.1 shapeReso\n');
 [numberstrucs,numberspaceL,numberspaceW] = DieCharacter(fileID);
+[SmallNumberLength, SmallNumberWidth, SmallNumberse]=DieCharacterSmall(fileID,Dielayer);
 charactergap = 100;
 
 for i = 1:size(DiesParams, 2)
@@ -97,12 +98,14 @@ end
 
 fclose(fileID);
 fclose('all');
+tic;
 command = sprintf('java -jar C:\\Users\\purdylab\\Desktop\\CNSTNanolithographyToolboxV2016.10.01\\CNSTNanolithographyToolboxV2016.10.01.jar cnstscripting %s.cnst %s.gds',filename,filename);
 [status,cmdout] = dos(command);
 status, cmdout
-command = sprintf('C:\\Users\\purdylab\\AppData\\Roaming\\KLayout\\klayout_app C:\\Users\\purdylab\\%s.gds', filename);
-[status,cmdout] = dos(command);
-status, cmdout
+toc;
+%command = sprintf('C:\\Users\\purdylab\\AppData\\Roaming\\KLayout\\klayout_app C:\\Users\\purdylab\\%s.gds', filename);
+%[status,cmdout] = dos(command);
+%status, cmdout
 movefile(sprintf('%s.cnst',filename),CNSTdir);
 movefile(sprintf('C:\\Users\\purdylab\\%s.gds',filename),GDSdir);
 movefile(sprintf('C:\\Users\\purdylab\\%s.gds.log',filename),GDSdir);
@@ -206,41 +209,55 @@ SingleDieLength = 11e3;
 SingleDieWidth = 11e3;
 WaferHeight = 400;%um
 EtchAngle = 54.7;%degree
-EtchWidth = 2*WaferHeight/tan(EtchAngle/180*pi);
-EtchWidth = EtchWidth*1.5;
-DiceWidth = EtchWidth;
+EtchWidth = WaferHeight/tan(EtchAngle/180*pi);
+DiceWidth = EtchWidth*1.5*2;
 IntervalWidth = 4e3;
 HoldGapWidth = 2e2;
 BeamHolderWidth = 1e3;
-BeamEndsReserveWidth = 10;
+BeamEndsReserveWidth = 20;
 
-if ~isequal(IndexofParamToBeVaried,[0,0])
-Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.value = VaryRange(1);
-ParamStep = (VaryRange(2)-VaryRange(1))/((BeamArrayYrange(2)-BeamArrayYrange(1))/BeamArrayYstep);
-counter = 1;
-for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
-    Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.value = VaryRange(1)+(counter-1)*ParamStep;
-    Params = UpdateDependencies(Params, IndexofParamToBeVaried);
-    SBname{counter} = singleBeam(Params, sprintf('%s_%s00%1.f',Diename,...
-        Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.name,...
-        counter),175,fileID);
-    Lengths(counter) = 2*Params{1}{9}.value*Params{2}{1}.value*1e6+Params{1}{1}.value*1e6;
-    counter = counter + 1;
-end
-else
-counter = 1;
-for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
-    SBname{counter} = singleBeam(Params, sprintf('%s_%s00%1.f',Diename,'Null',counter),175,fileID);
-    Lengths(counter) = 2*Params{1}{9}.value*Params{2}{1}.value*1e6+Params{1}{1}.value*1e6;
-    counter = counter + 1;
-end
+numberofdevices = (BeamArrayYrange(2)-BeamArrayYrange(1))/BeamArrayYstep+1;
+numberofstrings = floor(numberofdevices/7);
+numberofdevices = numberofdevices - numberofstrings;
+
+if ~isequal(IndexofParamToBeVaried(1),0)
+    stringParams = Params;
+    stringParams{2}{8}.value = stringParams{2}{2}.value;
+    string = singleBeam(stringParams, sprintf('%s_%sstrb',Diename,'Null'),175,fileID);
+    Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.value = VaryRange(1);
+    ParamStep = (VaryRange(2)-VaryRange(1))/(numberofdevices-1);
+    counter = 1;
+    for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
+        if mod(counter,7)==0
+            SBname{counter} = string;
+            Lengths(counter) = 2*stringParams{1}{9}.value*stringParams{2}{1}.value*1e6+stringParams{1}{1}.value*1e6;
+            counter = counter + 1;
+        else
+            Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.value = VaryRange(1)+(counter-1)*ParamStep;
+            Params = UpdateDependencies(Params, IndexofParamToBeVaried);
+            SBname{counter} = singleBeam(Params, sprintf('%s_%s00%1.f',Diename,...
+                Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.name,...
+                counter),175,fileID);
+            Lengths(counter) = 2*Params{1}{9}.value*Params{2}{1}.value*1e6+Params{1}{1}.value*1e6;
+            counter = counter + 1;
+        end
+    end
+elseif isequal(IndexofParamToBeVaried,[0,0])
+    counter = 1;
+    for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
+        SBname{counter} = singleBeam(Params, sprintf('%s_%s00%1.f',Diename,'Null',counter),175,fileID);
+        Lengths(counter) = 2*Params{1}{9}.value*Params{2}{1}.value*1e6+Params{1}{1}.value*1e6;
+        counter = counter + 1;
+    end
+elseif isequal(IndexofParamToBeVaried,[0,1])
+    SBname{1} = singleBeam(Params, sprintf('%s_%s00%1.f',Diename,'Membrane',1),175,fileID);
 end
 
 fprintf(fileID, sprintf('# %s\n',Diename));
 fprintf(fileID, sprintf('<%s struct>\n',Diename));%single die of different params
 counter = 1;
 for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
-    fprintf(fileID,sprintf('<%s %.3f %.3f 0 1 0 instance>\n',SBname{counter},-IntervalWidth/4,y));
+    fprintf(fileID,sprintf('<%s %.3f %.3f 0 1 0 instance>\n',SBname{counter},-IntervalWidth/4+numberspaceL/2,y));
     counter = counter + 1;
 end
 fprintf(fileID, sprintf('%1.f layer\n',Dielayer));
@@ -260,10 +277,28 @@ fprintf(fileID, sprintf('<Dices %s %1.f genArea>\n',Diename, Dielayer));
 fprintf(fileID, sprintf('<Dices 0 0 0 1 0 0 %1.f genAreaCopy>\n',Backlayer));
 
 fprintf(fileID, '176 layer\n');
-fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-    -IntervalWidth/4,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
-    min(Lengths),BeamArrayYrange(2)-BeamArrayYrange(1)+BeamArrayYstep*2));
+if ~isequal(IndexofParamToBeVaried,[0,1])
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
+        min(Lengths)-1,BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6+BeamArrayYstep*2));
+elseif isequal(IndexofParamToBeVaried,[0,1])
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
+        (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-1,...
+        Params{1}{2}.value*1e6-1));
+end
 
+if ~isequal(IndexofParamToBeVaried,[0,1])
+    counter =1;
+    x = min(Lengths)/2 + 10-IntervalWidth/4+numberspaceL/2;
+    for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
+        smallnumber = sprintf('%02i',counter);
+        for i = 1:size(smallnumber,2)
+            fprintf(fileID,sprintf('<Small%s %.3f %.3f N 1 0 instance>\n',smallnumber(i),x+i*7,y));
+        end
+        counter = counter + 1;
+    end
+end
 
 fprintf(fileID, '0 layer\n');
 fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',SingleDieLength, SingleDieWidth));
@@ -273,14 +308,21 @@ fprintf(fileID, sprintf('<beams %s 175 genArea>\n',Diename));
 fprintf(fileID, sprintf('<base beams %1.f subtract>\n',Dielayer));
 
 fprintf(fileID, sprintf('%1.f layer\n',Backlayer));
-fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-    -IntervalWidth/4,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
-    min(Lengths)-2*BeamEndsReserveWidth+2*EtchWidth,...
-    BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6+2*EtchWidth));
+if ~isequal(IndexofParamToBeVaried,[0,1])
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
+        min(Lengths)-2*BeamEndsReserveWidth+2*EtchWidth,...
+        BeamArrayYrange(2)-BeamArrayYrange(1)+BeamArrayYstep*2+2*EtchWidth+Params{2}{8}.value*1e6));
+elseif isequal(IndexofParamToBeVaried,[0,1])
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
+        (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-2*BeamEndsReserveWidth+2*EtchWidth,...
+        Params{1}{2}.value*1e6-2*BeamEndsReserveWidth+2*EtchWidth));
+end
 
 fprintf(fileID, sprintf('%1.f layer\n',Dielayer));
-x=-SingleDieLength/2+EtchWidth+charactergap+numberspaceW/2;
-y=SingleDieWidth/2-EtchWidth-charactergap-numberspaceL/2;
+x=-SingleDieLength/2+DiceWidth+charactergap+numberspaceW/2;
+y=SingleDieWidth/2-DiceWidth-charactergap-numberspaceL/2;
 for j = 1:size(DieSN,2)
     fprintf(fileID,sprintf('<%s %.3f %.3f N 1 -90 instance>\n',DieSN(j),x,y));
     y = y - charactergap - numberspaceL;
@@ -566,4 +608,77 @@ switch key
             newParams{2}{10}.value = temp/tan(22.5*pi/180);
         end
 end
+end
+
+function  [Length, Width, se]=DieCharacterSmall(fileID,Dielayer)
+Length = 3;
+Width = 1;
+se = 2.5;
+fprintf(fileID, sprintf('%i layer\n',Dielayer));
+fprintf(fileID, sprintf('<%s struct>\n','Small0'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',-se*2,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small1'));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small2'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',-se*2,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small3'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',-se*2,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small4'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small5'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',-se*2,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small6'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',-se*2,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small7'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small8'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',-se*2,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,-se,Length,Width));
+
+fprintf(fileID, sprintf('<%s struct>\n','Small9'));
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
+fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
+fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
 end

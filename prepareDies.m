@@ -1,5 +1,5 @@
 conn = setupConn();
-databasename = 'test';
+databasename = 'DeviceDB';
 Init_BigTables(databasename,conn);
 
 WaferSN = '000';
@@ -20,9 +20,214 @@ execute(conn,sqlquery);
 
 AvaliableDies = [5:10,12:17,20:25,28:33,36:41,43:48];
 DiesParams=[];
-DiesParams = generateDiesfromData('PSO\data.mat',[5,6,7,8,9,10],DiesParams, WaferSN,conn,Tablename);
-DiesParams = generateDiesfromData('PSO\data_1mm.mat',[12,13,14,15,16,17],DiesParams,WaferSN,conn,Tablename);
+DiesParams = generateDiesfromData('PSO\data.mat',[5:10],DiesParams, WaferSN,conn,Tablename,2);
+DiesParams = generateDiesfromData('PSO\data_1mm.mat',[12:17],DiesParams,WaferSN,conn,Tablename,1);
+DiesParams = generateDiesfromData('PSO\data.mat',[20:25],DiesParams, WaferSN,conn,Tablename,2);
+DiesParams = generateDiesfromData('PSO\data_1mm.mat',[28:33],DiesParams,WaferSN,conn,Tablename,1);
 
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+Membranesize = 2e-3;
+DieParams.Params{2}{1}.value = (Membranesize - DieParams.Params{1}{1}.value)/(2*DieParams.Params{1}{9}.value);
+DieParams.Params{1}{2}.value = Membranesize;
+DieParams.Params{2}{2}.value = Membranesize;
+DieParams.Params{2}{2}.value = DieParams.Params{2}{8}.value;
+VPname = 'Membrane';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [0,1];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 36, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A membrane of size %.3fmm by %.3fmm', Membranesize*1e3,Membranesize*1e3);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+clear Result;
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+DieParams.Params{1}{2}.value = DieParams.Params{1}{2}.value*0.5;
+DieParams.Params{2}{2}.value = DieParams.Params{2}{2}.value*0.5;
+DieParams.Params{2}{8}.value = DieParams.Params{2}{8}.value*0.5;
+DieParams.Params{2}{9}.value = DieParams.Params{2}{9}.value*0.5;
+DieParams.Params{2}{10}.value = DieParams.Params{2}{10}.value*0.5;
+VPname = 'DL';
+RVRL = -0.2;
+RVRH = 0.2;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 37, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('Scale width down to 50%%, Vary unit cell length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+clear Result;
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = DieParams.Params{1}{1}.value+DieParams.Params{1}{9}.value*2*DieParams.Params{2}{1}.value;
+DieParams.Params{1}{1}.value = DieParams.Params{1}{1}.value*0.5;
+DieParams.Params{2}{1}.value = DieParams.Params{2}{1}.value*0.5;
+DieParams.Params{2}{7}.value = DieParams.Params{2}{7}.value*0.5;
+DieParams.Params{1}{9}.value = floor((totallength-DieParams.Params{1}{1}.value)/(2*DieParams.Params{2}{1}.value));
+VPname = 'DL';
+RVRL = -0.2;
+RVRH = 0.2;
+Ystep = 200;%um
+Yrange =[-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 38, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('Scale length down to 50%%, adjust NumofUC to keep DeviceLength roughly unchanged, Vary unit cell length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+clear Result;
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = DieParams.Params{1}{1}.value+DieParams.Params{1}{9}.value*2*DieParams.Params{2}{1}.value;
+DieParams.Params{1}{2}.value = totallength;
+DieParams.Params{2}{2}.value = DieParams.Params{1}{2}.value;
+DieParams.Params{2}{8}.value = DieParams.Params{2}{2}.value;
+VPname = 'Null';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [0,1];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 39, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A wide strip, Lenght=%.3fum, width=%.3fum',totallength*1e6,totallength*1e6);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+clear Result;
+
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = 4e-3;
+DieParams.Params{2}{1}.value = (totallength - DieParams.Params{1}{1}.value)/(2*DieParams.Params{1}{9}.value);
+DieParams.Params{2}{8}.value = DieParams.Params{2}{2}.value;
+VPname = 'Null';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 40, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A bunch of trival straight beams of %.3fmm',totallength*1e3);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 4, Tablename, Synopsis);
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = 0.5e-3;
+DieParams.Params{2}{1}.value = (totallength - DieParams.Params{1}{1}.value)/(2*DieParams.Params{1}{9}.value);
+DieParams.Params{2}{8}.value = DieParams.Params{2}{2}.value;
+VPname = 'Null';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 41, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A bunch of trival straight beams of %.3fmm',totallength*1e3);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 0.5, Tablename, Synopsis);
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = 0.5e-3;
+DieParams.Params{2}{1}.value = (totallength - DieParams.Params{1}{1}.value)/(2*DieParams.Params{1}{9}.value);
+DieParams.Params{2}{8}.value = DieParams.Params{2}{2}.value;
+VPname = 'Null';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 47, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A bunch of trival straight beams of %.3fmm',totallength*1e3);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 0.5, Tablename, Synopsis);
+
+load('PSO\data.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = 0.5e-3;
+DieParams.Params{2}{1}.value = (totallength - DieParams.Params{1}{1}.value)/(2*DieParams.Params{1}{9}.value);
+DieParams.Params{2}{8}.value = DieParams.Params{2}{2}.value;
+VPname = 'Null';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 48, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A bunch of trival straight beams of %.3fmm',totallength*1e3);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 0.5, Tablename, Synopsis);
+
+load('PSO\data_1mm.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+Membranesize = 1e-3;
+DieParams.Params{2}{1}.value = (Membranesize - DieParams.Params{1}{1}.value)/(2*DieParams.Params{1}{9}.value);
+DieParams.Params{1}{2}.value = Membranesize;
+DieParams.Params{1}{2}.value = Membranesize;
+DieParams.Params{2}{2}.value = Membranesize;
+DieParams.Params{2}{2}.value = DieParams.Params{2}{8}.value;
+VPname = 'Membrane';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [0,1];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 43, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A membrane of size %.3fmm by %.3fmm', Membranesize*1e3,Membranesize*1e3);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 1, Tablename, Synopsis);
+clear Result;
+
+load('PSO\data_1mm.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+DieParams.Params{1}{2}.value = DieParams.Params{1}{2}.value*0.5;
+DieParams.Params{2}{2}.value = DieParams.Params{2}{2}.value*0.5;
+DieParams.Params{2}{8}.value = DieParams.Params{2}{8}.value*0.5;
+DieParams.Params{2}{9}.value = DieParams.Params{2}{9}.value*0.5;
+DieParams.Params{2}{10}.value = DieParams.Params{2}{10}.value*0.5;
+VPname = 'Null';
+RVRL = -0.2;
+RVRH = 0.2;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 44, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('Scale width down to 50%%, Vary unit cell length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 1, Tablename, Synopsis);
+clear Result;
+
+load('PSO\data_1mm.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = DieParams.Params{1}{1}.value+DieParams.Params{1}{9}.value*2*DieParams.Params{2}{1}.value;
+DieParams.Params{1}{1}.value = DieParams.Params{1}{1}.value*0.5;
+DieParams.Params{2}{1}.value = DieParams.Params{2}{1}.value*0.5;
+DieParams.Params{2}{7}.value = DieParams.Params{2}{7}.value*0.5;
+DieParams.Params{1}{9}.value = floor((totallength-DieParams.Params{1}{1}.value)/(2*DieParams.Params{2}{1}.value));
+VPname = 'Null';
+RVRL = -0.2;
+RVRH = 0.2;
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 45, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('Scale length down to 50%%, adjust NumofUC to keep DeviceLength roughly unchanged, Vary unit cell length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 1, Tablename, Synopsis);
+clear Result;
+
+load('PSO\data_1mm.mat');
+DieParams.Params = Result.params(Result.searchresult,1:2);
+totallength = DieParams.Params{1}{1}.value+DieParams.Params{1}{9}.value*2*DieParams.Params{2}{1}.value;
+DieParams.Params{1}{2}.value = totallength;
+DieParams.Params{2}{2}.value = DieParams.Params{1}{2}.value;
+DieParams.Params{2}{8}.value = DieParams.Params{2}{2}.value;
+VPname = 'Null';
+RVRL = 0;
+RVRH = 0;
+Ystep = 200;%um
+Yrange = [0,1];%um
+[DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, 46, WaferSN);
+DiesParams = [DiesParams, DieParams];
+Synopsis = sprintf('A wide strip, Lenght=%.3fum, width=%.3fum',totallength*1e6,totallength*1e6);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 1, Tablename, Synopsis);
+clear Result;
 
 sqlquery = sprintf('SET FOREIGN_KEY_CHECKS=1;\n');
 execute(conn,sqlquery);
@@ -73,6 +278,8 @@ switch ParamName
         Index = [2,10];
     case 'Null'
         Index = [0,0];
+    case 'Membrane'
+        Index = [0,1];
 end
 end
 function LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis)
@@ -137,7 +344,7 @@ sqlquery = [sqlquery,sqlquery2];
 execute(conn,sqlquery);
 end
 
-if ~isequal(VPname,'Null')
+if ~isequal(VPname,'Null') && ~isequal(VPname,'Membrane')
 ParamStepSize = (DieParams.ParamsRange(2)-DieParams.ParamsRange(1))/(NumberOfDevices -1);
 ListOfVP = [DieParams.ParamsRange(1):ParamStepSize:DieParams.ParamsRange(2)];
 for i = 1:NumberOfDevices
@@ -149,18 +356,20 @@ end
 end
 
 for i = 1:NumberOfDevices
+    temp = sprintf('%02i',i);
     sqlquery = sprintf('SELECT DL, UL, NumofUC FROM %s WHERE id=''%i''',DTablename, i);
     result = fetch(conn,sqlquery);
     sqlquery = sprintf(['UPDATE %s\n'...
-        '\tSET %s = %d\n'...
-        '\tWHERE id = %i\n;'],DTablename, 'DeviceLength', result.DL(1)+result.NumofUC(1)*2*result.UL(1), i);
+        '\tSET %s = %d,\n'...
+        '\t%s = ''%s''\n'...
+        '\tWHERE id = %i\n;'],DTablename, 'DeviceLength', result.DL(1)+result.NumofUC(1)*2*result.UL(1),'DeviceSN',[DieSN,'_',temp], i);
     execute(conn,sqlquery);
 end
 
 end
 function [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumber, WaferSN)
 DieParams.ParamsIndex = ParamTable(VPname);
-if ~isequal(DieParams.ParamsIndex, [0,0])
+if ~isequal(DieParams.ParamsIndex(1), 0)
     DieParams.ParamsRange = [(1+RVRL)*DieParams.Params{DieParams.ParamsIndex(1)}{DieParams.ParamsIndex(2)}.value,...
         (1+RVRH)*DieParams.Params{DieParams.ParamsIndex(1)}{DieParams.ParamsIndex(2)}.value];
 else
@@ -224,18 +433,19 @@ fclose(SQLscript);
 result = executeSQLScript(conn, 'sqltest.sql');
 end
 
-function newDiesParams = generateDiesfromData(DataPath,Dienumbers,DiesParams,WaferSN,conn,Tablename)
+function newDiesParams = generateDiesfromData(DataPath,Dienumbers,DiesParams,WaferSN,conn,Tablename, DesignedLength)
 load(DataPath);
+Ystep = 200;%um
+Yrange = [-1900,1900];%um
+
 DieParams.Params = Result.params(Result.searchresult,1:2);
 VPname = 'DL';
 RVRL = -0.2;
 RVRH = 0.2;
-Ystep = 200;%um
-Yrange = [-200,200];%um
 [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumbers(1), WaferSN);
 DiesParams = [DiesParams, DieParams];
 Synopsis = sprintf('Vary defect Length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
-LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis);
 clear Result;
 
 load(DataPath);
@@ -244,14 +454,12 @@ Params = Result.params(Result.searchresult,1:2);
 RVRL = Params{2}{1}.value-(Params{2}{7}.value+2*Params{2}{10}.value*tan(22.5*pi/180)+2*Params{2}{8}.value);
 RVRL = max([-0.2, -RVRL]);
 RVRH = 0.2;
-Ystep = 200;%um
-Yrange = [-200,200];%um
 clear Result;
 DieParams.Params = Params;
 [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumbers(2), WaferSN);
 DiesParams = [DiesParams, DieParams];
 Synopsis = sprintf('Vary unit cell length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
-LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis);
 
 load(DataPath);
 VPname = 'UrecL';
@@ -260,14 +468,12 @@ RVRL = (2+sqrt(2))*Params{2}{8}.value/Params{2}{7}.value;
 RVRL = max([-0.2, -RVRL]);
 RVRH = (Params{2}{1}.value-sqrt(2)&Params{2}{8}.value)/Params{2}{7}.value;
 RVRH = min([0.2,RVRH]);
-Ystep = 200;%um
-Yrange = [-200,200];%um
 clear Result;
 DieParams.Params = Params;
 [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumbers(3), WaferSN);
 DiesParams = [DiesParams, DieParams];
 Synopsis = sprintf('Vary width from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
-LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis);
 
 
 load(DataPath);
@@ -276,28 +482,24 @@ Params = Result.params(Result.searchresult,1:2);
 RVRL = (Params{2}{8}.value-Params{2}{2}.value)/2;
 RVRL = max([-0.2, -RVRL]);
 RVRH = 0.2;
-Ystep = 200;%um
-Yrange = [-200,200];%um
 clear Result;
 DieParams.Params = Params;
 [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumbers(4), WaferSN);
 DiesParams = [DiesParams, DieParams];
 Synopsis = sprintf('Vary UC width modulator length from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
-LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis);
 
 load(DataPath);
 VPname = 'FilletR';
 Params = Result.params(Result.searchresult,1:2);
 RVRL = -0.7;
 RVRH = 0;
-Ystep = 200;%um
-Yrange = [-200,200];%um
 clear Result;
 DieParams.Params = Params;
 [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumbers(5), WaferSN);
 DiesParams = [DiesParams, DieParams];
 Synopsis = sprintf('Vary FilletR from %s%% to +%s%%', num2str(RVRL*100), num2str(RVRH*100));
-LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis);
 
 load(DataPath);
 VPname = 'Null';
@@ -305,14 +507,12 @@ Params = Result.params(Result.searchresult,1:2);
 Params{2}{8}.value = Params{2}{2}.value;
 RVRL = 0;
 RVRH = 0;
-Ystep = 200;%um
-Yrange = [-200,200];%um
 clear Result;
 DieParams.Params = Params;
 [DieParams,NumberOfDevices] = PrepareDie(DieParams, VPname, RVRL, RVRH, Ystep, Yrange, Dienumbers(6), WaferSN);
 DiesParams = [DiesParams, DieParams];
 Synopsis = 'A bunch of trival straight beams';
-LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
+LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, DesignedLength, Tablename, Synopsis);
 
 newDiesParams = DiesParams;
 end
