@@ -51,15 +51,7 @@ if ~(UW.value==UrecW.value)
     UCfil.selection('point').set(names{4}, [3 4 5 6 7 8 9 10]);
     UCfil.set('radius', FilletR.value);
 else
-    counter = 1;
-    p = size(names,2);
-    for i = 1:p
-        if isequal(names{counter},'UCCharm1') || isequal(names{counter},'UCFillet1')
-            names(counter)=[];
-        else
-            counter = counter +1;
-        end
-    end
+    
 end
 
 rUCParams = {UL UW UH Ux Uy Uz UrecL UrecW ChamferR FilletR};

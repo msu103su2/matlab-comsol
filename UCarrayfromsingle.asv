@@ -6,7 +6,7 @@ model = Links{1};
 for i = 1:size(Positions,2)
     names = {};
     for j = 1:size(Basenames ,2)
-        names = [names, strcat(Basenames{j}, '_', num2str(i))];
+        names = [names, strcat(Basenames{i}, '_', num2str(i))];
     end
     UCParams{4}.value = Positions(i);
     [AllUCParams{i}, AllUCnames{i}] = unitcellgeom(workplane, DefectParams, UCParams, names);

@@ -186,4 +186,5 @@ SingleRunResult.EffMass = localmodeEffMass;
 geom1.feature.remove('difblock');
 geom1.feature.remove('dif1');
 solid.feature.remove('sym1');
+swel.feature.remove('dis1');
 end
