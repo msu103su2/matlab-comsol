@@ -14,7 +14,7 @@ TempCNSTpath = [workingdir,'\\',filename,'.cnst'];
 fileID = fopen(TempCNSTpath, 'w');
 fprintf(fileID, '0.001 gdsReso\n');
 fprintf(fileID, '0.1 shapeReso\n');
-[numberstrucs,numberspaceL,numberspaceW] = DieCharacter(fileID);
+[numberstrucs,numberspaceL,numberspaceW] = DieCharacter(fileID, Dielayer);
 [SmallNumberLength, SmallNumberWidth, SmallNumberse]=DieCharacterSmall(fileID,Dielayer);
 charactergap = 100;
 
@@ -374,7 +374,7 @@ else
 end
 end
 
-function [names,numberspaceL,numberspaceW] = DieCharacter(fileID)
+function [names,numberspaceL,numberspaceW] = DieCharacter(fileID, Dielayer)
 Length = 10;
 interval = 2;
 numberspaceL = 1e3;
@@ -386,7 +386,7 @@ names = [{'1'},{'2'},{'3'},{'4'},{'5'},{'6'},{'7'},{'8'},{'9'},{'0'},{'_'}];
 
 
 fprintf(fileID, '<square struct>\n');
-fprintf(fileID, '100 layer\n');
+fprintf(fileID, sprintf('%i layer\n',Dielayer));
 fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',Length, Length));
 
 fprintf(fileID, '<stick struct>\n');
