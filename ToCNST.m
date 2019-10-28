@@ -37,8 +37,8 @@ for i = 1:9
     MarkerFXs(2*i).name= CreateMarker (MarkerLayer, fileID,['-',num2str(i)]);
     MarkerFXs(2*i).x = -i*FX_dx;
 end
-MarkerFEX = 33e3;
-MarkerFEY = 33e3;
+MarkerFEX = 33.6e3;
+MarkerFEY = 33.6e3;
 MarkerDis = 300;
 for i = 1:8
     MarkerFEs(i).name = CreateMarker(MarkerLayer, fileID,['FE',num2str(i)]);
@@ -59,6 +59,11 @@ MarkerFEs(7).x = MarkerFEX - MarkerDis;
 MarkerFEs(7).y = -MarkerFEY - MarkerDis;
 MarkerFEs(8).x = MarkerFEX + MarkerDis;
 MarkerFEs(8).y = -MarkerFEY + MarkerDis;
+
+%windows
+fprintf(fileID, '<windows struct>\n');
+fprintf(fileID, '1 layer\n');
+fprintf(fileID, '0 0 2000 2000 0 rectangleC\n');
 
 %[DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
 %[UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
@@ -94,6 +99,19 @@ for i = 1:size(MarkerFEs,2)
     fprintf(fileID, sprintf('<%s %d %d N 1 0 instance>\n',...
     MarkerFEs(i).name,MarkerFEs(i).x,MarkerFEs(i).y));
 end
+for i = 1:size(MarkerFXs,2)
+    fprintf(fileID, sprintf('<windows %d 0 N 1 0 instance>\n',MarkerFXs(i).x-FX_dx/2*(2*mod(i,2)-1) ));
+end
+fprintf(fileID, '1 layer\n');
+fprintf(fileID, '40000 10000 15000 2000 90 rectangleC\n');
+fprintf(fileID, '37000 -10000 15000 2000 90 rectangleC\n');
+fprintf(fileID, '43000 -10000 15000 2000 90 rectangleC\n');
+fprintf(fileID, '-40000 10000 15000 2000 90 rectangleC\n');
+fprintf(fileID, '-37000 -10000 15000 2000 90 rectangleC\n');
+fprintf(fileID, '-43000 -10000 15000 2000 90 rectangleC\n');
+
+%dose test structure
+DoseTest(fileID);
 
 
 fclose(fileID);
@@ -681,4 +699,62 @@ fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',0,Length,Width));
 fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,se,Length,Width));
 fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',-se,se,Length,Width));
 fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 90 rectangleC\n',se,-se,Length,Width));
+end
+
+function DoseTest(fileID, Params)
+Unitsize = 2000;
+Layer = 16;
+
+% string
+Params{1}{1}.value = 100e-6;
+Params{2}{1}.value = 200e-6;
+Params{2}{7}.value = 100e-6;
+Params{1}{9}.value = 2;
+counter = 1;
+for width = [2e-6:1e-6:10e-6]
+    Params{1}{2}.value = width;
+    Params{2}{2}.value = Params{1}{2}.value;
+    Params{2}{8}.value = Params{2}{2}.value*2;
+    Params{2}{9}.value = (Params{2}{8}.value-Params{2}{2}.value)/2;
+    Params{2}{10}.value = Params{2}{9}.value*cos(pi/4)/tan(22.5*pi/180);
+    DTPCnames{counter} = singleBeam(Params, ['DTPC',num2str(counter)], 200, fileID);
+    counter = counter+1;
+end
+
+fprintf(fileID, '<DTPC struct>\n');
+y = 0;
+spacing = 100;
+counter = 1;
+for x = [-(size(DTPCnames,2)-1)*spacing/2:spacing:(size(DTPCnames,2)-1)*spacing/2]
+    fprintf(fileID, sprintf('<%s %.3f %.3f N 1 90 instance>\n',DTPCnames{counter},x,y));
+    counter = counter + 1;
+end
+fprintf(fileID, '<A DTPC 200 genArea>\n');
+
+fprintf(fileID, '201 layer\n');
+fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',...
+    (size(DTPCnames,2)-1)*spacing+30,1e6*(Params{1}{1}.value+2*Params{1}{9}.value*Params{2}{1}.value)));
+fprintf(fileID, '<B DTPC 201 genArea>\n');
+fprintf(fileID, sprintf('<B A %i subtract>\n',Layer));
+
+fprintf(fileID, '<DT struct>\n');
+fprintf(fileID, '100 layer\n');
+fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',Unitsize,Unitsize));
+fprintf(fileID, '<A DT 100 genArea>\n');
+fprintf(fileID, '101 layer\n');
+fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',Unitsize-50,Unitsize-50));
+fprintf(fileID, '<B DT 101 genArea>\n');
+fprintf(fileID, sprintf('<A B %i subtract>\n',Layer));
+
+fprintf(fileID, sprintf('%i layer\n', Layer));
+fprintf(fileID, sprintf('<0 0 100 20 100 0 0 0 0 alignCustC1>\n'));
+
+fprintf(fileID, sprintf('%.3f %.3f 1 5 1 40 10 80 0 resoPatternRSA\n',-Unitsize/2+60, Unitsize/4 + 300));
+fprintf(fileID, sprintf('%.3f %.3f 6 8 1 40 10 80 0 resoPatternRSA\n',-Unitsize/2+60, Unitsize/4));
+fprintf(fileID, sprintf('%.3f %.3f 9 10 1 40 10 80 0 resoPatternRSA\n',-Unitsize/2+60, Unitsize/4 - 300));
+fprintf(fileID, sprintf('%.3f %.3f 1 5 1 40 10 80 -90 resoPatternRSA\n',Unitsize/4 + 300, Unitsize/2-60));
+fprintf(fileID, sprintf('%.3f %.3f 6 8 1 40 10 80 -90 resoPatternRSA\n',Unitsize/4, Unitsize/2-60));
+fprintf(fileID, sprintf('%.3f %.3f 9 10 1 40 10 80 -90 resoPatternRSA\n',Unitsize/4 - 300, Unitsize/2-60));
+fprintf(fileID, sprintf('<DTPC %.3f %.3f N 1 0 instance>\n',-Unitsize/4,-Unitsize/4));
+fprintf(fileID, sprintf('<DTPC %.3f %.3f N 1 90 instance>\n',Unitsize/4,-Unitsize/4));
 end

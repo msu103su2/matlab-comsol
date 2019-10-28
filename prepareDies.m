@@ -20,6 +20,8 @@ execute(conn,sqlquery);
 
 AvaliableDies = [5:10,12:17,20:25,28:33,36:41,43:48];
 DiesParams=[];
+
+
 DiesParams = generateDiesfromData('PSO\data.mat',[5:10],DiesParams, WaferSN,conn,Tablename,2);
 DiesParams = generateDiesfromData('PSO\data_1mm.mat',[12:17],DiesParams,WaferSN,conn,Tablename,1);
 DiesParams = generateDiesfromData('PSO\data.mat',[20:25],DiesParams, WaferSN,conn,Tablename,2);
@@ -42,6 +44,7 @@ DiesParams = [DiesParams, DieParams];
 Synopsis = sprintf('A membrane of size %.3fmm by %.3fmm', Membranesize*1e3,Membranesize*1e3);
 LogDie(WaferSN, conn, DieParams, VPname, NumberOfDevices, 2, Tablename, Synopsis);
 clear Result;
+
 
 load('PSO\data.mat');
 DieParams.Params = Result.params(Result.searchresult,1:2);
