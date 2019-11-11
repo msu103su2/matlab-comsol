@@ -31,7 +31,7 @@ end
 MarkerLayer = 1;
 FX_dx = 5e3;
 MarkerC = CreateMarker (MarkerLayer, fileID,'0');
-for i = 1:8
+for i = 1:9
     MarkerFXs(2*i-1).name= CreateMarker (MarkerLayer, fileID,num2str(i));
     MarkerFXs(2*i-1).x = i*FX_dx;
     MarkerFXs(2*i).name= CreateMarker (MarkerLayer, fileID,['-',num2str(i)]);
@@ -239,8 +239,7 @@ IntervalWidth = 4e3;
 HoldGapWidth = 2e2;
 BeamHolderWidth = 1e3;
 BeamEndsReserveWidth = 20;
-DeviceCX = -IntervalWidth/4-numberspaceW/2-charactergap/2;
-DeviceCY = 0;
+
 numberofdevices = (BeamArrayYrange(2)-BeamArrayYrange(1))/BeamArrayYstep+1;
 numberofstrings = floor(numberofdevices/7);
 numberofdevices = numberofdevices - numberofstrings;
@@ -282,7 +281,7 @@ fprintf(fileID, sprintf('# %s\n',Diename));
 fprintf(fileID, sprintf('<%s struct>\n',Diename));%single die of different params
 counter = 1;
 for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
-    fprintf(fileID,sprintf('<%s %.3f %.3f 0 1 0 instance>\n',SBname{counter},DeviceCX,y));
+    fprintf(fileID,sprintf('<%s %.3f %.3f 0 1 0 instance>\n',SBname{counter},-IntervalWidth/4+numberspaceL/2,y));
     counter = counter + 1;
 end
 fprintf(fileID, sprintf('%1.f layer\n',Dielayer));
@@ -304,18 +303,18 @@ fprintf(fileID, sprintf('<Dices 0 0 0 1 0 0 %1.f genAreaCopy>\n',Backlayer));
 fprintf(fileID, '176 layer\n');
 if ~isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-        DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
         min(Lengths)-1,BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6+BeamArrayYstep*2));
 elseif isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-        DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
         (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-1,...
         Params{1}{2}.value*1e6-1));
 end
 
 if ~isequal(IndexofParamToBeVaried,[0,1])
     counter =1;
-    x = min(Lengths)/2 + 10+DeviceCX;
+    x = min(Lengths)/2 + 10-IntervalWidth/4+numberspaceL/2;
     for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
         smallnumber = sprintf('%02i',counter);
         for i = 1:size(smallnumber,2)
@@ -335,18 +334,18 @@ fprintf(fileID, sprintf('<base beams %1.f subtract>\n',Dielayer));
 fprintf(fileID, sprintf('%1.f layer\n',Backlayer));
 if ~isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-        DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
         min(Lengths)-2*BeamEndsReserveWidth+2*EtchWidth,...
         BeamArrayYrange(2)-BeamArrayYrange(1)+BeamArrayYstep*2+2*EtchWidth+Params{2}{8}.value*1e6));
 elseif isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
-        DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
+        -IntervalWidth/4+numberspaceL/2,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
         (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-2*BeamEndsReserveWidth+2*EtchWidth,...
         Params{1}{2}.value*1e6-2*BeamEndsReserveWidth+2*EtchWidth));
 end
 
 fprintf(fileID, sprintf('%1.f layer\n',Dielayer));
-x=SingleDieLength/2-DiceWidth-charactergap-IntervalWidth/2-numberspaceW/2;
+x=SingleDieLength/2-DiceWidth-charactergap-IntervalWidth-numberspaceW/2;
 y=SingleDieWidth/2-DiceWidth-charactergap-numberspaceL/2;
 for j = 1:size(DieSN,2)
     fprintf(fileID,sprintf('<%s %.3f %.3f N 1 -90 instance>\n',DieSN(j),x,y));
@@ -402,7 +401,7 @@ end
 function [names,numberspaceL,numberspaceW] = DieCharacter(fileID, Dielayer)
 Length = 10;
 interval = 2;
-numberspaceL = 0.9e3;
+numberspaceL = 1e3;
 thickness = 200;
 numberspaceW = 2*numberspaceL-thickness;
 m = round((thickness+interval)/(Length+interval));
