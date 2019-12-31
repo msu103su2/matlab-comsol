@@ -141,6 +141,7 @@ DefectParams = Params{1};
 UCParams = Params{2};
 [DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
 [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
+LithoCompensation = 0.4;%um (another one defined in singledie funciton)
 
 if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID, sprintf('<UC_%s struct>\n',SBname));
@@ -204,12 +205,12 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID, '<Union CurveOr 168 or>\n');
     fprintf(fileID, sprintf('<Union UC_%s 168 genArea>\n',SBname));
 
-    fprintf(fileID, sprintf('<Union CurveSub %i subtract>\n',SBlayer));
-    fprintf(fileID, sprintf('<Union UC_%s %i genArea>\n',SBname,SBlayer));
+    fprintf(fileID, sprintf('<Union CurveSub %i subtract>\n',169));
+    fprintf(fileID, sprintf('<Union UC_%s %i genArea>\n',SBname,169));
 
     fprintf(fileID, '# define device(beam)\n');
     fprintf(fileID, sprintf('<%s struct>\n', SBname));%single device
-    fprintf(fileID, sprintf('%1.f layer\n', SBlayer));
+    fprintf(fileID, sprintf('%1.f layer\n', 169));
     fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n', DL.value*1e6, DW.value*1e6));
     x = (DL.value+UL.value)/2;
     y=0;
@@ -219,10 +220,16 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     x = -(DL.value+UL.value)/2;
     dx = -UL.value;
     fprintf(fileID, sprintf('<UC_%s %.3f %.3f %1.f %1.f %.3f %.3f 1 arrayRect>\n',SBname,x*1e6,y*1e6,NumofUC.value,1,dx*1e6,dy*1e6));
+    %compensation:
+    fprintf(fileID, sprintf('<BC %s %i genArea>\n', SBname, 169));
+    fprintf(fileID, sprintf('<BC 0 0 N 1 0 %.3f %i genAreaCopyC>\n', LithoCompensation, SBlayer));
 else
     fprintf(fileID, sprintf('<%s struct>\n', SBname));%single device
-    fprintf(fileID, sprintf('%1.f layer\n', SBlayer));
+    fprintf(fileID, sprintf('%1.f layer\n', 169));
     fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n', (DL.value+NumofUC.value*2*UL.value)*1e6, DW.value*1e6));
+    %compensation:
+    fprintf(fileID, sprintf('<BC %s %i genArea>\n', SBname, 169));
+    fprintf(fileID, sprintf('<BC 0 0 N 1 0 %.3f %i genAreaCopyC>\n', LithoCompensation, SBlayer));
 end
 end
 
@@ -244,6 +251,7 @@ DeviceCY = 0;
 numberofdevices = (BeamArrayYrange(2)-BeamArrayYrange(1))/BeamArrayYstep+1;
 numberofstrings = floor(numberofdevices/7);
 numberofdevices = numberofdevices - numberofstrings;
+LithoCompensation = 0.4;%um(another one defined in singlebeam funciton)
 
 if ~isequal(IndexofParamToBeVaried(1),0)
     stringParams = Params;
@@ -305,11 +313,11 @@ fprintf(fileID, '176 layer\n');
 if ~isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
         DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
-        min(Lengths)-1,BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6+BeamArrayYstep*2));
+        min(Lengths)-1+LithoCompensation*2,BeamArrayYrange(2)-BeamArrayYrange(1)+Params{2}{8}.value*1e6+BeamArrayYstep*2));
 elseif isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
         DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2,...
-        (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-1,...
+        (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-1+LithoCompensation*2,...
         Params{1}{2}.value*1e6-1));
 end
 
@@ -336,12 +344,12 @@ fprintf(fileID, sprintf('%1.f layer\n',Backlayer));
 if ~isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
         DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
-        min(Lengths)-2*BeamEndsReserveWidth+2*EtchWidth,...
+        min(Lengths)-2*BeamEndsReserveWidth+2*EtchWidth+LithoCompensation*2,...
         BeamArrayYrange(2)-BeamArrayYrange(1)+BeamArrayYstep*2+2*EtchWidth+Params{2}{8}.value*1e6));
 elseif isequal(IndexofParamToBeVaried,[0,1])
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',...
         DeviceCX,(BeamArrayYrange(2)+BeamArrayYrange(1))/2, ...
-        (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-2*BeamEndsReserveWidth+2*EtchWidth,...
+        (Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value)*1e6-2*BeamEndsReserveWidth+2*EtchWidth+LithoCompensation*2,...
         Params{1}{2}.value*1e6-2*BeamEndsReserveWidth+2*EtchWidth));
 end
 
@@ -608,7 +616,7 @@ fprintf(fileID, sprintf('<0 0 %.3f %.3f %.3f %.3f 0 0 0 0 alignCustC2>\n',...
 fprintf(fileID, sprintf('<P1 %s 100 genArea>\n',Name));
 fprintf(fileID, '101 layer\n');
 fprintf(fileID, sprintf('0 0 %.3f %.3f 0 rectangleC\n',W+2,W+2));
-fprintf(fileID,sprintf('<{{%s}} {{Arial}} 20 %.3f %.3f textgds>\n',MarkerID,-(PL+L),0));
+fprintf(fileID,sprintf('<{{%s}} {{Arial}} 60 %.3f %.3f textgds>\n',MarkerID,-(PL+L),-PW/2+10));
 fprintf(fileID, sprintf('<P2 %s 101 genArea>\n',Name));
 fprintf(fileID, '<P1 P2 102 SUBTRACT>\n');
 fprintf(fileID, sprintf('<P3 %s 102 genArea>\n',Name));

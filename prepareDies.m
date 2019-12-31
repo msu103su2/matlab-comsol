@@ -18,6 +18,7 @@ sqlquery = sprintf(['ALTER TABLE %s\n'...
     '\tADD FOREIGN KEY (Wafer_id) REFERENCES Wafer(id);\n'],Tablename);
 execute(conn,sqlquery);
 
+LithoCompensation = 4e-7;%m
 AvaliableDies = [5:10,12:17,20:25,28:33,36:41,43:48];
 DiesParams=[];
 
