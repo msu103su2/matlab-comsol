@@ -4,10 +4,11 @@ function [localmodefreq, localmodeEffMass]= Localmode_center_tilt(Links,coords)
 eps = 1e-10;
 import com.comsol.model.*
 import com.comsol.model.util.*
-centerline = mphselectbox(model,'geom1', [coords{5}(1),coords{6}(1);coords{5}(2),coords{6}(2);-eps,eps;], 'edge');
-centerlinedata_disp = mpheval(model,'u*u+v*v+w*w','edim',0,'selection',centerline);
-
+centerline = mphselectbox(model,'geom1', [coords{5}(1)-eps,coords{6}(1)+eps;-eps,eps;-eps,eps;], 'edge');
+centerlinedata_disp = mpheval(model,'u*u+v*v+w*w','edim',1,'selection',centerline);
+for i=1:size(centerlinedata_disp.d1)
 maxpointdata_disp = max(centerlinedata_disp.d1);
+end
 temp = mphint2(model,'solid.rho*(u*u+v*v+w*w)',3);
 effectivemass = temp./(maxpointdata_disp.d1)';
 [localmodeEffMass, index] = min(effectivemass);
