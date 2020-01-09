@@ -1,33 +1,17 @@
-function Q = test(Links, Params)
-[model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
-    eig, solid, ref] = Links{1:end};
-h =Params{1}{3}.value;
-Q0=6900*(h/1e-7);
-E =250e9;
-L = 2*Params{2}{1}.value*Params{1}{9}.value+Params{1}{1}.value;
-centerline = mphselectbox(model,'geom1', [-L/2-eps,L/2+eps;-eps,eps;-eps,eps;], 'edge');
-expr = {'wXX','wX'};
-centerlinedata = mpheval(model,expr,'edim',1,'selection',centerline,'dataset','dset1');
-centerlinedata_sigma = mpheval(model,'solid.sx','edim',1,'selection',centerline,'dataset','dset2');
-nodes_x1 = centerlinedata.p(1,:);
-nodes_x2 = centerlinedata_sigma.p(1,:);
-
-if (size(nodes_x1,2)<size(nodes_x2,2))
-    nodes_x = nodes_x1;
-    nodes_lo = nodes_x2;
-else
-    nodes_x = nodes_x2;
-    nodes_lo = nodes_x1;
+z=[-10:0.05:0];
+r1=arrayfun(@(z) gauss(z),z);
+r2=arrayfun(@(z) testF(z),z);
+r3=arrayfun(@(z) gauss2(z),z);
+plot(z,r1,z,r2,z,r3)
+function r = gauss(z)
+    z = atan(z)-z;
+    r = sqrt(z);
 end
-
-[nodes_x,order] = sort(nodes_x);
-if isequal(nodes_x,nodes_lo(order))
-    wXX = centerlinedata.d1(:,order);
-    wX = centerlinedata.d2(:,order);
-    sigma = centerlinedata_sigma.d1(order);
+function r = testF(z)
+    z = -z;
+    r = sqrt(z);
 end
-
-for i = 1:size(wXX,1)
-    Q(i) = Q0*(12/(E*h*h))*trapz(nodes_x,wX(i,:).*wX(i,:))/trapz(nodes_x,wXX(i,:).*wXX(i,:)./sigma);
-end
+function r = gauss2(z)
+    z = 2*atan(z)-z;
+    r = sqrt(z);
 end

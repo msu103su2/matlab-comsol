@@ -1,0 +1,11 @@
+z=[-1:0.01:0];
+r=arrayfun(@(z) gauss(z),z);
+plot(z,r)
+function r = gauss(z)
+    z = atan(z)-z;
+    r = sqrt(z);
+end
+function r = gauss(z)
+    z = atan(z)-z;
+    r = sqrt(z);
+end
