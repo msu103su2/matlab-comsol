@@ -117,10 +117,9 @@ fprintf(fileID, '37000 -10000 15000 2000 90 rectangleC\n');
 fprintf(fileID, '-40000 10000 15000 2000 90 rectangleC\n');
 fprintf(fileID, '-37000 -10000 15000 2000 90 rectangleC\n');
 
-%{
-dose test structure
+%dose test structure
 DoseTest(fileID);
-%}
+
 
 fclose(fileID);
 fclose('all');
@@ -138,7 +137,6 @@ movefile(sprintf('C:\\Users\\purdylab\\%s.gds.log',filename),GDSdir);
 end
 
 function name = singleBeam(Params, SBname, SBlayer, fileID)
-Params = digitize(Params);%compensate for meshing
 name = SBname;
 DefectParams = Params{1};
 UCParams = Params{2};
@@ -153,10 +151,10 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID, '129 layer\n');
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 0 rectangleC\n',0, 0, UrecL.value*1e6, UrecW.value*1e6));
     fprintf(fileID, '130 layer\n');
-    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',UrecL.value*1e6/2, UrecW.value*1e6/2,UrecL.value*1e6/2-ChamferR.value*1e6, UrecW.value*1e6/2,UrecL.value*1e6/2, UrecW.value*1e6/2-ChamferR.value*1e6));
-    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',-UrecL.value*1e6/2, UrecW.value*1e6/2,-UrecL.value*1e6/2+ChamferR.value*1e6, UrecW.value*1e6/2,-UrecL.value*1e6/2, UrecW.value*1e6/2-ChamferR.value*1e6));
-    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',-UrecL.value*1e6/2, -UrecW.value*1e6/2,-UrecL.value*1e6/2+ChamferR.value*1e6, -UrecW.value*1e6/2,-UrecL.value*1e6/2, -UrecW.value*1e6/2+ChamferR.value*1e6));
-    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',UrecL.value*1e6/2, -UrecW.value*1e6/2,UrecL.value*1e6/2-ChamferR.value*1e6, -UrecW.value*1e6/2,UrecL.value*1e6/2, -UrecW.value*1e6/2+ChamferR.value*1e6));
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',UrecL.value*1e6/2, UrecW.value*1e6/2,UrecL.value*1e6/2-ChamferR.value, UrecW.value*1e6/2,UrecL.value*1e6/2, UrecW.value*1e6/2-ChamferR.value));
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',-UrecL.value*1e6/2, UrecW.value*1e6/2,-UrecL.value*1e6/2+ChamferR.value, UrecW.value*1e6/2,-UrecL.value*1e6/2, UrecW.value*1e6/2-ChamferR.value));
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',-UrecL.value*1e6/2, -UrecW.value*1e6/2,-UrecL.value*1e6/2+ChamferR.value, -UrecW.value*1e6/2,-UrecL.value*1e6/2, -UrecW.value*1e6/2+ChamferR.value));
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',UrecL.value*1e6/2, -UrecW.value*1e6/2,UrecL.value*1e6/2-ChamferR.value, -UrecW.value*1e6/2,UrecL.value*1e6/2, -UrecW.value*1e6/2+ChamferR.value));
     %{
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 45 rectangleC\n',UrecL.value*1e6/2, UrecW.value*1e6/2, ChamferR.value*1e6*sqrt(2), ChamferR.value*1e6*sqrt(2)));
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f 45 rectangleC\n',-UrecL.value*1e6/2, UrecW.value*1e6/2, ChamferR.value*1e6*sqrt(2), ChamferR.value*1e6*sqrt(2)));
@@ -172,18 +170,18 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID, '<Union UCpart003 138 subtract>\n');
     fprintf(fileID, sprintf('<Union UC_%s 138 genArea>\n',SBname));
     %__________________________________________________
-    L1 = round(FilletR.value*tan(pi/8)*1e9)/1e9;
-    L1sq2 = round(FilletR.value*tan(pi/8)*1e9/sqrt(2))/1e9;
+    L1 = round(FilletR.value*tan(pi/8)*1e6)/1e6;
+    L1sq2 = round(FilletR.value*tan(pi/8)*1e6/sqrt(2))/1e6;
     fprintf(fileID, '139 layer\n');
     fprintf(fileID,sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',...
         -UrecL.value/2*1e6,UW.value/2*1e6,...
         (-UrecL.value/2-L1)*1e6,UW.value/2*1e6,...
         (-UrecL.value/2+L1sq2)*1e6,(UW.value/2+L1sq2)*1e6));
     fprintf(fileID, '140 layer\n');
-    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f 100 circlethree\n',...
+    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f 300 circlethree\n',...
+        (-UrecL.value/2-L1)*1e6,(UW.value/2+FilletR.value)*1e6,...
         (-UrecL.value/2-L1)*1e6,UW.value/2*1e6,...
-        (-UrecL.value/2+L1sq2)*1e6,(UW.value/2+L1sq2)*1e6,...
-        (-UrecL.value/2-L1)*1e6,UW.value/2*1e6+round(2*FilletR.value*1e9)/1e3));
+        (-UrecL.value/2-L1)*1e6,(UW.value/2+L1sq2)*1e6));
     %{
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f %.3f arcVector\n',...
         (-UrecL.value/2-L1)*1e6,(UW.value/2+FilletR.value)*1e6,...
@@ -198,23 +196,16 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID, '<CurveOr 0 0 0 1 180 0 160 genAreaCopy>\n');
     fprintf(fileID, sprintf('<CurveOr UC_%s 160 genArea>\n',SBname));
 
-    L1 = round(FilletR.value*tan(pi/8)*1e9)/1e9;
-    L1sq2 = round(FilletR.value*tan(pi/8)*1e9/sqrt(2))/1e9;
+    L1 = FilletR.value*tan(pi/8);
     fprintf(fileID, '141 layer\n');
     fprintf(fileID,sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',...
         (-UrecL.value/2+ChamferR.value)*1e6,(UW.value/2+ChamferR.value)*1e6,...
         (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value)*1e6,...
-        (-UrecL.value/2+ChamferR.value-L1sq2)*1e6,(UW.value/2+ChamferR.value-L1sq2)*1e6));
+        (-UrecL.value/2+ChamferR.value-L1/sqrt(2))*1e6,(UW.value/2+ChamferR.value-L1/sqrt(2))*1e6));
     fprintf(fileID, '142 layer\n');
-    fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f 100 circlethree\n',...
-        (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value)*1e6,...
-        (-UrecL.value/2+ChamferR.value-L1sq2)*1e6,(UW.value/2+ChamferR.value-L1sq2)*1e6,...
-        (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value)*1e6-round(2*FilletR.value*1e9)/1e3));
-    %{
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f %.3f arcVector\n',...
         (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value-FilletR.value)*1e6,...
         FilletR.value*1e6,FilletR.value*1e6,-90,-45,180));
-        %}
     fprintf(fileID, sprintf('<Tri UC_%s 141 genArea>\n',SBname));
     fprintf(fileID, sprintf('<Arc UC_%s 142 genArea>\n',SBname));
     fprintf(fileID, '<Tri Arc 161 subtract>\n');
@@ -350,7 +341,7 @@ if ~isequal(IndexofParamToBeVaried,[0,1])
     for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
         smallnumber = sprintf('%02i',counter);
         for i = 1:size(smallnumber,2)
-            fprintf(fileID,sprintf('<Small%s %.3f %.3f N 1 0 instance>\n',smallnumber(i),x+i*14,y));
+            fprintf(fileID,sprintf('<Small%s %.3f %.3f N 1 0 instance>\n',smallnumber(i),x+i*7,y));
         end
         counter = counter + 1;
     end
@@ -713,9 +704,9 @@ end
 end
 
 function  [Length, Width, se]=DieCharacterSmall(fileID,Dielayer)
-Length = 5;
-Width = 3;
-se = 4.5;
+Length = 3;
+Width = 1;
+se = 2.5;
 fprintf(fileID, sprintf('%i layer\n',Dielayer));
 fprintf(fileID, sprintf('<%s struct>\n','Small0'));
 fprintf(fileID, sprintf('0 %.3f %.3f %.3f 0 rectangleC\n',se*2,Length, Width)); 
@@ -841,13 +832,4 @@ fprintf(fileID, sprintf('%.3f %.3f 6 8 1 40 10 80 -90 resoPatternRSA\n',Unitsize
 fprintf(fileID, sprintf('%.3f %.3f 9 10 1 40 10 80 -90 resoPatternRSA\n',Unitsize/4 - 300, Unitsize/2-60));
 fprintf(fileID, sprintf('<DTPC %.3f %.3f N 1 0 instance>\n',-Unitsize/4,-Unitsize/4));
 fprintf(fileID, sprintf('<DTPC %.3f %.3f N 1 90 instance>\n',Unitsize/4,-Unitsize/4));
-end
-
-function digitizedParams = digitize(Params)
-digitizedParams = Params;
-indexs = [1,1;1,2;1,3;1,4;1,5;1,6;2,1;2,2;2,3;2,4;2,5;2,6;2,7;2,8];
-for i = 1:size(indexs,1)
-    digitizedParams{indexs(i,1)}{indexs(i,2)}.value = round(Params{indexs(i,1)}{indexs(i,2)}.value * 1e9/2)*2*(1e-9);
-end
-digitizedParams{2}{9}.value = (digitizedParams{2}{8}.value-digitizedParams{2}{2}.value)/2;
 end
