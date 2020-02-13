@@ -386,6 +386,8 @@ DieParams.Yrange = Yrange;
 DieParams.Dienumber = Dienumber;
 DieParams.Diename = [WaferSN,'_',num2str(DieParams.Dienumber)];
 NumberOfDevices = size([DieParams.Yrange(1):DieParams.Ystep:DieParams.Yrange(2)],2);
+numberofstrings = floor(NumberOfDevices/7);
+NumberOfDevices = NumberOfDevices - numberofstrings;
 end
 function conn = setupConn()
 DSN = 'MariaDB_test';

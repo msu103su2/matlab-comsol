@@ -138,7 +138,7 @@ movefile(sprintf('C:\\Users\\purdylab\\%s.gds.log',filename),GDSdir);
 end
 
 function name = singleBeam(Params, SBname, SBlayer, fileID)
-Params = digitize(Params);%compensate for meshing
+Params = compensate(Params);%compensate for meshing and lithography
 name = SBname;
 DefectParams = Params{1};
 UCParams = Params{2};
@@ -178,11 +178,11 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID,sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',...
         -UrecL.value/2*1e6,UW.value/2*1e6,...
         (-UrecL.value/2-L1)*1e6,UW.value/2*1e6,...
-        (-UrecL.value/2+L1sq2)*1e6,(UW.value/2+L1sq2)*1e6));
+        (-UrecL.value/2+L1sq2)*1e6-(1e-3),(UW.value/2+L1sq2)*1e6-(1e-3)));
     fprintf(fileID, '140 layer\n');
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f 100 circlethree\n',...
         (-UrecL.value/2-L1)*1e6,UW.value/2*1e6,...
-        (-UrecL.value/2+L1sq2)*1e6,(UW.value/2+L1sq2)*1e6,...
+        (-UrecL.value/2+L1sq2)*1e6-(1e-3),(UW.value/2+L1sq2)*1e6-(1e-3),...
         (-UrecL.value/2-L1)*1e6,UW.value/2*1e6+round(2*FilletR.value*1e9)/1e3));
     %{
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f %.3f arcVector\n',...
@@ -204,11 +204,11 @@ if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID,sprintf('%.3f %.3f %.3f %.3f %.3f %.3f points2shape\n',...
         (-UrecL.value/2+ChamferR.value)*1e6,(UW.value/2+ChamferR.value)*1e6,...
         (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value)*1e6,...
-        (-UrecL.value/2+ChamferR.value-L1sq2)*1e6,(UW.value/2+ChamferR.value-L1sq2)*1e6));
+        (-UrecL.value/2+ChamferR.value-L1sq2)*1e6+(1e-3),(UW.value/2+ChamferR.value-L1sq2)*1e6+(1e-3)));
     fprintf(fileID, '142 layer\n');
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f 100 circlethree\n',...
         (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value)*1e6,...
-        (-UrecL.value/2+ChamferR.value-L1sq2)*1e6,(UW.value/2+ChamferR.value-L1sq2)*1e6,...
+        (-UrecL.value/2+ChamferR.value-L1sq2)*1e6+(1e-3),(UW.value/2+ChamferR.value-L1sq2)*1e6+(1e-3),...
         (-UrecL.value/2+ChamferR.value+L1)*1e6,(UW.value/2+ChamferR.value)*1e6-round(2*FilletR.value*1e9)/1e3));
     %{
     fprintf(fileID, sprintf('%.3f %.3f %.3f %.3f %.3f %.3f %.3f arcVector\n',...
@@ -700,10 +700,10 @@ function newParams = UpdateDependencies(Params, IndexofParamToBeVaried)
 newParams = Params;
 key = [num2str(IndexofParamToBeVaried(1)),num2str(IndexofParamToBeVaried(2))];
 switch key
-    case ['2','8']%UrecW, update charmfR and filletR, to filletR's maxminum
+    otherwise%case ['2','8']UrecW, update charmfR and filletR, to filletR's maxminum
         newParams{2}{9}.value = (newParams{2}{8}.value-newParams{2}{2}.value)/2;
         candi = newParams{2}{9}.value*cos(pi/4)/tan(22.5*pi/180);
-        temp = min([(newParams{2}{1}.value-newParams{2}{7}.value)/2,(newParams{2}{7}.value-newParams{2}{9}.value)/2]);
+        temp = min([(newParams{2}{1}.value-newParams{2}{7}.value)/2,(newParams{2}{7}.value-2*newParams{2}{9}.value)/2]);
         if temp > newParams{2}{9}.value*cos(pi/4)
             newParams{2}{10}.value = candi;
         else
@@ -850,4 +850,28 @@ for i = 1:size(indexs,1)
     digitizedParams{indexs(i,1)}{indexs(i,2)}.value = round(Params{indexs(i,1)}{indexs(i,2)}.value * 1e9/2)*2*(1e-9);
 end
 digitizedParams{2}{9}.value = (digitizedParams{2}{8}.value-digitizedParams{2}{2}.value)/2;
+end
+function newParams = compensate(Params)
+Compwidth = 400;%um
+newParams = Params;
+totalL = Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value;
+
+newParams{1}{1}.value=Params{1}{1}.value*(totalL+Compwidth*2)/totalL;
+newParams{1}{2}.value=Params{1}{2}+Compwidth*2;
+
+newParams{2}{1}.value=Params{2}{1}.value*(totalL+Compwidth*2)/totalL;
+newParams{2}{2}.value=Params{2}{2}+Compwidth*2;
+
+newParams{2}{7}.value=Params{2}{7}+Compwidth*2;
+newParams{2}{8}.value=Params{2}{8}+Compwidth*2;
+
+Params{2}{9}.value = (newParams{2}{8}.value-newParams{2}{2}.value)/2;
+candi = newParams{2}{9}.value*cos(pi/4)/tan(22.5*pi/180);
+temp = min([(newParams{2}{1}.value-newParams{2}{7}.value)/2,(newParams{2}{7}.value-2*newParams{2}{9}.value)/2]);
+if temp > newParams{2}{9}.value*cos(pi/4)
+    newParams{2}{10}.value = candi;
+else
+    newParams{2}{10}.value = temp/tan(22.5*pi/180);
+end
+newParams = digitize(newParams);
 end
