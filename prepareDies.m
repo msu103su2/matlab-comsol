@@ -337,17 +337,17 @@ sqlquery = sprintf(['ALTER TABLE %s\n'...
 execute(conn,sqlquery);
 
 for iteration = 1:NumberOfDevices
-sqlquery = sprintf('INSERT INTO %s (',DTablename);
-sqlquery2 = 'Values (';
-for i = 1:size(Paramnames,2)-1
-    sqlquery = [sqlquery,Paramnames{i},','];
-    sqlquery2 = sprintf([sqlquery2,'%d,'],Paramvalues{i});
-end
-i = i+1;
-sqlquery = [sqlquery,Paramnames{i},')'];
-sqlquery2 = sprintf([sqlquery2,'%d);\n'],Paramvalues{i});
-sqlquery = [sqlquery,sqlquery2];
-execute(conn,sqlquery);
+    sqlquery = sprintf('INSERT INTO %s (',DTablename);
+    sqlquery2 = 'Values (';
+    for i = 1:size(Paramnames,2)-1
+        sqlquery = [sqlquery,Paramnames{i},','];
+        sqlquery2 = sprintf([sqlquery2,'%d,'],Paramvalues{i});
+    end
+    i = i+1;
+    sqlquery = [sqlquery,Paramnames{i},')'];
+    sqlquery2 = sprintf([sqlquery2,'%d);\n'],Paramvalues{i});
+    sqlquery = [sqlquery,sqlquery2];
+    execute(conn,sqlquery);
 end
 
 if ~isequal(VPname,'Null') && ~isequal(VPname,'Membrane')

@@ -144,7 +144,7 @@ DefectParams = Params{1};
 UCParams = Params{2};
 [DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC] = DefectParams{1:end};
 [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
-LithoCompensation = 0.4;%um (another one defined in singledie funciton)
+LithoCompensation = 0;%um (another one defined in singledie funciton, has been compensated by compensate(Params), for time being just leave it here)
 
 if ~(Params{2}{2}.value==Params{2}{8}.value)
     fprintf(fileID, sprintf('<UC_%s struct>\n',SBname));
@@ -289,7 +289,7 @@ if ~isequal(IndexofParamToBeVaried(1),0)
             Lengths(counter) = 2*stringParams{1}{9}.value*stringParams{2}{1}.value*1e6+stringParams{1}{1}.value*1e6;
             counter = counter + 1;
         else
-            Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.value = VaryRange(1)+(counter-1)*ParamStep;
+            Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.value = VaryRange(1)+(counter-1-floor(counter/7))*ParamStep;
             Params = UpdateDependencies(Params, IndexofParamToBeVaried);
             SBname{counter} = singleBeam(Params, sprintf('%s_%s00%1.f',Diename,...
                 Params{IndexofParamToBeVaried(1)}{IndexofParamToBeVaried(2)}.name,...
@@ -348,9 +348,11 @@ if ~isequal(IndexofParamToBeVaried,[0,1])
     counter =1;
     x = min(Lengths)/2 + 10+DeviceCX;
     for y = BeamArrayYrange(1) : BeamArrayYstep : BeamArrayYrange(2)
-        smallnumber = sprintf('%02i',counter);
-        for i = 1:size(smallnumber,2)
-            fprintf(fileID,sprintf('<Small%s %.3f %.3f N 1 0 instance>\n',smallnumber(i),x+i*14,y));
+        if ~isequal(mod(counter,7),0)
+            smallnumber = sprintf('%02i',counter-floor(counter/7));
+            for i = 1:size(smallnumber,2)
+                fprintf(fileID,sprintf('<Small%s %.3f %.3f N 1 0 instance>\n',smallnumber(i),x+i*14,y));
+            end
         end
         counter = counter + 1;
     end
@@ -652,7 +654,7 @@ fprintf(fileID, sprintf('<P3 P4 %i OR>\n',104));
 fprintf(fileID, sprintf('<UnitMarker %s %i genArea>\n',Name, 104));
 
 fprintf(fileID, '106 layer\n');
-dx = 30;%um
+dx = 10;%um
 dy = dx;
 n = 7;
 m = 11;
@@ -852,18 +854,18 @@ end
 digitizedParams{2}{9}.value = (digitizedParams{2}{8}.value-digitizedParams{2}{2}.value)/2;
 end
 function newParams = compensate(Params)
-Compwidth = 400;%um
+Compwidth = 0.4e-6;%m
 newParams = Params;
 totalL = Params{1}{1}.value+Params{1}{9}.value*2*Params{2}{1}.value;
 
 newParams{1}{1}.value=Params{1}{1}.value*(totalL+Compwidth*2)/totalL;
-newParams{1}{2}.value=Params{1}{2}+Compwidth*2;
+newParams{1}{2}.value=Params{1}{2}.value+Compwidth*2;
 
 newParams{2}{1}.value=Params{2}{1}.value*(totalL+Compwidth*2)/totalL;
-newParams{2}{2}.value=Params{2}{2}+Compwidth*2;
+newParams{2}{2}.value=Params{2}{2}.value+Compwidth*2;
 
-newParams{2}{7}.value=Params{2}{7}+Compwidth*2;
-newParams{2}{8}.value=Params{2}{8}+Compwidth*2;
+newParams{2}{7}.value=Params{2}{7}.value+Compwidth*2;
+newParams{2}{8}.value=Params{2}{8}.value+Compwidth*2;
 
 Params{2}{9}.value = (newParams{2}{8}.value-newParams{2}{2}.value)/2;
 candi = newParams{2}{9}.value*cos(pi/4)/tan(22.5*pi/180);
