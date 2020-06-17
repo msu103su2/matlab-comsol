@@ -21,7 +21,7 @@ classdef SQL
             obj.databasename = 'DeviceDB';
             obj.MariaDBConnection = configureJDBCDataSource('Vendor','MySQL');
             obj.MariaDBConnection = setConnectionOptions(obj.MariaDBConnection,'DataSourceName',obj.DSN,'Server',obj.ServerAddress, ...
-                'PortNumber',obj.port,'JDBCDriverLocation','C:\Program Files\MATLAB\R2019b\java\jar\mysql-connector-java-5.1.48.jar');
+                'PortNumber',obj.port,'JDBCDriverLocation','C:\Program Files\MATLAB\R2020a\java\jar\mysql-connector-java-5.1.48.jar');
             obj.ConnectionStatus = testConnection(obj.MariaDBConnection,obj.username,obj.userpwd);
             saveAsJDBCDataSource(obj.MariaDBConnection);
             obj.conn = database(obj.DSN, obj.username, obj.userpwd);
@@ -69,8 +69,30 @@ classdef SQL
             execute(obj.onn,sqlquery);
         end
         
+        function bool = IsFieldExsist(obj, Tablename, Fieldname)
+            command = sprintf('SHOW COLUMNS FROM %s.%s LIKE ''%s'';',obj.databasename, Tablename, Fieldname);
+            bool = ~isempty(fetch(obj.conn,command));
+        end
+        
+        function AddField(obj, Tablename, Fieldname, FieldType)
+            command = sprintf('ALTER TABLE %s.%s ADD COLUMN %s %s DEFAULT NULL;',obj.databasename, Tablename, Fieldname, FieldType);
+            execute(obj.conn, command);
+        end
+        
+        function UpdateJSONField(obj, Fieldname, json, DeviceSN)
+            out = regexp(DeviceSN,'([0-9]+_[0-9]+)_[0-9]+','tokens');
+            Tablename = sprintf('Device_on_Die%s',out{1,1}{1,1});
+            sqlquery = sprintf('INSERT INTO %s.%s (%s) VALUES (''$s'') WHERE DeviceSN=''%s'';',...
+                obj.databasename, Tablename, Fieldname, json, DeviceSN);
+            execute(obj.onn,sqlquery);
+        end
+        
         function run(obj,command)
             execute(obj.conn,command);
+        end
+        
+        function result = query(obj,command)
+            result = fetch(obj.conn,command);
         end
         
         function result = InitParams(obj)

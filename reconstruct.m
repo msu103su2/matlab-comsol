@@ -183,6 +183,7 @@ toc;
 Eigenfreq = mphglobal(model,'solid.freq');
 SingleRunResult = evaluategeom(Links,Params,localmodefreq, localmodeEffMass);
 SingleRunResult.EffMass = localmodeEffMass;
+SingleRunResult.Eigenfreq = Eigenfreq;
 geom1.feature.remove('difblock');
 geom1.feature.remove('dif1');
 solid.feature.remove('sym1');
