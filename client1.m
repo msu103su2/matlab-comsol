@@ -4,22 +4,27 @@ import com.comsol.model.util.*
 sql = SQL;
 WaferSN = '000';
 DieNumber = 13;
-DeviceNumber = 2;
-
-DeviceSN = sprintf('%s_%02i_%02i',WaferSN, DieNumber, DeviceNumber);
-out = regexp(DeviceSN,'([0-9]+_[0-9]+)_[0-9]+','tokens');
-Tablename = sprintf('Device_on_Die%s',out{1,1}{1,1});
-
 [Params, Links] = init_shan();
 
-Params = sql.SelectDevice(WaferSN, DieNumber, DeviceNumber);
-result = reconstruct(Params, Links);
-
-Fieldname = 'Eigenfreq';
-jsontxt = jsonencode(result.Eigenfreq);
-
-if(~sql.IsFieldExsist(Tablename, Fieldname))
-    sql.AddField(Tablename, Fieldname, 'json')
+Tablename = sprintf('Device_on_Die%s_%2i',WaferSN, DieNumber);
+if(~sql.IsFieldExsist(Tablename, 'Eigenfreq'))
+    sql.AddField(Tablename, 'Eigenfreq', 'json')
 end
 
-sql.UpdateJSONField(Eigengreq, jsontxt, DeviceSN);
+if(~sql.IsFieldExsist(Tablename, 'localmodefreq'))
+    sql.AddField(Tablename, 'localmodefreq', 'DOUBLE')
+end
+
+result = sql.query(sprintf('SELECT COUNT(*) FROM %s.%s;',sql.databasename, Tablename));
+NumberOfDevices = result{1,1};
+
+for i = 1:NumberOfDevices
+    DeviceSN = sprintf('%s_%02i_%02i',WaferSN, DieNumber, i);
+    
+    Params = sql.SelectDevice(WaferSN, DieNumber, i);
+    result = reconstruct(Params, Links);
+    jsontxt = jsonencode(result.Eigenfreq);
+    
+    sql.UpdateJSONField('Eigenfreq', jsontxt, DeviceSN);
+    sql.UpdateNumberField('localmodefreq', result.localmodefreq, DeviceSN);
+end

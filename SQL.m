@@ -4,7 +4,7 @@ classdef SQL
         username;
         userpwd;
         ServerAddress;
-        port = 3306;
+        port ;
         conn;
         ConnectionStatus;
         MariaDBConnection;
@@ -13,11 +13,11 @@ classdef SQL
     end
     methods
         function obj = SQL()
-            obj.DSN = 'MariaDB_test';
+            obj.DSN = 'MariaDB10';
             obj.username = 'shanhao';
-            obj.userpwd = 'nepnep';
+            obj.userpwd = 'SloanGW@138';
             obj.ServerAddress = '136.142.206.151';
-            obj.port = 3306;
+            obj.port = 3307;
             obj.databasename = 'DeviceDB';
             obj.MariaDBConnection = configureJDBCDataSource('Vendor','MySQL');
             obj.MariaDBConnection = setConnectionOptions(obj.MariaDBConnection,'DataSourceName',obj.DSN,'Server',obj.ServerAddress, ...
@@ -82,9 +82,17 @@ classdef SQL
         function UpdateJSONField(obj, Fieldname, json, DeviceSN)
             out = regexp(DeviceSN,'([0-9]+_[0-9]+)_[0-9]+','tokens');
             Tablename = sprintf('Device_on_Die%s',out{1,1}{1,1});
-            sqlquery = sprintf('INSERT INTO %s.%s (%s) VALUES (''$s'') WHERE DeviceSN=''%s'';',...
+            sqlquery = sprintf('UPDATE %s.%s SET %s=''%s'' WHERE DeviceSN=''%s'';',...
                 obj.databasename, Tablename, Fieldname, json, DeviceSN);
-            execute(obj.onn,sqlquery);
+            execute(obj.conn,sqlquery);
+        end
+        
+        function UpdateNumberField(obj, Fieldname, value, DeviceSN)
+            out = regexp(DeviceSN,'([0-9]+_[0-9]+)_[0-9]+','tokens');
+            Tablename = sprintf('Device_on_Die%s',out{1,1}{1,1});
+            sqlquery = sprintf('UPDATE %s.%s SET %s=%s WHERE DeviceSN=''%s'';',...
+                obj.databasename, Tablename, Fieldname, value, DeviceSN);
+            execute(obj.conn,sqlquery);
         end
         
         function run(obj,command)
@@ -94,6 +102,7 @@ classdef SQL
         function result = query(obj,command)
             result = fetch(obj.conn,command);
         end
+       
         
         function result = InitParams(obj)
             f1 = 'name';   f2 = 'value';    f3 = 'unit';    f4 = 'comment';
