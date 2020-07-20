@@ -1,0 +1,21 @@
+sql = SQL;
+waferSN = '000'
+DieNumber = 21;
+Tablename = sprintf('Device_on_Die%s_%i',WaferSN, DieNumber);
+ids = sql.query(sprintf('SELECT id FROM %s.%s;',sql.databasename, Tablename));
+numOfDevices = height(ids);
+
+for id = ids
+    UW = sql.select('id', id, 'UW', Tablename);
+    UrecW = sql.select('id', id, 'UrecW', Tablename);
+    ChamferR = sql.select('id', id, 'ChamferR', Tablename);
+    FilletR = sql.select('id', id, 'FilletR', Tablename);
+    DeviceSN = sprintf("%s_%i_%02i", waferSN, DieNumber, id);
+    if (ChamferR > (UrecW - UW)/2)
+        ChamferR = (UrecW - UW)/2;
+        sql.UpdateNumberField('ChamferR', ChamferR, DeviceSN)
+    end
+    
+    if (FilletR > ChamferR/(sqrt(2)))
+    sql.UpdateNumberField()
+end

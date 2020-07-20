@@ -66,10 +66,10 @@ ext1.set('distance', {'DH'});
 geom1.run;
 
 %prestress condiciton
-iss1.set('Sil', {'1e9' '0' '0' '0' '1e9' '0' '0' '0' '0'});
+iss1.set('Sil', {'1.173779132614756e9' '0' '0' '0' '1.173779132614756e9' '0' '0' '0' '0'});
 
 %study node
-eig.set('neigs', 100);
+eig.set('neigs', 50);
 
 %extra control for obtaining localmode through symmetry
 temp = zeros(1,size(AllUCParams,2));

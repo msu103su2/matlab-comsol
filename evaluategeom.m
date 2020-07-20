@@ -30,19 +30,21 @@ centerlinedata_sigma = mpheval(model,'solid.sx','edim',1,'selection',centerline,
 nodes_x1 = centerlinedata.p(1,:);
 nodes_x2 = centerlinedata_sigma.p(1,:);
 
-if (size(nodes_x1,2)<size(nodes_x2,2))
-    nodes_x = nodes_x1;
-    nodes_lo = nodes_x2;
-else
-    nodes_x = nodes_x2;
-    nodes_lo = nodes_x1;
+index_x1 = [];
+index_x2 = [];
+for i = [1:size(nodes_x1,2)]
+    temp = find(nodes_x2 == nodes_x1(i));
+    if(not(isempty(temp)) && isempty(find(nodes_x1(index_x1) == nodes_x1(i))))
+        index_x1 = [index_x1, i];
+        index_x2 = [index_x2, temp(1)];
+    end
 end
 
-[nodes_x,order] = sort(nodes_x);
-if isequal(nodes_x,nodes_lo(order))
-    wXX = centerlinedata.d1(:,order);
-    wX = centerlinedata.d2(:,order);
-    sigma = centerlinedata_sigma.d1(order);
+if isequal(nodes_x1(index_x1),nodes_x2(index_x2))
+    wXX = centerlinedata.d1(:,index_x1);
+    wX = centerlinedata.d2(:,index_x1);
+    sigma = centerlinedata_sigma.d1(index_x2);
+    nodes_x = nodes_x1(index_x1);
 end
 
 for i = 1:size(wXX,1)
