@@ -69,7 +69,7 @@ geom1.run;
 iss1.set('Sil', {'1.173779132614756e9' '0' '0' '0' '1.173779132614756e9' '0' '0' '0' '0'});
 
 %study node
-eig.set('neigs', 50);
+eig.set('neigs', 80);
 
 %extra control for obtaining localmode through symmetry
 temp = zeros(1,size(AllUCParams,2));

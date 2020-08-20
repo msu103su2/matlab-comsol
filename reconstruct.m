@@ -147,7 +147,7 @@ swel.create('dis1', 'Distribution');
 swel.feature('dis1').set('numelem', 4);
 mesh.run;
 std.run;
-[localmodefreq, localmodeEffMass] = Localmode_center_tilt(Links,coords);
+[localmodefreq, localmodeEffMass] = Localmode_center_tilt(Links,coords,Params);
 %{
 ...
 

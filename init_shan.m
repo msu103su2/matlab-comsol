@@ -8,7 +8,7 @@ import com.comsol.model.util.*
 f1 = 'name';   f2 = 'value';    f3 = 'unit';    f4 = 'comment';
 DL = struct(f1, 'DL', f2, 140e-6, f3, '[m]', f4, 'Defect length');
 DW = struct(f1, 'DW', f2, 10e-6, f3, '[m]', f4, 'Defect width');
-DH = struct(f1, 'DH', f2, 100e-9, f3, '[m]', f4, 'Defect height');
+DH = struct(f1, 'DH', f2, 118e-9, f3, '[m]', f4, 'Defect height');
 Dx = struct(f1, 'Dx', f2, 0, f3, '[m]', f4, 'Defect x position');
 Dy = struct(f1, 'Dy', f2, 0, f3, '[m]', f4, 'Defect y position');
 Dz = struct(f1, 'Dz', f2, 0, f3, '[m]', f4, 'Defect z position');

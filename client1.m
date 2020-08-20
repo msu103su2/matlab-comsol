@@ -26,7 +26,7 @@ for Index = 1:size(DN,2)
     cutoffLength = min(table2array(Lengths)) - 1e-6;
     NumberOfDevices = result{1,1};
 
-    for i = 11:NumberOfDevices
+    for i = 1:NumberOfDevices
         DeviceSN = sprintf('%s_%i_%02i',WaferSN, DieNumber, i)
 
         Params = sql.SelectDevice(WaferSN, DieNumber, i);

@@ -47,7 +47,27 @@ if isequal(nodes_x1(index_x1),nodes_x2(index_x2))
     nodes_x = nodes_x1(index_x1);
 end
 
+[nodes_x,order] = sort(nodes_x,'ascend');
+sigma = sigma(:,order);
+wX = wX(:,order);
+wXX = wXX(:,order);
+
 for i = 1:size(wXX,1)
     Q(i) = Q0*(12/(E*h*h))*trapz(nodes_x,wX(i,:).*wX(i,:))/trapz(nodes_x,wXX(i,:).*wXX(i,:)./sigma);
 end
+end
+
+function Q = CalculateQ_whole(Links, Params, localmodeindex)
+[model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, fix1, std,...
+    eig, solid, ref] = Links{1:end};
+h =Params{1}{3}.value;
+Q0=6900*(h/1e-7);
+E =250e9;
+L = 2*Params{2}{1}.value*Params{1}{9}.value+Params{1}{1}.value;
+W = Params{2}{8}.value;
+PhC = mphselectbox(model,'geom1', [-L/2-eps,L/2+eps;-W/2-eps,W/2+eps;-eps,h+eps;], 'domain');
+int2expr = {'wX*wX','wXX*wXX/solid.sx'};
+numerator = mphint2(model,int2expr{1},'volume','selection',PhC,'solnum',localmodeindex);
+denominator = mphint2(model,int2expr{2},'volume','selection',PhC,'solnum',localmodeindex);
+Q = Q0*(12/(E*h*h))*numerator./denominator;
 end
