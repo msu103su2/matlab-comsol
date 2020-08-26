@@ -21,7 +21,7 @@ classdef SQL
             obj.databasename = 'DeviceDB';
             obj.MariaDBConnection = configureJDBCDataSource('Vendor','MySQL');
             obj.MariaDBConnection = setConnectionOptions(obj.MariaDBConnection,'DataSourceName',obj.DSN,'Server',obj.ServerAddress, ...
-                'PortNumber',obj.port,'JDBCDriverLocation','C:\Program Files\MATLAB\R2020a\java\jar\mysql-connector-java-5.1.48.jar');
+                'PortNumber',obj.port,'JDBCDriverLocation','C:\Program Files\MATLAB\R2019b\java\jar\mysql-connector-java-5.1.48.jar');
             obj.ConnectionStatus = testConnection(obj.MariaDBConnection,obj.username,obj.userpwd);
             saveAsJDBCDataSource(obj.MariaDBConnection);
             obj.conn = database(obj.DSN, obj.username, obj.userpwd);
