@@ -3,7 +3,7 @@ function [SearchResult, evolution] = PSO_general(Params, omega, phi_p, phi_g, se
 global variation;
 variation = 0.5;
 
-showDetail = 1;
+showDetail = 0;
 if nargin < 5
     optimize = 0;
 else
