@@ -8,7 +8,8 @@ allfreq = mphglobal(model,'solid.freq');
 [temp, localmodeindex] = min(abs(allfreq - localmodefreq));
 SingleResult.localmodefreq = allfreq(localmodeindex);
 SingleResult.QualityFactor = CalculateQ(Links, Params,localmodeindex);
-SingleResult.cooperation = 1*SingleResult.QualityFactor/(localmodeEffMass*localmodefreq);
+%SingleResult.cooperation = 1*SingleResult.QualityFactor/(localmodeEffMass*localmodefreq);
+SingleResult.cooperation = -localmodeEffMass;
 if localmodeindex == 1 || localmodeindex == size(allfreq,1)
     SingleResult.gapsize = 0;
 else

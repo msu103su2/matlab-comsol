@@ -13,55 +13,101 @@ if nargin < 3
     Uz = struct(f1, 'Uz', f2, 0, f3, '[m]', f4, 'Unitcell z position');
     UrecL = struct(f1, 'UrecL', f2, 100e-6, f3, '[m]', f4, 'the length of a rectangle unit in Unitcell');
     UrecW = struct(f1, 'UrecW', f2, 15e-6, f3, '[m]', f4, 'the width of a rectangle unit in Unitcell');
-    ChamferR = struct(f1, 'ChamferR', f2, 2.5e-6, f3, '[m]', f4, 'Chamfer radius');
-    FilletR = struct(f1, 'FilletR', f2, 4.26776e-6, f3, '[m]', f4, 'fillet radius');
-    names = {'UCR1' 'UCR2' 'UCUnion1' 'UCCharm1' 'UCFillet1'};
+    UCCharmA = struct(f1, 'ChamferA', f2, 0, f3, '[m]', f4, 'Chamfer A side radius');
+    UCCharmC = struct(f1, 'ChamferC', f2, 0, f3, '[m]', f4, 'Chamfer C side radius');
+    UCFilletA = struct(f1, 'FilletA', f2, 0, f3, '[m]', f4, 'fillet A side radius');
+    UCFilletC = struct(f1, 'FilletC', f2, 0, f3, '[m]', f4, 'fillet C side radius');
+    names = {'UCRA' 'UCRB' 'UCRC' 'UCUnion1' 'UCCharmA' 'UCCharmC' 'UCFilletA' 'UCFilletC'};
+    RecParams = [[UL.value/3, UL.value/3, UL.value/3];[UW.value, UW.value, UW.value]];
+    RecParams = struct(f1, 'RecParams', f2, RecParams, f3, '[m]', f4, 'Rectangle lengths and widths');
 elseif nargin < 4
-    [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
-    names = {'UCR1' 'UCR2' 'UCUnion1' 'UCCharm1' 'UCFillet1'};
+    [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, UCCharmA, UCCharmC, UCFilletA, UCFilletC, RecParams] = UCParams{1:end};
+    names = {'UCRA' 'UCRB' 'UCRC' 'UCUnion1' 'UCCharmA' 'UCCharmC' 'UCFilletA' 'UCFilletC'};
     UH.value = DefectParams{3}.value;
 else
-    [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, ChamferR, FilletR] = UCParams{1:end};
+    [UL, UW, UH, Ux, Uy, Uz, UrecL, UrecW, UCCharmA, UCCharmC, UCFilletA, UCFilletC, RecParams] = UCParams{1:end};
     UH.value = DefectParams{3}.value;
 end
 
+RecParams = RecParams.value;
+RecA_length = RecParams(1,1);RecB_length = RecParams(1,2);RecC_length = RecParams(1,3);
+RecA_width = RecParams(2,1);RecB_width = RecParams(2,2);RecC_width = RecParams(2,3);
+RecParams = struct(f1, 'RecParams', f2, RecParams, f3, '[m]', f4, 'Rectangle lengths and widths');
 
+%----check geom parameter compatibility----
+compatible = CheckChamferFillet(RecA_length, RecA_width, RecB_length, RecB_width, UCCharmA.value, UCFilletA.value);
+compatible = compatible && CheckChamferFillet(RecB_length, RecB_width, RecC_length, RecC_width, UCCharmC.value, UCFilletC.value);
+if (RecA_width < RecB_width && RecB_width > RecC_width)
+    compatible = compatible && (RecB_length > (UCFilletA.value+UCFillet.value)*tan(pi/8)+(UCCharmA.value+UCCharmC.value));
+end
+if (RecA_width > RecB_width && RecB_width < RecC_width)
+    compatible = compatible && (RecB_length > (UCFilletA.value+UCFillet.value)*tan(pi/8));
+end
+if (RecA_width < RecB_width && RecB_width < RecC_width)
+    compatible = compatible && (RecB_length > (UCFilletA.value+UCFillet.value)*tan(pi/8)+UCCharmA.value);
+end
+if (RecA_width > RecB_width && RecB_width > RecC_width)
+    compatible = compatible && (RecB_length > (UCFilletA.value+UCFillet.value)*tan(pi/8)+UCCharmC.value);
+end
+assert(compatible,'double check codes. Incompatible geom parameter sets detected');
 
-BaseRec = workplane.geom.feature.create(names{1}, 'Rectangle');
-ComplRec = workplane.geom.feature.create(names{2}, 'Rectangle');
+%---create geometry based on given center location Ux of center block, and
+%set up chamfer and fillet on correct rectangle based on relative widths of
+%rectangle ABC---
+RecA = workplane.geom.feature.create(names{1}, 'Rectangle');
+RecB = workplane.geom.feature.create(names{2}, 'Rectangle');
+RecC = workplane.geom.feature.create(names{3}, 'Rectangle');
 
-BaseRec.set('base', 'center');
-ComplRec.set('base', 'center');
-BaseRec.set('pos', [Ux.value Uy.value]);
-ComplRec.set('pos', [Ux.value Uy.value]);
+RecA.set('base', 'center');
+RecB.set('base', 'center');
+RecC.set('base', 'center');
 
-BaseRec.set('size', [UL.value UW.value]);
-ComplRec.set('size', [UrecL.value UrecW.value]);
+RecA.set('size', [RecA_length RecA_width]);
+RecB.set('size', [RecB_length RecB_width]);
+RecC.set('size', [RecC_length RecC_width]);
 
-UCUnion = workplane.geom.feature.create(names{3}, 'Union');
-UCUnion.selection('input').set(names(1:2));
-UCUnion.set('intbnd', false);
+RecA.set('pos', [Ux.value-(RecA_length + RecB_length)/2 Uy.value]);
+RecB.set('pos', [Ux.value Uy.value]);
+RecC.set('pos', [Ux.value+(RecC_length + RecB_length)/2 Uy.value]);
 
-if ~(UW.value==UrecW.value)
-    UCcha = workplane.geom.feature.create(names{4}, 'Chamfer');
-    UCcha.selection('point').set(names{3}, [3 6 7 10]);
-    UCcha.set('dist', ChamferR.value);
+if RecA_width < RecB_width
+    UCchaA = workplane.geom.feature.create(names{5}, 'Chamfer');
+    UCchaA.selection('point').set(names{2}, [1 4]);
+    UCchaA.set('dist', UCCharmA.value);
 
-    UCfil = workplane.geom.feature.create(names{5}, 'Fillet');
-    UCfil.selection('point').set(names{4}, [3 4 5 6 7 8 9 10]);
-    UCfil.set('radius', FilletR.value);
-else
-    counter = 1;
-    p = size(names,2);
-    for i = 1:p
-        if isequal(names{counter},'UCCharm1') || isequal(names{counter},'UCFillet1')
-            names(counter)=[];
-        else
-            counter = counter +1;
-        end
-    end
+    UCfilA = workplane.geom.feature.create(names{7}, 'Fillet');
+    UCfilA.selection('point').set(names{5}, [1 2 3 4]);
+    UCfilA.set('radius', UCFilletA.value);
+elseif RecA_width > RecB_width
+    UCchaA = workplane.geom.feature.create(names{5}, 'Chamfer');
+    UCchaA.selection('point').set(names{1}, [2 3]);
+    UCchaA.set('dist', UCCharmA.value);
+    
+    UCfilA = workplane.geom.feature.create(names{7}, 'Fillet');
+    UCfilA.selection('point').set(names{5}, [1 2 3 4]);
+    UCfilA.set('radius', UCFilletA.value);
 end
 
-rUCParams = {UL UW UH Ux Uy Uz UrecL UrecW ChamferR FilletR};
+if RecC_width < RecB_width
+    UCchaC = workplane.geom.feature.create(names{6}, 'Chamfer');
+    UCchaC.selection('point').set(names{2}, [2 3]);
+    UCchaC.set('dist', UCCharmC.value);
+
+    UCfilC = workplane.geom.feature.create(names{8}, 'Fillet');
+    UCfilC.selection('point').set(names{6}, [1 2 3 4]);
+    UCfilC.set('radius', UCFilletC.value);
+elseif RecC_width > RecB_width
+    UCchaC = workplane.geom.feature.create(names{6}, 'Chamfer');
+    UCchaC.selection('point').set(names{3}, [1 4]);
+    UCchaC.set('dist', UCCharmC.value);
+
+    UCfilC = workplane.geom.feature.create(names{8}, 'Fillet');
+    UCfilC.selection('point').set(names{6}, [1 2 3 4]);
+    UCfilC.set('radius', UCFilletC.value);
+end
+
+%---return Params and object names in comsol. The names might not be used in
+%comsol as the associsated params will be 0.---
+rUCParams = {UL UW UH Ux Uy Uz UrecL UrecW UCCharmA UCCharmC UCFilletA UCFilletC RecParams};
 rnames = names;
 end
