@@ -1,4 +1,4 @@
-function [localmodefreq, localmodeEffMass]= Localmode_center_tilt(links, params, leftEndCoord, rightEndCoord)
+function [localmodefreq, localmodeEffMass]= Localmode_center_tilt(links,leftEndCoord,rightEndCoord, params)
 eps = 1e-10;
 import com.comsol.model.*
 import com.comsol.model.util.*
@@ -37,7 +37,7 @@ for rowi = 1:size(low_dp,1)
             x = -locs(j);
             ymax = 0;
             for edgeFind_i = 1:size(PhCdata.p,2)
-                if(abs(PhCdata.p(1,edgeFind_i)-x)<params.MS && abs(PhCdata.p(2,edgeFind_i)) > abs(ymax))
+                if(abs(PhCdata.p(1,edgeFind_i)-x)<Params{1}{8}.value && abs(PhCdata.p(2,edgeFind_i)) > abs(ymax))
                     ymax = PhCdata.p(2,edgeFind_i);
                 end
             end
@@ -77,4 +77,51 @@ else
     allfreq = allfreq(find(judge));
     localmodefreq = allfreq(index);
 end
+end
+
+function [width, thickness] = getSize(position, params)
+    x = position(1); y = position(2); z = position(3);
+    if inCell(x, params.defect)
+        if inRec(x, params.defect.A)
+            width = params.defect.A.width;
+            thickness = params.defect.A.height;
+        elseif inRec(x, params.defect.B)
+            width = params.defect.B.width;
+            thickness = params.defect.B.height;
+        else
+            width = params.defect.C.width;
+            thickness = params.defect.C.height;
+        end
+    else
+        for i = 1:params.NumofUC*2
+            if inCell(x, params.defect(i))
+                if inRec(x, params.defect.A)
+                    width = params.defect.A.width;
+                    thickness = params.defect.A.height;
+                elseif inRec(x, params.defect.B)
+                    width = params.defect.B.width;
+                    thickness = params.defect.B.height;
+                else
+                    width = params.defect.C.width;
+                    thickness = params.defect.C.height;
+                end
+            end
+        end
+    end
+end
+
+function re = inCell(x, unitcell)
+    if x <= unitcell.x + unitcell.length/2 && x >= unitcell.x - unitcell.length/2
+        re = true;
+    else
+        re = false;
+    end
+end
+
+function re = inRec(x, rectangle)
+    if x <= rectangle.x + rectangle.length/2 && x >= rectangle.x - rectangle.length/2
+        re = true;
+    else
+        re = false;
+    end 
 end

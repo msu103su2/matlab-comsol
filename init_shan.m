@@ -1,30 +1,24 @@
-function [Params, Links] = init_shan()
+function [params, links] = init_shan()
 %import necessary libarary
 import com.comsol.model.*
 import com.comsol.model.util.*
 
+global totallength;
+
 %----params defined section-----
-% paramname = {value, 'unit', 'comments'}
-f1 = 'name';   f2 = 'value';    f3 = 'unit';    f4 = 'comment';
-DL = struct(f1, 'DL', f2, 140e-6, f3, '[m]', f4, 'Defect length');
-DW = struct(f1, 'DW', f2, 10e-6, f3, '[m]', f4, 'Defect width');
-DH = struct(f1, 'DH', f2, 118e-9, f3, '[m]', f4, 'Defect height');
-Dx = struct(f1, 'Dx', f2, 0, f3, '[m]', f4, 'Defect x position');
-Dy = struct(f1, 'Dy', f2, 0, f3, '[m]', f4, 'Defect y position');
-Dz = struct(f1, 'Dz', f2, 0, f3, '[m]', f4, 'Defect z position');
-kx = struct(f1, 'kx', f2, 2*pi/DL.value, f3, '[1/m]', f4, 'Defect length');
-MS = struct(f1, 'MS', f2, 3e-6, f3, '[m]', f4, 'Mesh typical size');
-NumofUC = struct(f1, 'NumofUC', f2, 5, f3, '[1]', f4, 'Unitcell number on one side');
-Params = {DL, DW, DH, Dx, Dy, Dz, kx, MS, NumofUC};
+MS = 3e-6;
+baseRec = PhC_Rec(140e-6, 10e-6,118e-9,'Defect');
+A = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'A');
+B = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'B');
+C = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'C');
+A.x = -(A.length + B.length)/2;
+C.x = (C.length + B.length)/2;
+defect = UnitCell(A,B,C);
+defect.rename('defect');
 
 %----Model node creation and modification
 model = ModelUtil.create('Model');
 model.hist.disable;
-%----Model params defination
-for i = 1 : size(Params,2)
-    model.param.set(Params{i}.name,[num2str(Params{i}.value) Params{i}.unit], ...
-        Params{i}.comment);
-end
 
 %----Geom creation----
 geom1 = model.geom.create('geom1', 3);
@@ -32,9 +26,46 @@ geom1 = model.geom.create('geom1', 3);
 %----geom.wp1---------
 wp1 = geom1.feature.create('wp1', 'WorkPlane');
 
-%Just reserve space for Params
-[BaseParams, Basenames] = unitcellgeom(wp1, Params);
+%Prepare a straight string as template
+unitcellgeom(wp1, defect);
+NumofUC = floor((totallength-defect.length)/...
+    (2*defect.length));
+UCs = []; %increase size in a loop, to be optimize if necessary
+for i = 1 : 2*NumofUC
+    comsol_index = ceil(i/2); 
+    
+    A = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'A');
+    B = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'B');
+    C = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'C');
+    A.x = -(A.length + B.length)/2;
+    C.x = (C.length + B.length)/2;
+    UC = UnitCell(A,B,C);
 
+    UCs = [UCs, UC];
+    if rem(i, 2) == 0
+        UCs(i).moveTo(defect.x - defect.length/2 - UCs(i).length * (comsol_index-0.5), 0, 0);
+        UCs(i).rename(['L',num2str(comsol_index)]);
+    else
+        UCs(i).moveTo(defect.x + defect.length/2 + UCs(i).length * (comsol_index-0.5), 0, 0);
+        UCs(i).rename(['R',num2str(comsol_index)]);
+    end
+    unitcellgeom(wp1, UCs(i));
+end
+
+%construct Params instance
+params = Params(defect, UCs, NumofUC, MS);
+
+%----Comsol Model params defination
+model.param.set('DL',[num2str(params.defect.length) '[m]']);
+model.param.set('DW',[num2str(params.defect.B.width) '[m]']);
+model.param.set('DH',[num2str(params.defect.B.height) '[m]']);
+model.param.set('Dx',[num2str(params.defect.x) '[m]']);
+model.param.set('Dy',[num2str(params.defect.y) '[m]']);
+model.param.set('Dz',[num2str(params.defect.z) '[m]']);
+model.param.set('MS',[num2str(params.MS) '[m]']);
+model.param.set('NumofUC',[num2str(params.NumofUC) '[1]']);
+
+%other initializations
 ext1 = geom1.feature.create('ext1','Extrude');
 ext1.selection('input').set('wp1');
 
@@ -73,7 +104,6 @@ eig.set('neigsactive', true);
 eig.set('geometricNonlinearity', true);
 eig.set('useadvanceddisable', true);
 
-Links = {model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
-    fix1, std, eig, solid, ref};
-Params = {Params, BaseParams};
+links = Links(model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
+    fix1, std, eig, solid, ref);
 end
