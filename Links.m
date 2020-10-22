@@ -3,11 +3,12 @@ classdef Links < handle
         model;
         geom1;
         wp1;
-        ext1;
+        exts;
         mesh;
         Msize;
         ftri;
         swel;
+        swe2;
         iss1;
         fix1;
         std;
@@ -16,16 +17,17 @@ classdef Links < handle
         ref;
     end
     methods
-        function obj = Links(model, geom1, wp1, ext1, mesh, Msize, ...
-                ftri,swel, iss1, fix1, std, eig, solid, ref)
+        function obj = Links(model, geom1, wp1, exts, mesh, Msize, ...
+                ftri,swel, swe2, iss1, fix1, std, eig, solid, ref)
             obj.model = model;
             obj.geom1 = geom1;
             obj.wp1 = wp1;
-            obj.ext1 = ext1;
+            obj.exts = exts;
             obj.mesh = mesh;
             obj.Msize = Msize;
             obj.ftri = ftri;
             obj.swel = swel;
+            obj.swe2 = swe2;
             obj.iss1 = iss1;
             obj.fix1 = fix1;
             obj.std = std;

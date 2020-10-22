@@ -9,7 +9,8 @@ classdef UnitCell < handle
         length;
         width
         NamePrefix;
-        constrctedNameList;
+        constructedNameList;
+        formUni;
     end
     methods
         function obj = UnitCell(partA, partB, partC)
@@ -17,10 +18,11 @@ classdef UnitCell < handle
             obj.B = partB;
             obj.C = partC;
             obj.length = partA.length + partB.length + partC.length;
-            obj.x = partB.x;
+            obj.x = ((partA.x-partA.length/2)+(partC.x+partC.length/2))/2;
             obj.y = partB.y;
             obj.z = partB.z;
             obj.NamePrefix = '';
+            obj.formUni = true;%if not form union, charmfer and fillet will not be constructed due to complicated indexs
         end
         
         function moveBy(obj, delta_x, delta_y, delta_z)
@@ -39,27 +41,32 @@ classdef UnitCell < handle
         end
         
         function moveTo(obj, x, y, z)
-            obj.x = x;
-            obj.y = y;
-            obj.z = z;
             
-            dx = obj.A.x - obj.B.x;
-            dy = obj.A.y - obj.B.y;
-            dz = obj.A.z - obj.B.z;
+            
+            dx = obj.A.x - obj.x;
+            dy = obj.A.y - obj.y;
+            dz = obj.A.z - obj.z;
             obj.A.x = dx + x;
             obj.A.y = dy + y;
             obj.A.z = dz + z;
             
-            dx = obj.C.x - obj.B.x;
-            dy = obj.C.y - obj.B.y;
-            dz = obj.C.z - obj.B.z;
+            dx = obj.C.x - obj.x;
+            dy = obj.C.y - obj.y;
+            dz = obj.C.z - obj.z;
             obj.C.x = dx + x;
             obj.C.y = dy + y;
             obj.C.z = dz + z;
             
-            obj.B.x = x;
-            obj.B.y = y;
-            obj.B.z = z;
+            dx = obj.B.x - obj.x;
+            dy = obj.B.y - obj.y;
+            dz = obj.B.z - obj.z;
+            obj.B.x = dx + x;
+            obj.B.y = dy + y;
+            obj.B.z = dz + z;
+            
+            obj.x = x;
+            obj.y = y;
+            obj.z = z;
         end
         
         function rename(obj, NamePrefix)

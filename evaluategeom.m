@@ -16,13 +16,12 @@ end
 end
 
 function Q = CalculateQ(links, params, localmodeindex, leftEndCoord, rightEndCoord)
-h =params{1}{3}.value;
-Q0=6900*(h/1e-7);
+%Q0=6900*(h/1e-7);
 E =250e9;
 centerline = mphselectbox(links.model,'geom1', [leftEndCoord(1)-eps,rightEndCoord(1)+eps;-eps,eps;-eps,eps;], 'edge');
 expr = {'wXX','wX'};
-centerlinedata = mpheval(model,expr,'edim',1,'selection',centerline,'dataset','dset1','solnum',localmodeindex);
-centerlinedata_sigma = mpheval(model,'solid.sx','edim',1,'selection',centerline,'dataset','dset2');
+centerlinedata = mpheval(links.model,expr,'edim',1,'selection',centerline,'dataset','dset1','solnum',localmodeindex);
+centerlinedata_sigma = mpheval(links.model,'solid.sx','edim',1,'selection',centerline,'dataset','dset2');
 nodes_x1 = centerlinedata.p(1,:);
 nodes_x2 = centerlinedata_sigma.p(1,:);
 
@@ -48,12 +47,8 @@ sigma = sigma(:,order);
 wX = wX(:,order);
 wXX = wXX(:,order);
 
-for i = 1:size(wXX,1)
-    Q(i) = Q0*(12/(E*h*h))*trapz(nodes_x,wX(i,:).*wX(i,:))/trapz(nodes_x,wXX(i,:).*wXX(i,:)./sigma);
-end
-
 %not sure how to calculate Q with varying h, here just try a trial
-h = arrayfun(@getSize, nodes_x);
+h = arrayfun(@(z) getSize(z, params), nodes_x);
 for i = 1:size(wXX,1)
     Q(i) = 6900/1e-7*12/E*trapz(nodes_x,wX(i,:).*wX(i,:)./h)/trapz(nodes_x,wXX(i,:).*wXX(i,:)./sigma);
 end
@@ -82,13 +77,13 @@ function thickness = getSize(x, params)
         end
     else
         for i = 1:params.NumofUC*2
-            if inCell(x, params.defect(i))
-                if inRec(x, params.defect.A)
-                    thickness = params.defect.A.height;
-                elseif inRec(x, params.defect.B)
-                    thickness = params.defect.B.height;
+            if inCell(x, params.UCs(i))
+                if inRec(x, params.UCs(i).A)
+                    thickness = params.UCs(i).A.height;
+                elseif inRec(x, params.UCs(i).B)
+                    thickness = params.UCs(i).B.height;
                 else
-                    thickness = params.defect.C.height;
+                    thickness = params.UCs(i).C.height;
                 end
             end
         end
@@ -96,7 +91,8 @@ function thickness = getSize(x, params)
 end
 
 function re = inCell(x, unitcell)
-    if x <= unitcell.x + unitcell.length/2 && x >= unitcell.x - unitcell.length/2
+    eps = 1e-10;
+    if x <= unitcell.x + unitcell.length/2 + eps && x >= unitcell.x - unitcell.length/2 - eps
         re = true;
     else
         re = false;
@@ -104,7 +100,7 @@ function re = inCell(x, unitcell)
 end
 
 function re = inRec(x, rectangle)
-    if x <= rectangle.x + rectangle.length/2 && x >= rectangle.x - rectangle.length/2
+    if x <= rectangle.x + rectangle.length/2 + eps && x >= rectangle.x - rectangle.length/2 - eps
         re = true;
     else
         re = false;

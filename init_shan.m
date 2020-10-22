@@ -66,8 +66,8 @@ model.param.set('MS',[num2str(params.MS) '[m]']);
 model.param.set('NumofUC',[num2str(params.NumofUC) '[1]']);
 
 %other initializations
-ext1 = geom1.feature.create('ext1','Extrude');
-ext1.selection('input').set('wp1');
+exts(1) = geom1.feature.create('ext1','Extrude');
+exts(1).selection('input').set('wp1');
 
 Si3N4 = model.material.create('Si3N4');
 Si3N4.selection.all;
@@ -89,6 +89,7 @@ ref2 = mesh.create('ref2','Refine');
 ref3 = mesh.create('ref3','Refine');
 ref4 = mesh.create('ref4','Refine');
 swel = mesh.create('swel', 'Sweep');
+swe2 = mesh.create('swe2', 'Sweep');
 ref = {ref1,ref2,ref3,ref4};
 
 solid = model.physics.create('solid', 'SolidMechanics', 'geom1');
@@ -104,6 +105,6 @@ eig.set('neigsactive', true);
 eig.set('geometricNonlinearity', true);
 eig.set('useadvanceddisable', true);
 
-links = Links(model, geom1, wp1, ext1, mesh, Msize, ftri, swel, iss1, ...
+links = Links(model, geom1, wp1, exts, mesh, Msize, ftri, swel, swe2, iss1, ...
     fix1, std, eig, solid, ref);
 end

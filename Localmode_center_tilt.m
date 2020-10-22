@@ -1,12 +1,11 @@
-function [localmodefreq, localmodeEffMass]= Localmode_center_tilt(links, params, leftEndCoord, rightEndCoord)
+function [localmodefreq, localmodeEffMass]= Localmode_center_tilt(links, params,lowercenterline)
 eps = 1e-10;
 import com.comsol.model.*
 import com.comsol.model.util.*
-centerline = mphselectbox(links.model,'geom1', [leftEndCoord(1)-eps,rightEndCoord(1)+eps;-eps,eps;-eps,eps;], 'edge');
 
 PhCdata = mpheval(links.model,'w','edim',3);
 
-lowlinedata_disp = mpheval(links.model,'w','edim',1,'selection',centerline(1));
+lowlinedata_disp = mpheval(links.model,'w','edim',1,'selection',lowercenterline);
 coords = lowlinedata_disp.p;
 low_dp = lowlinedata_disp.d1;
 
@@ -56,7 +55,7 @@ for rowi = 1:size(low_dp,1)
     end    
 end
 
-centerlinedata_disp = mpheval(links.model,'u*u+v*v+w*w','edim',1,'selection',centerline);
+centerlinedata_disp = mpheval(links.model,'u*u+v*v+w*w','edim',1,'selection',lowercenterline);
 centerlinedata_disp.d1 = centerlinedata_disp.d1(find(judge),:);
 
 if isequal(size(centerlinedata_disp.d1,1),0)

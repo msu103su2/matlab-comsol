@@ -28,8 +28,8 @@ RecC = workplane.geom.feature.create(UC.C.comsol_Rec_name, 'Rectangle');
 RecA.set('base', 'center');
 RecB.set('base', 'center');
 RecC.set('base', 'center');
-UC.constrctedNameList = [UC.A.comsol_Rec_name, ...
-    UC.B.comsol_Rec_name,UC.C.comsol_Rec_name];
+UC.constructedNameList = {UC.A.comsol_Rec_name, ...
+    UC.B.comsol_Rec_name,UC.C.comsol_Rec_name};
 
 RecA.set('size', [UC.A.length UC.A.width]);
 RecB.set('size', [UC.B.length UC.B.width]);
@@ -39,52 +39,43 @@ RecA.set('pos', [UC.A.x UC.A.y]);
 RecB.set('pos', [UC.B.x UC.B.y]);
 RecC.set('pos', [UC.C.x UC.C.y]);
 
-if UC.A.width < UC.B.width
-    UCchaA = workplane.geom.feature.create(UC.A.comsol_chamfer_name, 'Chamfer');
-    UCchaA.selection('point').set(UC.B.comsol_Rec_name, [1 4]);
-    UCchaA.set('dist', UC.A.chamfer);
+if UC.formUni
+    UCUnion = workplane.geom.feature.create([UC.NamePrefix,'Uni'], 'Union');
+    UCUnion.set('intbnd', false);
+    UCUnion.selection('input').set(UC.constructedNameList);
 
-    UCfilA = workplane.geom.feature.create(UC.A.comsol_fillet_name, 'Fillet');
-    UCfilA.selection('point').set(UC.A.comsol_chamfer_name, [1 2 3 4]);
-    UCfilA.set('radius', UC.A.fillet);
-    
-    UC.constructedNameList = [UC.constructedNameList, ...
-        UC.A.comsol_chamfer_name, UC.A.comsol_fillet_name];
-elseif UC.A.width > UC.B.width
-    UCchaA = workplane.geom.feature.create(UC.A.comsol_chamfer_name, 'Chamfer');
-    UCchaA.selection('point').set(UC.A.comsol_Rec_name, [2 3]);
-    UCchaA.set('dist', UC.A.chamfer);
-    
-    UCfilA = workplane.geom.feature.create(UC.A.comsol_fillet_name, 'Fillet');
-    UCfilA.selection('point').set(UC.A.comsol_chamfer_name, [1 2 3 4]);
-    UCfilA.set('radius', UC.A.fillet);
-    
-    UC.constructedNameList = [UC.constructedNameList, ...
-        UC.A.comsol_chamfer_name, UC.A.comsol_fillet_name];
-end
+    indiceComp = 4;
 
-if UC.C.width < UC.B.width
-    UCchaC = workplane.geom.feature.create(UC.C.comsol_chamfer_name, 'Chamfer');
-    UCchaC.selection('point').set(UC.B.comsol_Rec_name, [2 3]);
-    UCchaC.set('dist', UC.C.chamfer);
+    if not(UC.A.chamfer == 0)
+        UCchaA = workplane.geom.feature.create(UC.A.comsol_chamfer_name, 'Chamfer');
+        UCchaA.selection('point').set([UC.NamePrefix,'Uni'], [3 6]);
+        UCchaA.set('dist', UC.A.chamfer);
 
-    UCfilC = workplane.geom.feature.create(UC.C.comsol_fillet_name, 'Fillet');
-    UCfilC.selection('point').set(UC.C.comsol_chamfer_name, [1 2 3 4]);
-    UCfilC.set('radius', UC.C.fillet);
-    
-    UC.constructedNameList = [UC.constructedNameList, ...
-        UC.C.comsol_chamfer_name, UC.C.comsol_fillet_name];
-elseif UC.C.width > UC.B.width
-    UCchaC = workplane.geom.feature.create(UC.C.comsol_chamfer_name, 'Chamfer');
-    UCchaC.selection('point').set(UC.C.comsol_Rec_name, [1 4]);
-    UCchaC.set('dist', UC.C.chamfer);
+        UCfilA = workplane.geom.feature.create(UC.A.comsol_fillet_name, 'Fillet');
+        UCfilA.selection('point').set(UC.A.comsol_chamfer_name, [3 4 5 6]);
+        UCfilA.set('radius', UC.A.fillet);
 
-    UCfilC = workplane.geom.feature.create(UC.C.comsol_fillet_name, 'Fillet');
-    UCfilC.selection('point').set(UC.C.comsol_chamfer_name, [1 2 3 4]);
-    UCfilC.set('radius', UC.C.fillet);
-    
-    UC.constructedNameList = [UC.constructedNameList, ...
-        UC.C.comsol_chamfer_name, UC.C.comsol_fillet_name];
+        UC.constructedNameList = [UC.constructedNameList, ...
+            UC.A.comsol_chamfer_name, UC.A.comsol_fillet_name];
+
+        indiceComp = 0;
+    end
+    if not(UC.C.chamfer == 0)
+        UCchaC = workplane.geom.feature.create(UC.C.comsol_chamfer_name, 'Chamfer');
+        if (indiceComp == 0)
+            UCchaC.selection('point').set(UC.A.comsol_fillet_name, [9 12]-indiceComp);
+        else
+            UCchaC.selection('point').set([UC.NamePrefix,'Uni'], [9 12]-indiceComp);
+        end
+        UCchaC.set('dist', UC.C.chamfer);
+
+        UCfilC = workplane.geom.feature.create(UC.C.comsol_fillet_name, 'Fillet');
+        UCfilC.selection('point').set(UC.C.comsol_chamfer_name, [9 10 11 12]-indiceComp);
+        UCfilC.set('radius', UC.C.fillet);
+
+        UC.constructedNameList = [UC.constructedNameList, ...
+            UC.C.comsol_chamfer_name, UC.C.comsol_fillet_name];
+    end
 end
 
 %---return Params and object names in comsol. The names might not be used in

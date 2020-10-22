@@ -1,63 +1,45 @@
-particle.x = Params;
-particle.xre = meritFunction(particle.x);
-particle.p = particle.x;
-particle.pre = particle.xre;
-g = particle.x;
-gre = particle.xre;
-particle.v = zeros(size(Params));
-particles = repmat(particle, 1, 50);
-for i = 1:size(particles,2)
-    [particles(i).x, particles(i).v] = GenerateNewParams(Params);
-    particles(i).xre = meritFunction(particles(i).x); 
-    particles(i).p = particles(i).x;
-    particles(i).pre = particles(i).xre;
+function params = test(DeviceNumber)
+sql = SQL;
+oldparams = sql.SelectDevice('000',21,DeviceNumber);
+MS = oldparams{1}{8}.value;
+NumofUC = oldparams{1}{9}.value;
+
+baseRec = PhC_Rec(oldparams{1}{1}.value, oldparams{1}{2}.value,...
+    oldparams{1}{3}.value,'Defect');
+A = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'A');
+B = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'B');
+C = PhC_Rec(baseRec.length/3, baseRec.width, baseRec.height,'C');
+A.x = -(A.length + B.length)/2;
+C.x = (C.length + B.length)/2;
+defect = UnitCell(A,B,C);
+defect.width = defect.B.width;
+
+UCs = []; %increase size in a loop, to be optimize if necessary
+baseRec = PhC_Rec(oldparams{2}{1}.value-oldparams{2}{7}.value, ...
+    oldparams{2}{2}.value,oldparams{2}{3}.value,'Defect');
+for i = 1 : 2*NumofUC
+    comsol_index = ceil(i/2); 
+    
+    A = PhC_Rec(baseRec.length/2, baseRec.width, baseRec.height,'A');
+    B = PhC_Rec(oldparams{2}{7}.value, oldparams{2}{8}.value, baseRec.height,'B');
+    C = PhC_Rec(baseRec.length/2, baseRec.width, baseRec.height,'C');
+    A.x = -(A.length + B.length)/2;
+    C.x = (C.length + B.length)/2;
+    A.fillet = oldparams{2}{10}.value;
+    A.chamfer = oldparams{2}{9}.value;
+    C.fillet = oldparams{2}{10}.value;
+    C.chamfer = oldparams{2}{9}.value;
+    UC = UnitCell(A,B,C);
+
+    UCs = [UCs, UC];
+    if rem(i, 2) == 0
+        UCs(i).moveTo(defect.x - defect.length/2 - UCs(i).length * (comsol_index-0.5), 0, 0);
+        UCs(i).rename(['L',num2str(comsol_index)]);
+    else
+        UCs(i).moveTo(defect.x + defect.length/2 + UCs(i).length * (comsol_index-0.5), 0, 0);
+        UCs(i).rename(['R',num2str(comsol_index)]);
+    end
 end
 
-figure()
-hold on
-for x = 0.3:0.025:0.8
-    [SearchResult, evolution] = PSO_general(Params,0.3,0.2,0.6,particles);
-    display(evolution);
-    plot(x, evolution,'*')
-end
-
-
-function meritValue = meritFunction(Params)
-k = Params(1,:);
-k = [k,2*pi];
-L = Params(2,:);
-Matrix = N(k(1),2*pi);
-for i = 1 : size(L,2)
-    Matrix = N(k(i+1),k(i))*M(k(i),L(i))*Matrix;
-end
-meritValue.r = -Matrix(2,1)/Matrix(2,2);
-meritValue.t = Matrix(1,1)+Matrix(1,2)*meritValue.r;
-end
-
-function matrix = M(kn,Ln)
-    matrix = [[exp(1i*kn*Ln),0];[0,exp(-1i*kn*Ln)]];
-end
-
-function matrix = N(k2,k1)
-    matrix = 0.5*[[1+k1/k2,1-k1/k2];[1-k1/k2,1+k1/k2]];
-end
-
-function [newParams, v] = GenerateNewParams(Params)
-newParams = zeros(size(Params));
-v = zeros(size(Params));
-global variation;
-lo = 1/(1+variation);
-hi = 1+variation;
-
-newParams(1,1) = ((rand-0.5)*(hi-lo)+(hi+lo)/2)*2*pi;
-v(1,1) = (2*rand-1)*(hi-lo)*2*pi;
-newParams(2,1) = rand*pi/newParams(1,1);
-v(2,1) = (2*rand-1)*pi/newParams(1,1);
-for i = 2 : size(Params,2)
-    newParams(1,i) = ((rand-0.5)*(hi-lo)+(hi+lo)/2)*newParams(1,i-1);
-    v(1,i) =(2*rand-1)*(hi-lo)*newParams(1,i-1);
-    newParams(2,i) = rand*pi/newParams(1,i);
-    v(2,i) = (2*rand-1)*pi/newParams(1,i);
-end
-
+params = Params(defect, UCs, NumofUC, MS);
 end

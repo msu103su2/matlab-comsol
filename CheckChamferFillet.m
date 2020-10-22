@@ -8,14 +8,14 @@ end
 if(LW > RW)
     if (ChamferD > LL)
         compatible = false;
+    else
         Fillet_Max = min([(LL - ChamferD)/tan(22.5*pi/180),RL/tan(22.5*pi/180)]);
     end
 else
     if (ChamferD > RL)
         compatible = false;
-        Fillet_Max = min([(RL - ChamferD)/tan(22.5*pi/180),LL/tan(22.5*pi/180)]);
     else
-        Fillet_Max = 0;
+        Fillet_Max = min([(RL - ChamferD)/tan(22.5*pi/180),LL/tan(22.5*pi/180)]);
     end
 end
 

@@ -40,5 +40,16 @@ classdef PhC_Rec < handle
             obj.comsol_chamfer_name = [NamePrefix obj.comsol_chamfer_barename];
             obj.comsol_fillet_name = [NamePrefix obj.comsol_fillet_barename];
         end
+        
+        function copyfrom(obj, other)
+            obj.length = other.length;
+            obj.width = other.width;
+            obj.height = other.height;
+            obj.fillet = other.fillet;
+            obj.chamfer = other.chamfer;
+            obj.x = other.x;
+            obj.y = other.y;
+            obj.z = other.z;
+        end
     end
 end

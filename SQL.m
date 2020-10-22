@@ -9,7 +9,7 @@ classdef SQL
         ConnectionStatus;
         MariaDBConnection;
         databasename;
-        Params;
+        params;
     end
     methods
         function obj = SQL()
@@ -21,11 +21,11 @@ classdef SQL
             obj.databasename = 'DeviceDB';
             obj.MariaDBConnection = configureJDBCDataSource('Vendor','MySQL');
             obj.MariaDBConnection = setConnectionOptions(obj.MariaDBConnection,'DataSourceName',obj.DSN,'Server',obj.ServerAddress, ...
-                'PortNumber',obj.port,'JDBCDriverLocation','C:\Program Files\MATLAB\R2019b\java\jar\mysql-connector-java-5.1.48.jar');
+                'PortNumber',obj.port,'JDBCDriverLocation','C:\Program Files\MATLAB\R2020a\java\jar\mysql-connector-java-5.1.48.jar');
             obj.ConnectionStatus = testConnection(obj.MariaDBConnection,obj.username,obj.userpwd);
             saveAsJDBCDataSource(obj.MariaDBConnection);
             obj.conn = database(obj.DSN, obj.username, obj.userpwd);
-            obj.Params = InitParams(obj);
+            obj.params = InitParams(obj);
         end
         
         function result = IsConnected(obj)
@@ -38,18 +38,18 @@ classdef SQL
             result = fetch(obj.conn,sqlquery);
         end
         
-        function Params = SelectDevice(obj, WaferSN, DieNumber, DeviceNumber)
+        function params = SelectDevice(obj, WaferSN, DieNumber, DeviceNumber)
             Table = sprintf('Device_on_Die%s_%s',WaferSN, num2str(DieNumber));
             sqlquery = sprintf('SELECT * FROM %s.%s WHERE id = %i;', obj.databasename, Table, DeviceNumber);
             data = fetch(obj.conn,sqlquery);
             data = data(1,4:22);
             for i = 1:9
-                obj.Params{1}{i}.value = data{1,i};
+                obj.params{1}{i}.value = data{1,i};
             end
             for i = 1:10
-                obj.Params{2}{i}.value = data{1,9+i};
+                obj.params{2}{i}.value = data{1,9+i};
             end
-            Params = obj.Params;
+            params = obj.params;
         end
         
         function UpdateTable(obj, data, DeviceSN)
@@ -127,8 +127,8 @@ classdef SQL
             ChamferR = struct(f1, 'ChamferR', f2, 0, f3, '[m]', f4, 'Chamfer radius');
             FilletR = struct(f1, 'FilletR', f2, 0, f3, '[m]', f4, 'fillet radius');
             cache2 = {UL UW UH Ux Uy Uz UrecL UrecW ChamferR FilletR};
-            obj.Params = {cache1, cache2};
-            result = obj.Params;
+            obj.params = {cache1, cache2};
+            result = obj.params;
         end
     end
 end
