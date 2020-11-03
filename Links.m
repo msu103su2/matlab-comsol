@@ -15,6 +15,7 @@ classdef Links < handle
         eig;
         solid;
         ref;
+        pc1;
     end
     methods
         function obj = Links(model, geom1, wp1, exts, mesh, Msize, ...
