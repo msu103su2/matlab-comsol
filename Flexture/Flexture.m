@@ -53,6 +53,22 @@ ls2.set('specify2', 'coord');
 ls2.set('coord1', [0,0]);
 ls2.set('coord2', rightEndCoord);
 
+ls3 = links.wp1.geom.create('ls3','LineSegment');
+ls3.set('specify1', 'coord');
+ls3.set('specify2', 'coord');
+ls3.set('coord1', [-higherL/2,defect.width/2]);
+ls3.set('coord2', [-higherL/2,-defect.width/2]);
+
+ls4 = links.wp1.geom.create('ls4','LineSegment');
+ls4.set('specify1', 'coord');
+ls4.set('specify2', 'coord');
+ls4.set('coord1', [higherL/2,defect.width/2]);
+ls4.set('coord2', [higherL/2,-defect.width/2]);
+
+par1 = links.wp1.geom.create('par1', 'Partition');
+par1.selection('input').set({'defectfilC'});
+model.component('mod1').geom('geom1').feature('wp1').geom.feature('par1').selection('tool').set({'ls3' 'ls4'});
+
 %count how many extrusions are needed
 
 %extrude
@@ -104,7 +120,7 @@ links.geom1.run;
 links.iss1.set('Sil', cellstr(string(reshape(params.stressTensor,1,[]))));
 
 %study node
-links.eig.set('neigs', 10);
+links.eig.set('neigs', 20);
 
 %boundary condition
 bnd1box = [leftEndCoord(1)-eps, leftEndCoord(1)+eps;...
@@ -119,9 +135,7 @@ ftribox = [leftEndCoord(1)-eps, rightEndCoord(1)+eps;...
 idx_bnd1 = mphselectbox(links.model,'geom1', bnd1box, 'boundary');
 idx_bnd2 = mphselectbox(links.model,'geom1', bnd2box, 'boundary');
 idx_ftri = mphselectbox(links.model,'geom1', ftribox, 'boundary');
-idx_anchor = mphselectbox(links.model,'geom1', [leftEndCoord(1)-eps, leftEndCoord(1)+eps;-eps,eps;-eps,eps;], 'point');
-
-
+idx_anchor = mphselectbox(links.model,'geom1', [-eps, eps;-eps,eps;-eps,eps;], 'point');
 
 pc1 = links.solid.create('pc1', 'PeriodicCondition', 2);
 pc1.selection.set([idx_bnd1 idx_bnd2]);
@@ -157,8 +171,9 @@ end
 
 swp = links.std.create('param', 'Parametric');
 swp.set('pname', {'Kf'});
-swp.set('plistarr', {'range(0,pi/(20*DL),4*pi/DL)'});
+swp.set('plistarr', {'range(0,pi/(20*DL),pi/DL)'});
 swp.set('punit', {'rad/m'});
+links.eig.set('disabledphysics', {'solid/fix2'});
 
 links.mesh.run;
 links.std.run;
@@ -194,6 +209,18 @@ function floSol = sortModes(links, params, lowercenterline)
     Kfs = mphglobal(links.model,'Kf', 'dataset', 'dset3', 'outersolnum', 'all', 'solnum',1);
     sweepNum = size(Kfs,2);
     
+    temp_width = min([params.defect.A.width,params.defect.B.width,params.defect.C.width]);
+    edge1box = [-params.defect.B.length/2-eps, params.defect.B.length/2+eps;...
+        -params.defect.B.width/2-eps, -temp_width/2+eps;...
+        -eps, eps];
+    idx_edge1 = mphselectbox(links.model,'geom1', edge1box, 'edge');
+    edge1_data = mpheval(links.model,'w','edim',1,'selection',idx_edge1, 'dataset', 'dset3', 'outersolnum', 1, 'solnum', 1);
+    edge1coords = edge1_data.p;
+    edge2coords = edge1coords;
+    edge2coords(2,:) = -edge2coords(2,:);
+    center_coords = edge1coords;
+    center_coords(2,:) = center_coords(2,:)*0;
+    
     floSol = [];
     for sweep = 1:sweepNum
         lowlinedata_disp = mpheval(links.model,'w','edim',1,'selection',lowercenterline, 'dataset', 'dset3', 'outersolnum', sweep);
@@ -208,7 +235,10 @@ function floSol = sortModes(links, params, lowercenterline)
         centerline_data_y = mphinterp(links.model,'v','coord',coords, 'dataset', 'dset3', 'outersolnum', sweep);
         centerline_data_z = mphinterp(links.model,'w','coord',coords, 'dataset', 'dset3', 'outersolnum', sweep);
         side1_data = mphinterp(links.model,'w','coord',side1coords, 'dataset', 'dset3', 'outersolnum', sweep);
-        side2_data = mphinterp(links.model,'w','coord',side2coords, 'dataset', 'dset3', 'outersolnum', sweep); 
+        side2_data = mphinterp(links.model,'w','coord',side2coords, 'dataset', 'dset3', 'outersolnum', sweep);
+        edge1_data = mphinterp(links.model,'w','coord',edge1coords, 'dataset', 'dset3', 'outersolnum', sweep);
+        edge2_data = mphinterp(links.model,'w','coord',edge2coords, 'dataset', 'dset3', 'outersolnum', sweep); 
+        center_data = mphinterp(links.model,'w','coord',center_coords, 'dataset', 'dset3', 'outersolnum', sweep); 
         Eigenfreq = mphglobal(links.model,'solid.freq', 'dataset', 'dset3', 'outersolnum', sweep);
         data = mpheval(links.model,{'u','v','w'}, 'dataset', 'dset3', 'outersolnum', sweep);
 
@@ -247,21 +277,19 @@ function floSol = sortModes(links, params, lowercenterline)
                     corrcoef(flip(side2_data(i,1:half)),side2_data(i,half+1:end))]));
                 coef2 = coef2(1,2);
                 
-
+%}
                 count = 0;
-                side1mean = mean(abs(side1_data(i,:)));
-                for j = 1:size(centerline_data_z(i,:),2)
-                    if (sign(side1_data(i,j))*sign(side2_data(i,j))>0 && ...
-                            sign(side1_data(i,j))*sign(centerline_data_z(i,j))<0 &&...
-                            abs(side1_data(i,j))>side1mean)
+                for j = 1:size(center_data(i,:),2)
+                    if (sign(edge1_data(i,j)-center_data(i,j))*sign(edge2_data(i,j)-center_data(i,j))>0 && ...
+                            max([abs(edge1_data(i,j)-center_data(i,j)),abs(edge2_data(i,j)-center_data(i,j))])/max([abs(center_data(i,j)),abs(edge1_data(i,j)),abs(edge2_data(i,j))])>0.05)
                         count = count+1;
                     end
                 end
-%}
-                if(coef < -coefmin)
+
+                if(coef < -coefmin && count<1)
                     modes.tilt.freq = [modes.tilt.freq, Eigenfreq(i)];
                     modes.tilt.k = [modes.tilt.k, Kfs(sweep)];
-                elseif(coef > coefmin)
+                elseif(coef > coefmin && count<1)
                     modes.OutOfPlane.freq = [modes.OutOfPlane.freq, Eigenfreq(i)];
                     modes.OutOfPlane.k = [modes.OutOfPlane.k, Kfs(sweep)];
                 else

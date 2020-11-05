@@ -7,6 +7,7 @@ classdef Params < handle
         minW;
         totalLength;
         stressTensor;
+        extra;
     end
     methods
         function obj = Params(defect, UCs, NumofUC, MS)
