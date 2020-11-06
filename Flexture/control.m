@@ -2,18 +2,18 @@ addpath('..\')
 sql = SQL;
 
 %----params defined section-----
+Thickness = 118e-9;
+L = 70e-6;
+W = 5e-6;
+widerL = 35e-6;
+widerW = 7.5e-6;
+higherL = 40e-6;
+higherH = Thickness*2;
 
-L = ;
-W = ;
-widerL = ;
-widerW = ;
-higherL = ;
-higherH = ;
-
-baseRec = PhC_Rec(140e-6, 10e-6,118e-9,'Defect');
-A = PhC_Rec(baseRec.length/4, baseRec.width, baseRec.height,'A');
-B = PhC_Rec(baseRec.length/2, baseRec.width*1.5, baseRec.height,'B');
-C = PhC_Rec(baseRec.length/4, baseRec.width, baseRec.height,'C');
+baseRec = PhC_Rec(L, W, Thickness,'Defect');
+A = PhC_Rec((L-widerL)/2, baseRec.width, baseRec.height,'A');
+B = PhC_Rec(widerL, widerW, baseRec.height,'B');
+C = PhC_Rec((L-widerL)/2, baseRec.width, baseRec.height,'C');
 A.x = -(A.length + B.length)/2;
 C.x = (C.length + B.length)/2;
 A.chamfer = abs(B.width - A.width)/2;
@@ -29,6 +29,8 @@ MS = 3e-6;
 UCs = [];
 NumofUC = 0;
 params = Params(defect, UCs, NumofUC, MS);
+params.extra.higherL = higherL;
+params.extra.higherH = higherH;
 
 simuR = Flexture(params, links);
 

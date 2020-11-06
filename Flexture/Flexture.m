@@ -53,66 +53,45 @@ ls2.set('specify2', 'coord');
 ls2.set('coord1', [0,0]);
 ls2.set('coord2', rightEndCoord);
 
-ls3 = links.wp1.geom.create('ls3','LineSegment');
-ls3.set('specify1', 'coord');
-ls3.set('specify2', 'coord');
-ls3.set('coord1', [-higherL/2,defect.width/2]);
-ls3.set('coord2', [-higherL/2,-defect.width/2]);
-
-ls4 = links.wp1.geom.create('ls4','LineSegment');
-ls4.set('specify1', 'coord');
-ls4.set('specify2', 'coord');
-ls4.set('coord1', [higherL/2,defect.width/2]);
-ls4.set('coord2', [higherL/2,-defect.width/2]);
-
-par1 = links.wp1.geom.create('par1', 'Partition');
-par1.selection('input').set({'defectfilC'});
-model.component('mod1').geom('geom1').feature('wp1').geom.feature('par1').selection('tool').set({'ls3' 'ls4'});
-
 %count how many extrusions are needed
 
 %extrude
 %it seems from comsol, for 2D object on wp1, there only being 1 face with
 %indice 1
 
-heights = [];
-geomNames = {};
-[heights, geomNames] = SortHeights(heights, geomNames, params.defect.A);
-[heights, geomNames] = SortHeights(heights, geomNames, params.defect.B);
-[heights, geomNames] = SortHeights(heights, geomNames, params.defect.C);
-for i = 1 : params.NumofUC*2
-    [heights, geomNames] = SortHeights(heights, geomNames, params.UCs(i).A);
-    [heights, geomNames] = SortHeights(heights, geomNames, params.UCs(i).B);
-    [heights, geomNames] = SortHeights(heights, geomNames, params.UCs(i).C);
-end
-
-if size(heights,2) == 1
+if params.extra.higherH == 0
     links.exts = [links.exts, links.geom1.feature.create('ext1','Extrude')];
     links.exts(1).set('workplane', 'wp1');
     links.exts(1).selection('input').set({'wp1'});
-    links.exts(1).set('distance', heights(1));
-elseif size(heights,2) == 2
-    if(heights(1) > heights(2))
-        heights = flip(heights);
-        geomNames = flip(geomNames);
-    end 
-    heights(2) = heights(2) -heights(1); 
+    links.exts(1).set('distance',  params.defect.B.height);
+else
+    ls3 = links.wp1.geom.create('ls3','LineSegment');
+    ls3.set('specify1', 'coord');
+    ls3.set('specify2', 'coord');
+    ls3.set('coord1', [-params.extra.higherL/2,params.defect.width/2]);
+    ls3.set('coord2', [-params.extra.higherL/2,-params.defect.width/2]);
+
+    ls4 = links.wp1.geom.create('ls4','LineSegment');
+    ls4.set('specify1', 'coord');
+    ls4.set('specify2', 'coord');
+    ls4.set('coord1', [params.extra.higherL/2,params.defect.width/2]);
+    ls4.set('coord2', [params.extra.higherL/2,-params.defect.width/2]);
+
+    par1 = links.wp1.geom.create('par1', 'Partition');
+    par1.selection('input').set({'defectfilC'});
+    par1.selection('tool').set({'ls3' 'ls4'});
+
     %do the higher part firstly, the extra height part
     links.exts = [links.exts, links.geom1.feature.create('ext1','Extrude')];
     links.exts(1).set('workplane', 'wp1');
-    links.exts(1).set('reverse', true);
-    links.exts(1).selection('input').set('wp1.'+string(geomNames{2}));
-    links.exts(1).set('distance', heights(2));
+    links.exts(1).selection('input').set('wp1.par1');
+    links.exts(1).set('distance', params.defect.B.height);
     
     links.exts = [links.exts, links.geom1.feature.create('ext2','Extrude')];
     links.exts(2).set('extrudefrom', 'faces');
-    for i = 1:size(geomNames{2},2)
-        links.exts(2).selection('inputface').set(['ext1(',num2str(i),')'],4);
-    end
-    for i = 1:size(geomNames{1},2)
-        links.exts(2).selection('inputface').set('wp1.'+string(geomNames{1}{i}),1);
-    end
-    links.exts(2).set('distance', heights(1));
+    links.exts(2).set('reverse', true);
+    links.exts(2).selection('inputface').set('ext1',8);
+    links.exts(2).set('distance', params.extra.higherH-params.defect.B.height);
 end
 links.geom1.run;
 
@@ -137,6 +116,7 @@ idx_bnd2 = mphselectbox(links.model,'geom1', bnd2box, 'boundary');
 idx_ftri = mphselectbox(links.model,'geom1', ftribox, 'boundary');
 idx_anchor = mphselectbox(links.model,'geom1', [-eps, eps;-eps,eps;-eps,eps;], 'point');
 
+
 pc1 = links.solid.create('pc1', 'PeriodicCondition', 2);
 pc1.selection.set([idx_bnd1 idx_bnd2]);
 pc1.set('PeriodicType', 'Floquet');
@@ -155,14 +135,23 @@ links.ref{2}.active(false);
 links.ref{3}.active(false);
 links.ref{4}.active(false);
 
-idx_ext1 = mphselectbox(links.model,'geom1', ftribox+[0,0;0,0;0,heights(1)], 'domain');
+idx_ext1 = mphselectbox(links.model,'geom1', ftribox+[0,0;0,0;0,params.defect.B.height], 'domain');
 links.swel.selection.geom('geom1', 3);
 links.swel.selection.set(idx_ext1);
 links.swel.create('dis1', 'Distribution');
 links.swel.feature('dis1').set('numelem', 2);
 
-if (size(heights, 2) == 2)
-    idx_ext2 = mphselectbox(links.model,'geom1', ftribox-[0,0;0,0;heights(2),0], 'domain');
+if (params.extra.higherH ~= 0)
+    idx_ref1 = mphselectbox(links.model,'geom1', [-params.extra.higherL/2-eps, -params.extra.higherL/2+eps;...
+        -params.defect.width/2-eps,params.defect.width/2+eps;-eps,eps;], 'edge');
+    idx_ref1 = [idx_ref1,mphselectbox(links.model,'geom1', [params.extra.higherL/2-eps, params.extra.higherL/2+eps;...
+        -params.defect.width/2-eps,params.defect.width/2+eps;-eps,eps;], 'edge')];
+    links.ref{1}.active(true);
+    links.ref{1}.selection.geom('geom1', 1);
+    links.ref{1}.selection.set(idx_ref1);
+    links.ref{1}.set('numrefine', 5);
+    
+    idx_ext2 = mphselectbox(links.model,'geom1', ftribox-[0,0;0,0;params.extra.higherH-params.defect.B.height,0], 'domain');
     links.swe2.selection.geom('geom1', 3);
     links.swe2.selection.set(idx_ext2);
     links.swe2.create('dis1', 'Distribution');
@@ -303,28 +292,5 @@ function floSol = sortModes(links, params, lowercenterline)
         else
             floSol = [floSol,modes];
         end
-    end
-end
-
-function converted = convertNames(geomNames)
-    converted = [];
-    for i = 1:size(geomNames,2)
-        uniNames = [];
-        indexs = [];
-        for  j = 1:size(geomNames{i},2)
-            out = regexp(geomNames{i}{j},'(defect|R[0-9]+|L[0-9]+)+rec([ABC]+)','tokens');
-            if out{1}{2} == 'A'
-                index = 1;
-            elseif out{1}{2} == 'B'
-                index = 2;
-            else
-                index = 3;
-            end
-            indexs{j} = index;
-            uniNames{j} = ['wp1.', out{1}{1}, 'Uni'];
-        end
-        extrude.indexs = indexs;
-        extrude.uniNames = uniNames;
-        converted{i} = extrude;
     end
 end
