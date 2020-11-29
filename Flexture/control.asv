@@ -70,13 +70,13 @@ Tilt.k = Tilt.k(I);
 
 %get lower band speed of sound
 fit = polyfit(OOP.k(1:5),2*pi*OOP.f(1:5),1);
-OOP.c = fit(1);
+OOP.c = fit(2);
 fit = polyfit(IPX.k(1:5),2*pi*IPX.f(1:5),1);
-IPX.c = fit(1);
+IPX.c = fit(2);
 fit = polyfit(IPY.k(1:5),2*pi*IPY.f(1:5),1);
-IPY.c = fit(1);
+IPY.c = fit(2);
 fit = polyfit(Tilt.k(1:5),2*pi*Tilt.f(1:5),1);
-Tilt.c = fit(1);
+Tilt.c = fit(2);
 
 %plot modes
 figure(1)
