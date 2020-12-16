@@ -5,6 +5,7 @@ classdef Params < handle
         NumofUC;
         MS;
         minW;
+        maxW;
         totalLength;
         stressTensor;
         extra;
@@ -24,6 +25,14 @@ classdef Params < handle
                 r = min([r, obj.UCs(i).A.width, obj.UCs(i).B.width, obj.UCs(i).C.width]);
             end
             obj.minW = r;
+        end
+        
+        function r = getMaxWidth(obj)
+            r = max([obj.defect.A.width, obj.defect.B.width, obj.defect.C.width]);
+            for i = 1:2*obj.NumofUC
+                r = max([r, obj.UCs(i).A.width, obj.UCs(i).B.width, obj.UCs(i).C.width]);
+            end
+            obj.maxW = r;
         end
         
         function r = getLength(obj)

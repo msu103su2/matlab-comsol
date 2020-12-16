@@ -36,11 +36,11 @@ function floSol = SortModes(model)
         modes.InPlane_y.freq= [];
         modes.OutOfPlane.freq = [];
         modes.tilt.freq = [];
+        modes.trash.freq = [];
         modes.InPlane_x.k = [];
         modes.InPlane_y.k= [];
         modes.OutOfPlane.k = [];
         modes.tilt.k = [];
-        modes.trash.freq = [];
         modes.trash.k = [];
         
         for i = 1:size(solid_data.d1,1)
