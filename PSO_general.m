@@ -3,7 +3,7 @@ function [SearchResult, evolution] = PSO_general(Params, omega, phi_p, phi_g, se
 global variation;
 variation = 0.5;
 
-showDetail = 0;
+showDetail = 1;
 if nargin < 5
     optimize = 0;
 else
@@ -87,21 +87,18 @@ while converged < size(particles,2) && counter < size(particles,2)*30
     evolution = evolution +1;
     T=T*r;
     for i = 1 : size(particles,2)
-        for d = 1 : size(particles(i).v,2)
+        occuppied = 0;
+        for d = 2 : size(particles(i).v,2)
             inrange = 0;
             while ~inrange
-                
                 vmax = omega*particles(i).v(1,d) + ...
                     phi_p*abs(particles(i).p(1,d) - particles(i).x(1,d)) +...
                     phi_g*abs(g(1,d) - particles(i).x(1,d));
                 vmin = omega*particles(i).v(1,d) - ...
                     phi_p*abs(particles(i).p(1,d) - particles(i).x(1,d)) -...
                     phi_g*abs(g(1,d) - particles(i).x(1,d));
-                if (d == 1)
-                    targetRange = [2*pi/(1+variation), 2*pi*(1+variation)];
-                else
-                    targetRange = [particles(i).x(1,d-1)/(1+variation), particles(i).x(1,d-1)*(1+variation)];
-                end
+                targetRange = [max([particles(i).x(1,d-1)/(1+variation), particles(i).x(1,d-1) - 2*(particles(i).x(2,d-1)-occuppied)/(1+1/sqrt(2))]), ...
+                    min([(1+variation)*particles(i).x(1,d-1), 2*sqrt(2)*(particles(i).x(2,d-1)-occuppied)+particles(i).x(1,d-1)])];
                 
                 if (vmax + particles(i).x(1,d) < targetRange(1))
                     particles(i).x(1,d) = targetRange(1);
@@ -116,24 +113,24 @@ while converged < size(particles,2) && counter < size(particles,2)*30
                     particles(i).x(1,d) = particles(i).x(1,d) + particles(i).v(1,d);
                 end
                 
-                if (d == 1)
-                    if(particles(i).x(1,d) <= 2*pi*(1+variation)  && 2*pi/(1+variation) <= particles(i).x(1,d))
+                if(particles(i).x(1,d) <= targetRange(2)  && targetRange(1) <= particles(i).x(1,d))
                     inrange = 1;
-                    end
-                else
-                    if(particles(i).x(1,d) <= particles(i).x(1,d-1)*(1+variation)  && particles(i).x(1,d-1)/(1+variation) <= particles(i).x(1,d))
-                    inrange = 1;
-                    end
                 end
                 
                 vmin = omega*particles(i).v(2,d) - ...
                     phi_p*abs(particles(i).p(2,d) - particles(i).x(2,d)) -...
                     phi_g*abs(g(2,d) - particles(i).x(2,d));
-                targetRange = [1/4*pi/particles(i).x(1,d), 3/4*pi/particles(i).x(1,d)];
                 vmax = omega*particles(i).v(2,d) + ...
                     phi_p*abs(particles(i).p(2,d) - particles(i).x(2,d)) +...
                     phi_g*abs(g(2,d) - particles(i).x(2,d));
-                targetRange = [1/4*pi/particles(i).x(1,d), 3/4*pi/particles(i).x(1,d)];
+                
+                if (particles(i).x(1,d) > particles(i).x(1,d-1))
+                    lo = (particles(i).x(1,d) - particles(i).x(1,d-1))*(1+1/sqrt(2))/2;
+                else
+                    lo = -(particles(i).x(1,d) - particles(i).x(1,d-1))/(2*sqrt(2));
+                end
+                targetRange = [lo, (ceil((lo - pi/(2*particles(i).x(1,d)))/(pi/particles(i).x(1,d)))+1)*pi/particles(i).x(1,d)];
+                
                 if (vmin + particles(i).x(2,d) > targetRange(2))
                     particles(i).x(2,d) = targetRange(2);
                 elseif (vmax + particles(i).x(2,d) < targetRange(1))
@@ -152,6 +149,11 @@ while converged < size(particles,2) && counter < size(particles,2)*30
                         inrange = 0;
                     end
                 end
+            end
+            if (particles(i).x(1,d) < particles(i).x(1,d-1))
+                occuppied = (particles(i).x(1,d-1) - particles(i).x(1,d))/(2*sqrt(2));
+            else
+                occuppied = -(particles(i).x(1,d-1) - particles(i).x(1,d))*(1+1/sqrt(2))/2;
             end
         end
         particles(i).xre = meritFunction(particles(i).x);
@@ -204,20 +206,23 @@ while converged < size(particles,2) && counter < size(particles,2)*30
     end
 end
 
-SearchResult = gre.r;
+SearchResult.r = gre.r;
+SearchResult.p = g;
 drawParams = g;
-drawParams = [[2*pi;1],drawParams,[2*pi;1]];
 rectangle('Position',[0,-drawParams(1,1)/(4*pi),drawParams(2,1),drawParams(1,1)/(2*pi)])
 x = 0;
 for i =2:size(drawParams,2)
     x = x + drawParams(2,i-1);
     rectangle('Position',[x,-drawParams(1,i)/(4*pi),drawParams(2,i),drawParams(1,i)/(2*pi)])
 end
+
+save('Z:\data\optical lever project\test\SearchResult.mat','SearchResult')
 end
 
 function meritValue = meritFunction(Params)
-k = Params(1,:);
-k = [k,200*pi];
+width = Params(1,:);
+width = [width, 200*pi];
+k = width;
 L = Params(2,:);
 Matrix = N(k(1),2*pi);
 for i = 1 : size(L,2)
@@ -236,20 +241,32 @@ function matrix = N(k2,k1)
 end
 
 function [newParams, v] = GenerateNewParams(Params)
+%newParams(1,1), width, newParams(2,1), length
 newParams = zeros(size(Params));
+newParams(1:2,1) = Params(1:2,1);
 v = zeros(size(Params));
 global variation;
-lo = 1/(1+variation);
-hi = 1+variation;
+occuppied = 0;
 
-newParams(1,1) = ((rand-0.5)*(hi-lo)+(hi+lo)/2)*2*pi;
-v(1,1) = (2*rand-1)*(hi-lo)*2*pi;
-newParams(2,1) = (rand-0.5)*pi/(2*newParams(1,1))+pi/(2*newParams(1,1));
-v(2,1) = (2*rand-1)*pi/(2*newParams(1,1));
 for i = 2 : size(Params,2)
-    newParams(1,i) = ((rand-0.5)*(hi-lo)+(hi+lo)/2)*newParams(1,i-1);
-    v(1,i) =(2*rand-1)*(hi-lo)*newParams(1,i-1);
-    newParams(2,i) = (rand-0.5)*pi/(2*newParams(1,1))+pi/(2*newParams(1,1));
-    v(2,i) = (2*rand-1)*pi/(2*newParams(1,1));
+    hi = min([(1+variation)*newParams(1,i-1), 2*sqrt(2)*(newParams(2,i-1)-occuppied)+newParams(1,i-1)]);
+    lo = max([newParams(1,i-1)/(1+variation), newParams(1,i-1) - 2*(newParams(2,i-1)-occuppied)/(1+1/sqrt(2))]);
+    newParams(1,i) = (rand-0.5)*(hi-lo)+(hi+lo)/2;
+    v(1,i) =(2*rand-1)*(hi-lo);
+  
+    if (newParams(1,i) > newParams(1,i-1))
+        lo = (newParams(1,i) - newParams(1,i-1))*(1+1/sqrt(2))/2;
+    else
+        lo = -(newParams(1,i) - newParams(1,i-1))/(2*sqrt(2));
+    end
+    hi = (ceil((lo - pi/(2*newParams(1,i)))/(pi/newParams(1,i)))+1)*pi/newParams(1,i);
+    newParams(2,i) = (rand-0.5)*(hi-lo)+(hi+lo)/2;
+    v(2,i) = (2*rand-1)*(hi-lo);
+    
+    if (newParams(1,i) < newParams(1,i-1))
+        occuppied = (newParams(1,i-1) - newParams(1,i))/(2*sqrt(2));
+    else
+        occuppied = -(newParams(1,i-1) - newParams(1,i))*(1+1/sqrt(2))/2;
+    end
 end
 end

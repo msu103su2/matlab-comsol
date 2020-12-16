@@ -8,11 +8,12 @@ function PlotModes(WaferSN, DieNumber)
     for i = 1:NumberOfDevices
         DeviceSN = sprintf('%s_%02i_%02i',WaferSN, DieNumber, i);
         result = sql.Select('DeviceSN',DeviceSN','Eigenfreq',Tablename);
-        EFs = [EFs jsondecode(result{1,1}{1,1})];
+        EF = jsondecode(result{1,1}{1,1});
+        EF = EF(1:50,1);
+        EFs = [EFs EF];
         result = sql.Select('DeviceSN',DeviceSN','UL',Tablename);
         x = [x,result{1,1}];
     end
     figure('Name','simulated Modes');
-    plot(x,EFs,'*')
-    ylim([1e5 4.9e6]);
+    plot(x*10e6,EFs/1e6,'*')
 end
